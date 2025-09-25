@@ -194,8 +194,8 @@
     }
 #endif
 
-    void ShaderCompiler();
-    ShaderCompiler();
+    void ShaderCompilerGUI();
+    ShaderCompilerGUI();
 
     // Rendering
     ImGui::Render();

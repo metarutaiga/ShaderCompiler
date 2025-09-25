@@ -38,5 +38,15 @@ inline bool InputTextMultiline(const char* label, std::string& text, const ImVec
     return InputTextEx(label, nullptr, text, size, flags | ImGuiInputTextFlags_Multiline, callback, user_data);
 }
 //---------------------------------------------------------------------------
+inline bool ScrollCombo(int* index, size_t size)
+{
+    if (ImGui::IsItemHovered()) {
+        float wheel = ImGui::GetIO().MouseWheel;
+        if (wheel < 0 && ((*index) + 1) != size) { (*index)++; return true; }
+        if (wheel > 0 && ((*index)    ) != 0   ) { (*index)--; return true; }
+    }
+    return false;
+}
+//---------------------------------------------------------------------------
 } // namespace ImGui
 //---------------------------------------------------------------------------

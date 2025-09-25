@@ -5,34 +5,36 @@
 #include <sys/dir.h>
 #include <mach-o/dyld.h>
 #endif
+#include <algorithm>
 #include <map>
 #include <vector>
+#include "D3DCompiler.h"
 #include "ImGuiHelper.h"
 #include "Logger.h"
+#include "ShaderCompiler.h"
 #include "VirtualMachine.h"
 
-#include "mine/syscall/allocator.h"
-#include "mine/syscall/syscall_internal.h"
-#include "mine/x86/x86_i386.h"
-#include "mine/x86/x86_instruction.inl"
-#include "mine/x86/x86_register.inl"
-
-static std::string shader_path;
-static std::string compiler_path;
-static std::string text;
-static std::vector<std::string> shaders;
-static int shader_index;
-static std::vector<std::string> compilers;
-static int compiler_index;
-static std::string entry;
-static std::vector<std::string> profiles;
-static int profile_index;
-static std::map<std::string, std::string> binaries;
-static std::vector<char> binary;
 static ImGuiID binary_dockid;
 static mine* cpu;
 
-static const char* DetectProfile()
+using namespace ShaderCompiler;
+namespace ShaderCompiler {
+
+std::string shader_path;
+std::string compiler_path;
+
+std::string text;
+std::vector<std::string> shaders;
+int shader_index;
+std::vector<std::string> compilers;
+int compiler_index;
+std::string entry;
+std::vector<std::string> profiles;
+int profile_index;
+std::map<std::string, std::string> binaries;
+std::vector<char> binary;
+
+const char* DetectProfile()
 {
     int type = 'vert';
     if (text.find(") : COLOR") != std::string::npos)
@@ -55,12 +57,14 @@ static const char* DetectProfile()
     return "ps_1_0";
 }
 
+};  // namespace ShaderCompiler
+
 static void LoadCompiler()
 {
     profiles.clear();
     if (compilers.size() > compiler_index) {
         std::string compiler = compilers[compiler_index];
-        if (strncasecmp(compiler.data(), "d3dcompiler", 11) == 0) {
+        if (strncasecmp(compiler.data(), "d3dx9", 5) == 0 || strncasecmp(compiler.data(), "d3dcompiler", 11) == 0) {
             profiles.push_back("Shader Model 1.0");
             profiles.push_back("Shader Model 1.1");
             profiles.push_back("Shader Model 1.2");
@@ -119,6 +123,8 @@ static bool Option()
     bool refresh = false;
     if (ImGui::Begin("Option")) {
         ImVec2 region = ImGui::GetContentRegionAvail();
+
+        // Shader
         ImGui::TextUnformatted("Shader");
         ImGui::SetNextItemWidth(region.x);
         if (ImGui::Combo("##200", &shader_index, [](void* user_data, int index) {
@@ -128,6 +134,12 @@ static bool Option()
             refresh = true;
             LoadShader();
         }
+        if (ImGui::ScrollCombo(&shader_index, shaders.size())) {
+            refresh = true;
+            LoadShader();
+        }
+
+        // Compiler
         ImGui::TextUnformatted("Compiler");
         ImGui::SetNextItemWidth(region.x);
         if (ImGui::Combo("##201", &compiler_index, [](void* user_data, int index) {
@@ -137,14 +149,25 @@ static bool Option()
             refresh = true;
             LoadCompiler();
         }
+        if (ImGui::ScrollCombo(&compiler_index, compilers.size())) {
+            refresh = true;
+            LoadShader();
+        }
+
+        // Entry
         ImGui::TextUnformatted("Entry");
         refresh |= ImGui::InputTextEx("##202", nullptr, entry, ImVec2(region.x, 0));
+
+        // Profile
         ImGui::TextUnformatted("Profile");
         ImGui::SetNextItemWidth(region.x);
         if (ImGui::Combo("##203", &profile_index, [](void* user_data, int index) {
             auto* profiles = (std::string*)user_data;
             return profiles[index].c_str();
         }, profiles.data(), (int)profiles.size())) {
+            refresh = true;
+        }
+        if (ImGui::ScrollCombo(&profile_index, profiles.size())) {
             refresh = true;
         }
     }
@@ -195,68 +218,6 @@ static void Console()
     ImGui::End();
 }
 
-static size_t RunD3DCompile(mine* cpu, size_t(*symbol)(const char*, void*), void* image)
-{
-    auto* allocator = cpu->Allocator;
-    auto* i386 = (x86_i386*)cpu;
-    auto& x86 = i386->x86;
-
-    size_t D3DCompile = symbol("D3DCompile", image);
-    if (D3DCompile) {
-        auto profile = DetectProfile();
-
-        auto pSrcData = VirtualMachine::DataToMemory(text.data(), text.size(), allocator);
-        auto SrcDataSize = text.size();
-        auto pEntrypoint = VirtualMachine::DataToMemory(entry.data(), entry.size() + 1, allocator);
-        auto pTarget = VirtualMachine::DataToMemory(profile, strlen(profile) + 1, allocator);
-
-        Push32(0);
-        auto ppErrorMsgs = ESP;
-        Push32(0);
-        auto ppCode = ESP;
-        Push32('D3DC');
-
-        Push32(ppErrorMsgs);    // **ppErrorMsgs    optional
-        Push32(ppCode);         // **ppCode
-        Push32(0);              // Flags2
-        Push32(1 << 12);        // Flags1
-        Push32(pTarget);        // pTarget
-        Push32(pEntrypoint);    // pEntrypoint      optional
-        Push32(0);              // *pInclude        optional
-        Push32(0);              // *pDefines        optional
-        Push32(0);              // pSourceName      optional
-        Push32(SrcDataSize);    // SrcDataSize
-        Push32(pSrcData);       // pSrcData
-    }
-
-    return D3DCompile;
-}
-
-static size_t RunD3DDisassemble(mine* cpu, size_t(*symbol)(const char*, void*), void* image)
-{
-    auto* allocator = cpu->Allocator;
-    auto* i386 = (x86_i386*)cpu;
-    auto& x86 = i386->x86;
-
-    size_t D3DDisassemble = symbol("D3DDisassemble", image);
-    if (D3DDisassemble) {
-        auto pSrcData = VirtualMachine::DataToMemory(binary.data(), binary.size(), allocator);
-        auto SrcDataSize = binary.size();
-
-        Push32(0);
-        auto ppDisassembly = ESP;
-        Push32('D3DD');
-
-        Push32(ppDisassembly);  // **ppDisassembly
-        Push32(0);              // szComments       optional
-        Push32(0);              // Flags
-        Push32(SrcDataSize);    // SrcDataSize
-        Push32(pSrcData);       // pSrcData
-    }
-
-    return D3DDisassemble;
-}
-
 static void Refresh()
 {
     delete cpu;
@@ -271,9 +232,12 @@ static void Refresh()
     logs[CONSOLE].clear();
 
     if (compilers.size() > compiler_index) {
-        std::string path = compiler_path + "/" + compilers[compiler_index];
+        std::string compiler = compilers[compiler_index];
+        std::string path = compiler_path + "/" + compiler;
 
-        cpu = VirtualMachine::RunDLL(path.c_str(), RunD3DCompile);
+        if (strncasecmp(compiler.data(), "d3dx9", 5) == 0 || strncasecmp(compiler.data(), "d3dcompiler", 11) == 0) {
+            cpu = VirtualMachine::RunDLL(path.c_str(), D3DCompiler::RunD3DCompile);
+        }
     }
 }
 
@@ -289,69 +253,11 @@ static void Loop()
                 logs_index[CONSOLE] = (int)logs[CONSOLE].size();
                 logs_index[SYSTEM] = (int)logs[SYSTEM].size();
 
-                auto* allocator = cpu->Allocator;
-                auto* i386 = (x86_i386*)cpu;
-                auto& x86 = i386->x86;
-                auto* memory = (uint8_t*)allocator->address();
-                auto* stack = (uint32_t*)(memory + cpu->Stack());
-                switch (stack[0]) {
-                case 'D3DC': {
-                    auto* error = (uint32_t*)(memory + stack[2]);
-                    if (error) {
-//                      auto& size = error[2];
-                        auto& pointer = error[3];
-                        auto* message = (uint32_t*)(memory + pointer);
-
-                        Logger<CONSOLE>("%s", message);
-                    }
-                    auto* blob = (uint32_t*)(memory + stack[1]);
-                    if (blob && EAX == 0) {
-                        auto& size = blob[2];
-                        auto& pointer = blob[3];
-                        auto* code = (uint32_t*)(memory + pointer);
-
-                        std::string d3dsio;
-                        for (auto i = 0; i < (size & ~15); i += 16) {
-                            char line[256];
-                            snprintf(line, 256, "%04X: %08X, %08X, %08X, %08X\n",
-                                     i,
-                                     code[i / 4 + 0],
-                                     code[i / 4 + 1],
-                                     code[i / 4 + 2],
-                                     code[i / 4 + 3]);
-                            d3dsio += line;
-                        }
-                        binaries["D3DSIO"] = d3dsio;
-                        binary.assign((char*)code, (char*)code + size);
-
-                        if (compilers.size() > compiler_index) {
-                            std::string path = compiler_path + "/" + compilers[compiler_index];
-
-                            delete cpu;
-                            cpu = VirtualMachine::RunDLL(path.c_str(), RunD3DDisassemble);
-                            return;
-                        }
-                    }
-                    break;
+                mine* origin = cpu;
+                cpu = D3DCompiler::RunNextProcess(origin);
+                if (cpu == nullptr) {
+                    delete origin;
                 }
-                case 'D3DD': {
-                    auto* blob = (uint32_t*)(memory + stack[1]);
-                    if (blob && EAX == 0) {
-                        auto& size = blob[2];
-                        auto& pointer = blob[3];
-                        auto* code = (char*)(memory + pointer);
-
-                        std::string disassembly(code, code + size);
-                        binaries["D3DSIO Disassembly"] = disassembly;
-                    }
-                    break;
-                }
-                default:
-                    break;
-                }
-
-                delete cpu;
-                cpu = nullptr;
                 return;
             }
             if (count == 0) {
@@ -379,9 +285,9 @@ static void Init()
     if (ImGui::DockBuilderGetNode(id) == nullptr) {
         id = ImGui::DockBuilderAddNode(id);
 
-        ImGuiID bottom = ImGui::DockBuilderSplitNode(id, ImGuiDir_Down, 1.0f / 2.0f, nullptr, &id);
-        ImGuiID left = ImGui::DockBuilderSplitNode(id, ImGuiDir_Left, 2.0f / 5.0f, nullptr, &id);
-        ImGuiID middle = ImGui::DockBuilderSplitNode(id, ImGuiDir_Left, 1.0f / 3.0f, nullptr, &id);
+        ImGuiID bottom = ImGui::DockBuilderSplitNode(id, ImGuiDir_Down, 1.0f / 4.0f, nullptr, &id);
+        ImGuiID left = ImGui::DockBuilderSplitNode(id, ImGuiDir_Left, 3.0f / 7.0f, nullptr, &id);
+        ImGuiID middle = ImGui::DockBuilderSplitNode(id, ImGuiDir_Left, 1.0f / 4.0f, nullptr, &id);
         ImGuiID right = binary_dockid = id;
         ImGui::DockBuilderDockWindow("Text", left);
         ImGui::DockBuilderDockWindow("Option", middle);
@@ -404,11 +310,14 @@ static void Init()
                 while (struct dirent* dirent = readdir(dir)) {
                     if (dirent->d_name[0] == '.')
                         continue;
+                    if (strcasestr(dirent->d_name, ".hlsl") == nullptr)
+                        continue;
                     shaders.push_back(dirent->d_name);
                 }
                 closedir(dir);
             }
         }
+        std::stable_sort(shaders.begin(), shaders.end());
 
         compiler_path.resize(1024, 0);
         realpath((cwd + "/../../../../../../compiler").c_str(), compiler_path.data());
@@ -419,11 +328,14 @@ static void Init()
                 while (struct dirent* dirent = readdir(dir)) {
                     if (dirent->d_name[0] == '.')
                         continue;
+                    if (strcasestr(dirent->d_name, ".dll") == nullptr)
+                        continue;
                     compilers.push_back(dirent->d_name);
                 }
                 closedir(dir);
             }
         }
+        std::stable_sort(compilers.begin(), compilers.end());
 
         LoadCompiler();
         LoadShader();
@@ -434,7 +346,7 @@ static void Init()
     ImGui::DockSpace(id);
 }
 
-void ShaderCompiler()
+void ShaderCompilerGUI()
 {
     ImVec2 window_size = ImVec2(1536.0f, 864.0f);
 

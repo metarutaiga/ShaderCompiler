@@ -10,7 +10,7 @@
 
 namespace VirtualMachine {
 
-mine* RunDLL(const char* dll, size_t(*parameter)(mine*, size_t(*)(const char*, void*), void*))
+mine* RunDLL(const char* dll, size_t(*parameter)(mine*, size_t(*)(mine*, void*, const char*)))
 {
     static const int allocator_size = 256 * 1024 * 1024;
     static const int stack_size = 1 * 1024 * 1024;
@@ -42,22 +42,7 @@ mine* RunDLL(const char* dll, size_t(*parameter)(mine*, size_t(*)(const char*, v
         syscall_windows_new(cpu, &syscall_windows);
         syscall_windows_import(cpu, "main", image, true);
 
-        auto symbol = [](const char* name, void* image) {
-            struct ExportData {
-                const char* name;
-                size_t address;
-            } export_data = { .name = name };
-            PE::Exports(image, [](const char* name, size_t address, void* userdata) {
-                auto export_data = (ExportData*)userdata;
-                if (strcmp(export_data->name, name) == 0) {
-                    export_data->address = address;
-                    Logger<SYSTEM>("%-12s : [%08zX] %s", "Symbol", address, name);
-                }
-            }, &export_data);
-            return export_data.address;
-        };
-
-        size_t address = parameter(cpu, symbol, image);
+        size_t address = parameter(cpu, GetProcAddress);
         if (address) {
             auto* i386 = (x86_i386*)cpu;
             auto& x86 = i386->x86;
@@ -81,14 +66,14 @@ mine* RunDLL(const char* dll, size_t(*parameter)(mine*, size_t(*)(const char*, v
     return cpu;
 }
 
-size_t RunException(mine* data, size_t index)
+size_t RunException(mine* cpu, size_t index)
 {
     size_t result = 0;
     if (result == 0) {
-        result = syscall_windows_execute(data, index);
+        result = syscall_windows_execute(cpu, index);
     }
     if (result == 0) {
-        result = syscall_i386_execute(data, index);
+        result = syscall_i386_execute(cpu, index);
     }
     return result;
 }
@@ -114,6 +99,28 @@ uint32_t DataToMemory(const void* data, size_t size, struct allocator_t* allocat
         return (uint32_t)(pointer - memory);
     }
     return 0;
+}
+
+size_t GetProcAddress(mine* cpu, void* image, const char* name)
+{
+    if (image == nullptr) {
+        auto* allocator = cpu->Allocator;
+        auto* memory = (char*)allocator->address();
+        uint32_t stack[2] = {};
+        image = memory + syscall_GetModuleHandleA(memory, stack);
+    }
+    struct ExportData {
+        const char* name;
+        size_t address;
+    } export_data = { .name = name };
+    PE::Exports(image, [](const char* name, size_t address, void* userdata) {
+        auto export_data = (ExportData*)userdata;
+        if (strcmp(export_data->name, name) == 0) {
+            export_data->address = address;
+            Logger<SYSTEM>("%-12s : [%08zX] %s", "Symbol", address, name);
+        }
+    }, &export_data);
+    return export_data.address;
 }
 
 };  // namespace VirtualMachine

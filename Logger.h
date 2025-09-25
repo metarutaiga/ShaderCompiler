@@ -14,6 +14,8 @@ static int LoggerV(const char* format, va_list va)
 {
     int index = INDEX;
     int length = vsnprintf(nullptr, 0, format, va) + 1;
+    if (strncmp(format, "[CALL]", 6) == 0)
+        return length;
     if (index == SYSTEM) {
         logs[index].push_back(std::string());
     }
@@ -61,6 +63,16 @@ static int LoggerV(const char* format, va_list va)
     }
     log.resize(len);
     std::move(appends.begin() + 1, appends.end(), std::back_inserter(logs[index]));
+
+//  // Call
+//  if (logs[index].size() >= 2) {
+//      auto back1 = logs[index][logs[index].size() - 2];
+//      auto back2 = logs[index][logs[index].size() - 1];
+//      if (back1.size() >= back2.size() && back1.compare(0, back2.size(), back2) == 0) {
+//          logs[index].pop_back();
+//          logs[index].back() += '.';
+//      }
+//  }
 
     return length;
 }
