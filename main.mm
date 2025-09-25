@@ -194,6 +194,9 @@
     }
 #endif
 
+    void ShaderCompiler();
+    ShaderCompiler();
+
     // Rendering
     ImGui::Render();
     ImDrawData* draw_data = ImGui::GetDrawData();
@@ -305,6 +308,7 @@
         self.window.contentViewController = rootViewController;
         [self.window center];
         [self.window makeKeyAndOrderFront:self];
+        [self.window zoom:nil];
     }
     return self;
 }
