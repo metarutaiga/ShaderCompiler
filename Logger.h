@@ -14,8 +14,8 @@ static int LoggerV(const char* format, va_list va)
 {
     int index = INDEX;
     int length = vsnprintf(nullptr, 0, format, va) + 1;
-    if (strncmp(format, "[CALL]", 6) == 0)
-        return length;
+//  if (strncmp(format, "[CALL]", 6) == 0)
+//      return length;
     if (index == SYSTEM) {
         logs[index].push_back(std::string());
     }

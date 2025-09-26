@@ -3,7 +3,6 @@
 #include "ShaderCompiler.h"
 #include "VirtualMachine.h"
 #include "mine/syscall/allocator.h"
-#include "mine/syscall/syscall_internal.h"
 #include "mine/x86/x86_i386.h"
 #include "mine/x86/x86_instruction.inl"
 #include "mine/x86/x86_register.inl"
@@ -148,20 +147,9 @@ mine* RunNextProcess(mine* cpu)
         if (blob && EAX == 0) {
             auto& size = blob[2];
             auto& pointer = blob[3];
-            auto* code = (uint32_t*)(memory + pointer);
+            auto* code = (char*)(memory + pointer);
 
-            std::string d3dsio;
-            for (auto i = 0; i < size; i += 16) {
-                char line[256];
-                snprintf(line, 256, "%04X: %08X", i, code[i / 4 + 0]);
-                if ((i +  4) < size) snprintf(line, 256, "%s, %08X", line, code[i / 4 + 1]);
-                if ((i +  8) < size) snprintf(line, 256, "%s, %08X", line, code[i / 4 + 2]);
-                if ((i + 12) < size) snprintf(line, 256, "%s, %08X", line, code[i / 4 + 3]);
-                snprintf(line, 256, "%s\n", line);
-                d3dsio += line;
-            }
-            ShaderCompiler::binaries["Binary"] = d3dsio;
-            ShaderCompiler::binary.assign((char*)code, (char*)code + size);
+            ShaderCompiler::binary.assign(code, code + size);
 
             size_t address = D3DCompiler::RunD3DDisassemble(cpu, VirtualMachine::GetProcAddress);
             if (address) {
@@ -169,9 +157,10 @@ mine* RunNextProcess(mine* cpu)
                 cpu->Jump(address);
                 return cpu;
             }
+            Logger<CONSOLE>("Disassemble : %s\n", "Symbol is not found");
         }
         else {
-            Logger<CONSOLE>("Compile : %08X", EAX);
+            Logger<CONSOLE>("Compile : %08X\n", EAX);
         }
         break;
     }
@@ -182,11 +171,10 @@ mine* RunNextProcess(mine* cpu)
             auto& pointer = blob[3];
             auto* code = (char*)(memory + pointer);
 
-            std::string disassembly(code, code + size);
-            ShaderCompiler::binaries["Disassembly"] = disassembly;
+            ShaderCompiler::binaries["Disassembly"].assign(code, code + size);
         }
         else {
-            Logger<CONSOLE>("Disassemble : %08X", EAX);
+            Logger<CONSOLE>("Disassemble : %08X\n", EAX);
         }
         break;
     }

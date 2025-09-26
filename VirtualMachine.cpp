@@ -10,7 +10,17 @@
 
 namespace VirtualMachine {
 
-mine* RunDLL(const char* dll, size_t(*parameter)(mine*, size_t(*)(mine*, void*, const char*)))
+static int silent_logger(const char* format, ...)
+{
+    return 0;
+}
+
+static int silent_vlogger(const char* format, va_list)
+{
+    return 0;
+}
+
+mine* RunDLL(const char* dll, size_t(*parameter)(mine*, size_t(*)(mine*, void*, const char*)), bool debug)
 {
     static const int allocator_size = 256 * 1024 * 1024;
     static const int stack_size = 1 * 1024 * 1024;
@@ -28,8 +38,8 @@ mine* RunDLL(const char* dll, size_t(*parameter)(mine*, size_t(*)(mine*, void*, 
             .path = ".",
             .printf = Logger<CONSOLE>,
             .vprintf = LoggerV<CONSOLE>,
-            .debugPrintf = Logger<SYSTEM>,
-            .debugVprintf = LoggerV<SYSTEM>,
+            .debugPrintf = debug ? Logger<SYSTEM> : silent_logger,
+            .debugVprintf = debug ? LoggerV<SYSTEM> : silent_vlogger,
         };
         syscall_i386_new(cpu, &syscall);
 

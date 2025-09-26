@@ -194,8 +194,11 @@
     }
 #endif
 
-    void ShaderCompilerGUI();
-    ShaderCompilerGUI();
+    CGSize size = [NSScreen mainScreen].frame.size;
+    bool ShaderCompilerGUI(ImVec2 screen);
+    if (ShaderCompilerGUI(ImVec2(size.width, size.height)) == false) {
+        [NSApp terminate:nil];
+    }
 
     // Rendering
     ImGui::Render();
@@ -302,13 +305,12 @@
     {
         NSViewController *rootViewController = [[AppViewController alloc] initWithNibName:nil bundle:nil];
         self.window = [[NSWindow alloc] initWithContentRect:NSZeroRect
-                                                  styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskResizable | NSWindowStyleMaskMiniaturizable
+                                                  styleMask:NSWindowStyleMaskBorderless
                                                     backing:NSBackingStoreBuffered
                                                       defer:NO];
         self.window.contentViewController = rootViewController;
-        [self.window center];
+        [self.window setFrame:NSMakeRect(0, 0, 1, 1) display:YES];
         [self.window makeKeyAndOrderFront:self];
-        [self.window zoom:nil];
     }
     return self;
 }

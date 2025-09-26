@@ -6,6 +6,7 @@
 #include <mach-o/dyld.h>
 #endif
 #include <algorithm>
+#include <chrono>
 #include <map>
 #include <vector>
 #include "D3DCompiler.h"
@@ -14,8 +15,10 @@
 #include "ShaderCompiler.h"
 #include "VirtualMachine.h"
 
+static std::chrono::system_clock::time_point begin_execute;
 static ImGuiID binary_dockid;
 static mine* cpu;
+static bool debug_vm;
 
 using namespace ShaderCompiler;
 namespace ShaderCompiler {
@@ -33,6 +36,7 @@ std::vector<std::string> profiles;
 int profile_index;
 std::map<std::string, std::string> binaries;
 std::vector<char> binary;
+int binary_index;
 
 const char* DetectProfile()
 {
@@ -64,7 +68,8 @@ static void LoadCompiler()
     profiles.clear();
     if (compilers.size() > compiler_index) {
         std::string compiler = compilers[compiler_index];
-        if (strncasecmp(compiler.data(), "d3dx9", 5) == 0 || strncasecmp(compiler.data(), "d3dcompiler", 11) == 0) {
+        if (strncasecmp(compiler.data(), "d3dx9", 5) == 0 ||
+            strncasecmp(compiler.data(), "d3dcompiler", 11) == 0) {
             profiles.push_back("Shader Model 1.0");
             profiles.push_back("Shader Model 1.1");
             profiles.push_back("Shader Model 1.2");
@@ -170,6 +175,10 @@ static bool Option()
         if (ImGui::ScrollCombo(&profile_index, profiles.size())) {
             refresh = true;
         }
+
+        // Debug
+        ImGui::NewLine();
+        ImGui::Checkbox("Debug Virtual Machine", &debug_vm);
     }
     ImGui::End();
     return refresh;
@@ -177,10 +186,31 @@ static bool Option()
 
 static void Binary()
 {
-    static std::map<std::string, std::string> dummy = { { "Binary", "" } };
-
     int id = 300;
-    for (auto& [title, binary] : binaries.empty() ? dummy : binaries) {
+
+    if (ImGui::Begin("Binary", nullptr, ImGuiWindowFlags_NoFocusOnAppearing)) {
+        ImVec2 region = ImGui::GetContentRegionAvail();
+        ImGui::SetNextWindowSize(region);
+        ImGui::PushID(id++);
+        ImGui::ListBox("", &binary_index, [](void* user_data, int index) -> const char* {
+            auto& binary = *(std::vector<char>*)user_data;
+            auto code = (uint32_t*)binary.data();
+            auto size = binary.size();
+            auto i = index * 16;
+
+            static char line[256];
+            snprintf(line, 256, "%04X: %08X", i, code[i / 4 + 0]);
+            if ((i +  4) < size) snprintf(line, 256, "%s, %08X", line, code[i / 4 + 1]);
+            if ((i +  8) < size) snprintf(line, 256, "%s, %08X", line, code[i / 4 + 2]);
+            if ((i + 12) < size) snprintf(line, 256, "%s, %08X", line, code[i / 4 + 3]);
+
+            return line;
+        }, &binary, (int)(binary.size() + 15) / 16);
+        ImGui::PopID();
+    }
+    ImGui::End();
+
+    for (auto& [title, binary] : binaries) {
         ImGui::DockBuilderDockWindow(title.c_str(), binary_dockid);
         if (ImGui::Begin(title.c_str(), nullptr, ImGuiWindowFlags_NoFocusOnAppearing)) {
             ImVec2 region = ImGui::GetContentRegionAvail();
@@ -235,47 +265,55 @@ static void Refresh()
         std::string compiler = compilers[compiler_index];
         std::string path = compiler_path + "/" + compiler;
 
-        if (strncasecmp(compiler.data(), "d3dx9", 5) == 0 || strncasecmp(compiler.data(), "d3dcompiler", 11) == 0) {
-            cpu = VirtualMachine::RunDLL(path.c_str(), D3DCompiler::RunD3DCompile);
+        if (strncasecmp(compiler.data(), "d3dx9", 5) == 0 ||
+            strncasecmp(compiler.data(), "d3dcompiler", 11) == 0) {
+            cpu = VirtualMachine::RunDLL(path.c_str(), D3DCompiler::RunD3DCompile, debug_vm);
+            if (cpu) {
+                begin_execute = std::chrono::system_clock::now();
+            }
         }
     }
 }
 
 static void Loop()
 {
-    if (cpu) {
-        uint32_t count = 0;
-        uint32_t begin = 0;
-        for (;;) {
-            if (cpu->Step('INTO') == false) {
-                Logger<SYSTEM>("%s", cpu->Disassemble(1).c_str());
-                Logger<SYSTEM>("%s", cpu->Status().c_str());
-                logs_index[CONSOLE] = (int)logs[CONSOLE].size();
-                logs_index[SYSTEM] = (int)logs[SYSTEM].size();
+    if (cpu == nullptr)
+        return;
 
-                mine* origin = cpu;
-                cpu = D3DCompiler::RunNextProcess(origin);
-                if (cpu == nullptr) {
-                    delete origin;
-                }
-                return;
+    uint32_t count = 0;
+    uint32_t begin = 0;
+    for (;;) {
+        if (cpu->Step('INTO') == false) {
+            Logger<SYSTEM>("%s", cpu->Disassemble(1).c_str());
+            Logger<SYSTEM>("%s", cpu->Status().c_str());
+            logs_index[CONSOLE] = (int)logs[CONSOLE].size();
+            logs_index[SYSTEM] = (int)logs[SYSTEM].size();
+
+            mine* origin = cpu;
+            cpu = D3DCompiler::RunNextProcess(origin);
+            if (cpu == nullptr) {
+                auto end_execute = std::chrono::system_clock::now();
+                auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_execute - begin_execute).count();
+                Logger<CONSOLE>("Duration : %lldms", duration);
+                delete origin;
             }
-            if (count == 0) {
-                count = 1000;
-#if defined(_WIN32)
-                uint32_t now = GetTickCount();
-#else
-                struct timespec ts = {};
-                clock_gettime(CLOCK_REALTIME, &ts);
-                uint32_t now = uint32_t(ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
-#endif
-                if (begin == 0)
-                    begin = now;
-                if (begin < now - 16)
-                    break;
-            }
-            count--;
+            return;
         }
+        if (count == 0) {
+            count = 1000;
+#if defined(_WIN32)
+            uint32_t now = GetTickCount();
+#else
+            struct timespec ts = {};
+            clock_gettime(CLOCK_REALTIME, &ts);
+            uint32_t now = uint32_t(ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
+#endif
+            if (begin == 0)
+                begin = now;
+            if (begin < now - 16)
+                break;
+        }
+        count--;
     }
 }
 
@@ -346,14 +384,14 @@ static void Init()
     ImGui::DockSpace(id);
 }
 
-void ShaderCompilerGUI()
+bool ShaderCompilerGUI(ImVec2 screen)
 {
+    bool show = true;
     ImVec2 window_size = ImVec2(1536.0f, 864.0f);
 
-    ImGuiViewport* viewport = ImGui::GetWindowViewport();
-    ImGui::SetNextWindowPos(viewport->WorkPos + ImVec2((viewport->WorkSize.x - window_size.x) / 2.0f, (viewport->WorkSize.y - window_size.y) / 2.0f), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(window_size, ImGuiCond_Appearing);
-    if (ImGui::Begin("Shader Compiler")) {
+    ImGui::SetNextWindowPos(ImVec2((screen.x - window_size.x) / 2.0f, (screen.y - window_size.y) / 2.0f), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(window_size, ImGuiCond_Once);
+    if (ImGui::Begin("Shader Compiler", &show, ImGuiWindowFlags_NoCollapse)) {
         bool refresh = false;
         Init();
         refresh |= Text();
@@ -367,4 +405,5 @@ void ShaderCompilerGUI()
         Loop();
     }
     ImGui::End();
+    return show;
 }
