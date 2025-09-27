@@ -15,14 +15,26 @@ size_t RunD3DCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
     auto* i386 = (x86_i386*)cpu;
     auto& x86 = i386->x86;
 
+    auto profile = ShaderCompiler::DetectProfile();
+    auto macro = (uint32_t*)allocator->allocate(sizeof(uint32_t) * 6);
+    if (macro) {
+        char major[2] = { strlen(profile) > 3 ? profile[3] : '1' };
+        char minor[2] = { strlen(profile) > 5 ? profile[5] : '0' };
+        macro[0] = VirtualMachine::DataToMemory("__SHADER_TARGET_MAJOR", sizeof("__SHADER_TARGET_MAJOR"), allocator);
+        macro[1] = VirtualMachine::DataToMemory(major, 2, allocator);
+        macro[2] = VirtualMachine::DataToMemory("__SHADER_TARGET_MINOR", sizeof("__SHADER_TARGET_MINOR"), allocator);
+        macro[3] = VirtualMachine::DataToMemory(minor, 2, allocator);
+        macro[4] = 0;
+        macro[5] = 0;
+    }
+
     size_t D3DCompile = symbol(cpu, nullptr, "D3DCompile");
     if (D3DCompile == 0)
         D3DCompile = symbol(cpu, nullptr, "D3DCompileFromMemory");
     if (D3DCompile) {
-        auto profile = ShaderCompiler::DetectProfile();
-
         auto pSrcData = VirtualMachine::DataToMemory(ShaderCompiler::text.data(), ShaderCompiler::text.size(), allocator);
         auto SrcDataSize = ShaderCompiler::text.size();
+        auto pDefines = macro ? uint32_t((char*)macro - (char*)allocator->address()) : 0;
         auto pEntrypoint = VirtualMachine::DataToMemory(ShaderCompiler::entry.data(), ShaderCompiler::entry.size() + 1, allocator);
         auto pTarget = VirtualMachine::DataToMemory(profile, strlen(profile) + 1, allocator);
 
@@ -39,7 +51,7 @@ size_t RunD3DCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
         Push32(pTarget);        // pTarget
         Push32(pEntrypoint);    // pEntrypoint      optional
         Push32(0);              // *pInclude        optional
-        Push32(0);              // *pDefines        optional
+        Push32(pDefines);       // *pDefines        optional
         Push32(0);              // pSourceName      optional
         Push32(SrcDataSize);    // SrcDataSize
         Push32(pSrcData);       // pSrcData
@@ -49,10 +61,9 @@ size_t RunD3DCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
 
     size_t D3DXCompileShader = symbol(cpu, nullptr, "D3DXCompileShader");
     if (D3DXCompileShader) {
-        auto profile = ShaderCompiler::DetectProfile();
-
         auto pSrcData = VirtualMachine::DataToMemory(ShaderCompiler::text.data(), ShaderCompiler::text.size(), allocator);
         auto srcDataLen = ShaderCompiler::text.size();
+        auto pDefines = macro ? uint32_t((char*)macro - (char*)allocator->address()) : 0;
         auto pFunctionName = VirtualMachine::DataToMemory(ShaderCompiler::entry.data(), ShaderCompiler::entry.size() + 1, allocator);
         auto pProfile = VirtualMachine::DataToMemory(profile, strlen(profile) + 1, allocator);
 
@@ -69,7 +80,7 @@ size_t RunD3DCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
         Push32(pProfile);       // pProfile
         Push32(pFunctionName);  // pFunctionName
         Push32(0);              // pInclude
-        Push32(0);              // *pDefines
+        Push32(pDefines);       // *pDefines
         Push32(srcDataLen);     // srcDataLen
         Push32(pSrcData);       // pSrcData
 

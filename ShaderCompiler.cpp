@@ -315,7 +315,7 @@ static void RefreshCompiler()
 
 static void RefreshMachine()
 {
-    if (binary.empty())
+    if (binary.empty() || cpu)
         return;
 
     if (refresh_machine == false)
@@ -446,11 +446,11 @@ static void Init()
     realpath((cwd + "/../../../../../../machine").c_str(), machine_path.data());
     machine_path.resize(strlen(machine_path.c_str()));
 
-    machines.push_back("NV30");
-    machines.push_back("NV35");
-    machines.push_back("NV40");
-    machines.push_back("G70");
-    machines.push_back("G80");
+    machines.push_back("NV30 - 101.31");
+    machines.push_back("NV35 - 101.31");
+    machines.push_back("NV40 - 174.74");
+    machines.push_back("G70 - 174.74");
+    machines.push_back("G80 - 174.74");
 
     LoadCompiler();
     LoadShader();

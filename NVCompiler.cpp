@@ -22,8 +22,12 @@ size_t RunNVCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
             gpu = ShaderCompiler::machines[ShaderCompiler::machine_index];
 
         std::string version = "2.07.0804.1530";
-        if (gpu.size() > 2 && gpu[2] == '3')
+        if (gpu.find("101.31") != std::string::npos)
             version = "2.01.10000.0305";
+
+        size_t space = gpu.find(' ');
+        if (space != std::string::npos)
+            gpu.resize(space);
 
         auto pSrcData = VirtualMachine::DataToMemory(ShaderCompiler::binary.data(), ShaderCompiler::binary.size(), allocator);
         auto SrcDataSize = ShaderCompiler::binary.size();
