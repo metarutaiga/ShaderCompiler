@@ -8,6 +8,7 @@ namespace ShaderCompiler {
 
 extern std::string shader_path;
 extern std::string compiler_path;
+extern std::string machine_path;
 
 extern std::string text;
 
@@ -21,6 +22,9 @@ extern std::string entry;
 
 extern std::vector<std::string> profiles;
 extern int profile_index;
+
+extern std::vector<std::string> machines;
+extern int machine_index;
 
 extern std::map<std::string, std::string> binaries;
 extern std::vector<char> binary;

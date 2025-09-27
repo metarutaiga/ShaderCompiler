@@ -20,7 +20,7 @@ static int silent_vlogger(const char* format, va_list)
     return 0;
 }
 
-mine* RunDLL(const char* dll, size_t(*parameter)(mine*, size_t(*)(mine*, void*, const char*)), bool debug)
+mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, void*, const char*)), bool debug)
 {
     static const int allocator_size = 256 * 1024 * 1024;
     static const int stack_size = 1 * 1024 * 1024;
@@ -29,13 +29,15 @@ mine* RunDLL(const char* dll, size_t(*parameter)(mine*, size_t(*)(mine*, void*, 
     cpu->Initialize(simple_allocator<16>::construct(allocator_size), stack_size);
     cpu->Exception = RunException;
 
-    void* image = PE::Load(dll, [](size_t base, size_t size, void* userdata) {
+    void* image = PE::Load(dll.c_str(), [](size_t base, size_t size, void* userdata) {
         mine* cpu = (mine*)userdata;
         return cpu->Memory(base, size);
     }, cpu, Logger<SYSTEM>);
     if (image) {
+        std::string path = dll.substr(0, dll.find_last_of("/\\") + 1);
+
         Syscall syscall = {
-            .path = ".",
+            .path = path.c_str(),
             .printf = Logger<CONSOLE>,
             .vprintf = LoggerV<CONSOLE>,
             .debugPrintf = debug ? Logger<SYSTEM> : silent_logger,

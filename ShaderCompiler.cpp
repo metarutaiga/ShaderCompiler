@@ -12,10 +12,14 @@
 #include "D3DCompiler.h"
 #include "ImGuiHelper.h"
 #include "Logger.h"
+#include "NVCompiler.h"
 #include "ShaderCompiler.h"
 #include "VirtualMachine.h"
 
+static bool refresh_compiler;
+static bool refresh_machine;
 static std::chrono::system_clock::time_point begin_execute;
+
 static ImGuiID binary_dockid;
 static mine* cpu;
 static bool debug_vm;
@@ -25,6 +29,7 @@ namespace ShaderCompiler {
 
 std::string shader_path;
 std::string compiler_path;
+std::string machine_path;
 
 std::string text;
 std::vector<std::string> shaders;
@@ -34,6 +39,9 @@ int compiler_index;
 std::string entry;
 std::vector<std::string> profiles;
 int profile_index;
+std::vector<std::string> machines;
+int machine_index;
+
 std::map<std::string, std::string> binaries;
 std::vector<char> binary;
 int binary_index;
@@ -41,8 +49,11 @@ int binary_index;
 const char* DetectProfile()
 {
     int type = 'vert';
-    if (text.find(") : COLOR") != std::string::npos)
+    if (text.find("):COLOR") != std::string::npos ||
+        text.find("): COLOR") != std::string::npos ||
+        text.find(") : COLOR") != std::string::npos) {
         type = 'frag';
+    }
     if (profiles.size() > profile_index) {
         std::string profile = profiles[profile_index];
         if (profile.find("1.0") != std::string::npos)   return (type == 'vert') ? "vs_1_0" : "ps_1_0";
@@ -112,20 +123,20 @@ static void LoadShader()
     }
 }
 
-static bool Text()
+static void Text()
 {
-    bool refresh = false;
     if (ImGui::Begin("Text")) {
         ImVec2 region = ImGui::GetContentRegionAvail();
-        refresh = ImGui::InputTextMultiline("##100", text, region);
+        if (ImGui::InputTextMultiline("##100", text, region)) {
+            refresh_compiler = true;
+            refresh_machine = true;
+        }
     }
     ImGui::End();
-    return refresh;
 }
 
-static bool Option()
+static void Option()
 {
-    bool refresh = false;
     if (ImGui::Begin("Option")) {
         ImVec2 region = ImGui::GetContentRegionAvail();
 
@@ -135,33 +146,31 @@ static bool Option()
         if (ImGui::Combo("##200", &shader_index, [](void* user_data, int index) {
             auto* shaders = (std::string*)user_data;
             return shaders[index].c_str();
-        }, shaders.data(), (int)shaders.size())) {
-            refresh = true;
+        }, shaders.data(), (int)shaders.size()) || ImGui::ScrollCombo(&shader_index, shaders.size())) {
             LoadShader();
-        }
-        if (ImGui::ScrollCombo(&shader_index, shaders.size())) {
-            refresh = true;
-            LoadShader();
+            refresh_compiler = true;
+            refresh_machine = true;
         }
 
         // Compiler
+        ImGui::NewLine();
         ImGui::TextUnformatted("Compiler");
         ImGui::SetNextItemWidth(region.x);
         if (ImGui::Combo("##201", &compiler_index, [](void* user_data, int index) {
             auto* compilers = (std::string*)user_data;
             return compilers[index].c_str();
-        }, compilers.data(), (int)compilers.size())) {
-            refresh = true;
+        }, compilers.data(), (int)compilers.size()) || ImGui::ScrollCombo(&compiler_index, compilers.size())) {
             LoadCompiler();
-        }
-        if (ImGui::ScrollCombo(&compiler_index, compilers.size())) {
-            refresh = true;
-            LoadShader();
+            refresh_compiler = true;
+            refresh_machine = true;
         }
 
         // Entry
         ImGui::TextUnformatted("Entry");
-        refresh |= ImGui::InputTextEx("##202", nullptr, entry, ImVec2(region.x, 0));
+        if (ImGui::InputTextEx("##202", nullptr, entry, ImVec2(region.x, 0))) {
+            refresh_compiler = true;
+            refresh_machine = true;
+        }
 
         // Profile
         ImGui::TextUnformatted("Profile");
@@ -169,11 +178,20 @@ static bool Option()
         if (ImGui::Combo("##203", &profile_index, [](void* user_data, int index) {
             auto* profiles = (std::string*)user_data;
             return profiles[index].c_str();
-        }, profiles.data(), (int)profiles.size())) {
-            refresh = true;
+        }, profiles.data(), (int)profiles.size()) || ImGui::ScrollCombo(&profile_index, profiles.size())) {
+            refresh_compiler = true;
+            refresh_machine = true;
         }
-        if (ImGui::ScrollCombo(&profile_index, profiles.size())) {
-            refresh = true;
+
+        // Machine
+        ImGui::NewLine();
+        ImGui::TextUnformatted("Machine");
+        ImGui::SetNextItemWidth(region.x);
+        if (ImGui::Combo("##204", &machine_index, [](void* user_data, int index) {
+            auto* machines = (std::string*)user_data;
+            return machines[index].c_str();
+        }, machines.data(), (int)machines.size()) || ImGui::ScrollCombo(&machine_index, machines.size())) {
+            refresh_machine = true;
         }
 
         // Debug
@@ -181,7 +199,6 @@ static bool Option()
         ImGui::Checkbox("Debug Virtual Machine", &debug_vm);
     }
     ImGui::End();
-    return refresh;
 }
 
 static void Binary()
@@ -199,10 +216,25 @@ static void Binary()
             auto i = index * 16;
 
             static char line[256];
-            snprintf(line, 256, "%04X: %08X", i, code[i / 4 + 0]);
-            if ((i +  4) < size) snprintf(line, 256, "%s, %08X", line, code[i / 4 + 1]);
-            if ((i +  8) < size) snprintf(line, 256, "%s, %08X", line, code[i / 4 + 2]);
-            if ((i + 12) < size) snprintf(line, 256, "%s, %08X", line, code[i / 4 + 3]);
+            int width = (4 + 10 + 10 + 10 + 10 + 1);
+            int offset = snprintf(line, 256, "%04X", i);
+            for (int j = 0; j < 16; j += 4) {
+                if ((i + j) >= size)
+                    break;
+                char c = (j == 0) ? ':' : ',';
+                offset += snprintf(line + offset, 256 - offset, "%c %08X", c, code[(i + j) / 4]);
+            }
+            if (width > offset) {
+                memset(line + offset, ' ', width - offset);
+            }
+
+            for (int j = 0; j < 16; ++j) {
+                if ((i + j) >= size)
+                    break;
+                char c = binary[i + j];
+                line[width + j] = (c >= 0x20 && c <= 0x7E) ? c : ' ';
+            }
+            line[width + 16] = 0;
 
             return line;
         }, &binary, (int)(binary.size() + 15) / 16);
@@ -227,10 +259,11 @@ static void System()
     if (ImGui::Begin("System")) {
         ImVec2 region = ImGui::GetContentRegionAvail();
         ImGui::SetNextWindowSize(region);
-        ImGui::ListBox("##400", &logs_index[SYSTEM], [](void* user_data, int index) {
+        ImGui::ListBox("##400", &logs_index[SYSTEM], &logs_focus[SYSTEM], [](void* user_data, int index) {
             auto* logs = (std::string*)user_data;
             return logs[index].c_str();
         }, logs[SYSTEM].data(), (int)logs[SYSTEM].size());
+        logs_focus[SYSTEM] = -1;
     }
     ImGui::End();
 }
@@ -240,16 +273,21 @@ static void Console()
     if (ImGui::Begin("Console")) {
         ImVec2 region = ImGui::GetContentRegionAvail();
         ImGui::SetNextWindowSize(region);
-        ImGui::ListBox("##500", &logs_index[CONSOLE], [](void* user_data, int index) {
+        ImGui::ListBox("##500", &logs_index[CONSOLE], &logs_focus[CONSOLE], [](void* user_data, int index) {
             auto* logs = (std::string*)user_data;
             return logs[index].c_str();
         }, logs[CONSOLE].data(), (int)logs[CONSOLE].size());
+        logs_focus[CONSOLE] = -1;
     }
     ImGui::End();
 }
 
-static void Refresh()
+static void RefreshCompiler()
 {
+    if (refresh_compiler == false)
+        return;
+    refresh_compiler = false;
+
     delete cpu;
     cpu = nullptr;
 
@@ -267,10 +305,36 @@ static void Refresh()
 
         if (strncasecmp(compiler.data(), "d3dx9", 5) == 0 ||
             strncasecmp(compiler.data(), "d3dcompiler", 11) == 0) {
-            cpu = VirtualMachine::RunDLL(path.c_str(), D3DCompiler::RunD3DCompile, debug_vm);
+            cpu = VirtualMachine::RunDLL(path, D3DCompiler::RunD3DCompile, debug_vm);
             if (cpu) {
                 begin_execute = std::chrono::system_clock::now();
             }
+        }
+    }
+}
+
+static void RefreshMachine()
+{
+    if (binary.empty())
+        return;
+
+    if (refresh_machine == false)
+        return;
+    refresh_machine = false;
+
+    delete cpu;
+    cpu = nullptr;
+
+    ShaderCompiler::binaries["NVIDIA"].clear();
+
+//  logs[SYSTEM].clear();
+//  logs[CONSOLE].clear();
+
+    if (machines.size() > machine_index) {
+        std::string path = machine_path + "/" + "NVShaderPerf.dll";
+        cpu = VirtualMachine::RunDLL(path, NVCompiler::RunNVCompile, debug_vm);
+        if (cpu) {
+            begin_execute = std::chrono::system_clock::now();
         }
     }
 }
@@ -280,10 +344,9 @@ static void Loop()
     if (cpu == nullptr)
         return;
 
-    uint32_t count = 0;
     uint32_t begin = 0;
     for (;;) {
-        if (cpu->Step('INTO') == false) {
+        if (cpu->Step(1000) == false) {
             Logger<SYSTEM>("%s", cpu->Disassemble(1).c_str());
             Logger<SYSTEM>("%s", cpu->Status().c_str());
             logs_index[CONSOLE] = (int)logs[CONSOLE].size();
@@ -291,96 +354,108 @@ static void Loop()
 
             mine* origin = cpu;
             cpu = D3DCompiler::RunNextProcess(origin);
+            if (cpu == nullptr)
+                cpu = NVCompiler::RunNextProcess(origin);
             if (cpu == nullptr) {
                 auto end_execute = std::chrono::system_clock::now();
                 auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_execute - begin_execute).count();
-                Logger<CONSOLE>("Duration : %lldms", duration);
+                Logger<CONSOLE>("Duration : %lldms\n", duration);
                 delete origin;
             }
             return;
         }
-        if (count == 0) {
-            count = 1000;
 #if defined(_WIN32)
-            uint32_t now = GetTickCount();
+        uint32_t now = GetTickCount();
 #else
-            struct timespec ts = {};
-            clock_gettime(CLOCK_REALTIME, &ts);
-            uint32_t now = uint32_t(ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
+        struct timespec ts = {};
+        clock_gettime(CLOCK_REALTIME, &ts);
+        uint32_t now = uint32_t(ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
 #endif
-            if (begin == 0)
-                begin = now;
-            if (begin < now - 16)
-                break;
-        }
-        count--;
+        if (begin == 0)
+            begin = now;
+        if (begin < now - 16)
+            break;
     }
 }
 
 static void Init()
 {
     ImGuiID id = ImGui::GetID("Shader Compiler");
-    if (ImGui::DockBuilderGetNode(id) == nullptr) {
-        id = ImGui::DockBuilderAddNode(id);
 
-        ImGuiID bottom = ImGui::DockBuilderSplitNode(id, ImGuiDir_Down, 1.0f / 4.0f, nullptr, &id);
-        ImGuiID left = ImGui::DockBuilderSplitNode(id, ImGuiDir_Left, 3.0f / 7.0f, nullptr, &id);
-        ImGuiID middle = ImGui::DockBuilderSplitNode(id, ImGuiDir_Left, 1.0f / 4.0f, nullptr, &id);
-        ImGuiID right = binary_dockid = id;
-        ImGui::DockBuilderDockWindow("Text", left);
-        ImGui::DockBuilderDockWindow("Option", middle);
-        ImGui::DockBuilderDockWindow("Binary", right);
-        ImGui::DockBuilderDockWindow("System", bottom);
-        ImGui::DockBuilderDockWindow("Console", bottom);
-        ImGui::DockBuilderFinish(id);
-
-        std::string cwd(1024, 0);
-        uint32_t size = (uint32_t)cwd.size();;
-        _NSGetExecutablePath(cwd.data(), &size);
-        cwd.resize(strlen(cwd.c_str()));
-
-        shader_path.resize(1024);
-        realpath((cwd + "/../../../../../../shader").c_str(), shader_path.data());
-        shader_path.resize(strlen(shader_path.c_str()));
-        if (shader_path.empty() == false) {
-            DIR* dir = opendir(shader_path.c_str());
-            if (dir) {
-                while (struct dirent* dirent = readdir(dir)) {
-                    if (dirent->d_name[0] == '.')
-                        continue;
-                    if (strcasestr(dirent->d_name, ".hlsl") == nullptr)
-                        continue;
-                    shaders.push_back(dirent->d_name);
-                }
-                closedir(dir);
-            }
-        }
-        std::stable_sort(shaders.begin(), shaders.end());
-
-        compiler_path.resize(1024, 0);
-        realpath((cwd + "/../../../../../../compiler").c_str(), compiler_path.data());
-        compiler_path.resize(strlen(compiler_path.c_str()));
-        if (compiler_path.empty() == false) {
-            DIR* dir = opendir(compiler_path.c_str());
-            if (dir) {
-                while (struct dirent* dirent = readdir(dir)) {
-                    if (dirent->d_name[0] == '.')
-                        continue;
-                    if (strcasestr(dirent->d_name, ".dll") == nullptr)
-                        continue;
-                    compilers.push_back(dirent->d_name);
-                }
-                closedir(dir);
-            }
-        }
-        std::stable_sort(compilers.begin(), compilers.end());
-
-        LoadCompiler();
-        LoadShader();
-        entry = "Main";
-
-        id = ImGui::GetID("Shader Compiler");
+    static bool initialize = false;
+    if (initialize) {
+        ImGui::DockSpace(id);
+        return;
     }
+    initialize = true;
+
+    ImGuiID dockid = ImGui::DockBuilderAddNode(id);
+    ImGuiID bottom = ImGui::DockBuilderSplitNode(dockid, ImGuiDir_Down, 1.0f / 4.0f, nullptr, &dockid);
+    ImGuiID left = ImGui::DockBuilderSplitNode(dockid, ImGuiDir_Left, 3.0f / 7.0f, nullptr, &dockid);
+    ImGuiID middle = ImGui::DockBuilderSplitNode(dockid, ImGuiDir_Left, 1.0f / 4.0f, nullptr, &dockid);
+    ImGuiID right = binary_dockid = dockid;
+    ImGui::DockBuilderDockWindow("Text", left);
+    ImGui::DockBuilderDockWindow("Option", middle);
+    ImGui::DockBuilderDockWindow("Binary", right);
+    ImGui::DockBuilderDockWindow("System", bottom);
+    ImGui::DockBuilderDockWindow("Console", bottom);
+    ImGui::DockBuilderFinish(dockid);
+
+    std::string cwd(1024, 0);
+    uint32_t size = (uint32_t)cwd.size();
+    _NSGetExecutablePath(cwd.data(), &size);
+    cwd.resize(strlen(cwd.c_str()));
+
+    shader_path.resize(1024);
+    realpath((cwd + "/../../../../../../shader").c_str(), shader_path.data());
+    shader_path.resize(strlen(shader_path.c_str()));
+    if (shader_path.empty() == false) {
+        DIR* dir = opendir(shader_path.c_str());
+        if (dir) {
+            while (struct dirent* dirent = readdir(dir)) {
+                if (dirent->d_name[0] == '.')
+                    continue;
+                if (strcasestr(dirent->d_name, ".hlsl") == nullptr)
+                    continue;
+                shaders.push_back(dirent->d_name);
+            }
+            closedir(dir);
+        }
+    }
+    std::stable_sort(shaders.begin(), shaders.end());
+
+    compiler_path.resize(1024, 0);
+    realpath((cwd + "/../../../../../../compiler").c_str(), compiler_path.data());
+    compiler_path.resize(strlen(compiler_path.c_str()));
+    if (compiler_path.empty() == false) {
+        DIR* dir = opendir(compiler_path.c_str());
+        if (dir) {
+            while (struct dirent* dirent = readdir(dir)) {
+                if (dirent->d_name[0] == '.')
+                    continue;
+                if (strcasestr(dirent->d_name, ".dll") == nullptr)
+                    continue;
+                compilers.push_back(dirent->d_name);
+            }
+            closedir(dir);
+        }
+    }
+    std::stable_sort(compilers.begin(), compilers.end());
+
+    machine_path.resize(1024, 0);
+    realpath((cwd + "/../../../../../../machine").c_str(), machine_path.data());
+    machine_path.resize(strlen(machine_path.c_str()));
+
+    machines.push_back("NV30");
+    machines.push_back("NV35");
+    machines.push_back("NV40");
+    machines.push_back("G70");
+    machines.push_back("G80");
+
+    LoadCompiler();
+    LoadShader();
+    entry = "Main";
+
     ImGui::DockSpace(id);
 }
 
@@ -392,16 +467,14 @@ bool ShaderCompilerGUI(ImVec2 screen)
     ImGui::SetNextWindowPos(ImVec2((screen.x - window_size.x) / 2.0f, (screen.y - window_size.y) / 2.0f), ImGuiCond_Once);
     ImGui::SetNextWindowSize(window_size, ImGuiCond_Once);
     if (ImGui::Begin("Shader Compiler", &show, ImGuiWindowFlags_NoCollapse)) {
-        bool refresh = false;
         Init();
-        refresh |= Text();
-        refresh |= Option();
+        Text();
+        Option();
         Binary();
         System();
         Console();
-        if (refresh) {
-            Refresh();
-        }
+        RefreshCompiler();
+        RefreshMachine();
         Loop();
     }
     ImGui::End();

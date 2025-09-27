@@ -8,6 +8,7 @@
 
 extern std::vector<std::string> logs[2];
 extern int logs_index[2];
+extern int logs_focus[2];
 
 template<int INDEX>
 static int LoggerV(const char* format, va_list va)
@@ -63,6 +64,7 @@ static int LoggerV(const char* format, va_list va)
     }
     log.resize(len);
     std::move(appends.begin() + 1, appends.end(), std::back_inserter(logs[index]));
+    logs_focus[index] = (int)logs[index].size() - 1;
 
 //  // Call
 //  if (logs[index].size() >= 2) {
