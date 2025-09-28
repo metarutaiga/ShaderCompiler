@@ -46,10 +46,11 @@ std::map<std::string, std::string> binaries;
 std::vector<char> binary;
 int binary_index;
 
-const char* DetectProfile()
+std::string DetectProfile()
 {
     int type = 'vert';
-    if (text.find("):COLOR") != std::string::npos ||
+    if (text.find("ps_") != std::string::npos ||
+        text.find("):COLOR") != std::string::npos ||
         text.find("): COLOR") != std::string::npos ||
         text.find(") : COLOR") != std::string::npos) {
         type = 'frag';
@@ -114,11 +115,13 @@ static void LoadShader()
         std::string path = shader_path + "/" + shaders[shader_index];
         FILE* file = fopen(path.c_str(), "rb");
         if (file) {
+            std::string context;
             fseek(file, 0, SEEK_END);
-            text.resize(ftell(file));
+            context.resize(ftell(file));
             fseek(file, 0, SEEK_SET);
-            text.resize(fread(text.data(), 1, text.size(), file));
+            context.resize(fread(context.data(), 1, context.size(), file));
             fclose(file);
+            text = context;
         }
     }
 }
@@ -288,7 +291,7 @@ static void RefreshCompiler()
         return;
     refresh_compiler = false;
 
-    delete cpu;
+    VirtualMachine::Close(cpu);
     cpu = nullptr;
 
     for (auto& [title, binary] : binaries) {
@@ -305,7 +308,12 @@ static void RefreshCompiler()
 
         if (strncasecmp(compiler.data(), "d3dx9", 5) == 0 ||
             strncasecmp(compiler.data(), "d3dcompiler", 11) == 0) {
-            cpu = VirtualMachine::RunDLL(path, D3DCompiler::RunD3DCompile, debug_vm);
+            if (text.find('{') == std::string::npos) {
+                cpu = VirtualMachine::RunDLL(path, D3DCompiler::RunD3DAssemble, debug_vm);
+            }
+            else {
+                cpu = VirtualMachine::RunDLL(path, D3DCompiler::RunD3DCompile, debug_vm);
+            }
             if (cpu) {
                 begin_execute = std::chrono::system_clock::now();
             }
@@ -322,7 +330,7 @@ static void RefreshMachine()
         return;
     refresh_machine = false;
 
-    delete cpu;
+    VirtualMachine::Close(cpu);
     cpu = nullptr;
 
     ShaderCompiler::binaries["NVIDIA"].clear();
@@ -331,7 +339,11 @@ static void RefreshMachine()
 //  logs[CONSOLE].clear();
 
     if (machines.size() > machine_index) {
+        std::string machine = machines[machine_index];
         std::string path = machine_path + "/" + "NVShaderPerf.dll";
+        if (machine.find("NV20") != std::string::npos) {
+            path = machine_path + "/" + "NVKelvinR7.dll";
+        }
         cpu = VirtualMachine::RunDLL(path, NVCompiler::RunNVCompile, debug_vm);
         if (cpu) {
             begin_execute = std::chrono::system_clock::now();
@@ -410,16 +422,26 @@ static void Init()
     realpath((cwd + "/../../../../../../shader").c_str(), shader_path.data());
     shader_path.resize(strlen(shader_path.c_str()));
     if (shader_path.empty() == false) {
-        DIR* dir = opendir(shader_path.c_str());
-        if (dir) {
-            while (struct dirent* dirent = readdir(dir)) {
-                if (dirent->d_name[0] == '.')
-                    continue;
-                if (strcasestr(dirent->d_name, ".hlsl") == nullptr)
-                    continue;
-                shaders.push_back(dirent->d_name);
+        for (int type = 0; type < 2; ++type) {
+            DIR* dir = opendir(shader_path.c_str());
+            if (dir) {
+                while (struct dirent* dirent = readdir(dir)) {
+                    if (dirent->d_name[0] == '.')
+                        continue;
+                    switch (type) {
+                    case 0:
+                        if (strcasestr(dirent->d_name, ".asm") == nullptr)
+                            continue;
+                        break;
+                    case 1:
+                        if (strcasestr(dirent->d_name, ".hlsl") == nullptr)
+                            continue;
+                        break;
+                    }
+                    shaders.push_back(dirent->d_name);
+                }
+                closedir(dir);
             }
-            closedir(dir);
         }
     }
     std::stable_sort(shaders.begin(), shaders.end());
@@ -445,12 +467,37 @@ static void Init()
     machine_path.resize(1024, 0);
     realpath((cwd + "/../../../../../../machine").c_str(), machine_path.data());
     machine_path.resize(strlen(machine_path.c_str()));
-
-    machines.push_back("NV30 - 101.31");
-    machines.push_back("NV35 - 101.31");
-    machines.push_back("NV40 - 174.74");
-    machines.push_back("G70 - 174.74");
-    machines.push_back("G80 - 174.74");
+    if (machine_path.empty() == false) {
+        std::vector<std::string> orders[3];
+        DIR* dir = opendir(machine_path.c_str());
+        if (dir) {
+            while (struct dirent* dirent = readdir(dir)) {
+                if (dirent->d_name[0] == '.')
+                    continue;
+                if (strcmp(dirent->d_name, "NVKelvinR7.dll") == 0) {
+                    orders[0].push_back("NV20 - 7.58");
+                    continue;
+                }
+                if (strcmp(dirent->d_name, "2.01.10000.0305") == 0) {
+                    orders[1].push_back("NV30 - 101.31");
+                    orders[1].push_back("NV35 - 101.31");
+                    orders[1].push_back("NV40 - 101.31");
+                    orders[1].push_back("G70 - 101.31");
+                    continue;
+                }
+                if (strcmp(dirent->d_name, "2.07.0804.1530") == 0) {
+                    orders[2].push_back("NV40 - 174.74");
+                    orders[2].push_back("G70 - 174.74");
+                    orders[2].push_back("G80 - 174.74");
+                    continue;
+                }
+            }
+            closedir(dir);
+        }
+        for (auto& order : orders) {
+            machines.insert(machines.end(), order.begin(), order.end());
+        }
+    }
 
     LoadCompiler();
     LoadShader();

@@ -20,6 +20,16 @@ static int silent_vlogger(const char* format, va_list)
     return 0;
 }
 
+void Close(mine* cpu)
+{
+    if (cpu == nullptr)
+        return;
+
+    syscall_windows_delete(cpu);
+    syscall_i386_delete(cpu);
+    delete cpu;
+}
+
 mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, void*, const char*)), bool debug)
 {
     static const int allocator_size = 256 * 1024 * 1024;

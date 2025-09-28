@@ -9,6 +9,85 @@
 
 namespace D3DCompiler {
 
+size_t RunD3DAssemble(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
+{
+    auto* allocator = cpu->Allocator;
+    auto* i386 = (x86_i386*)cpu;
+    auto& x86 = i386->x86;
+
+    auto profile = ShaderCompiler::DetectProfile();
+    auto macro = (uint32_t*)allocator->allocate(sizeof(uint32_t) * 6);
+    if (macro) {
+        char major[2] = { profile.size() > 3 ? profile[3] : '1' };
+        char minor[2] = { profile.size() > 5 ? profile[5] : '0' };
+        macro[0] = VirtualMachine::DataToMemory("__SHADER_TARGET_MAJOR", sizeof("__SHADER_TARGET_MAJOR"), allocator);
+        macro[1] = VirtualMachine::DataToMemory(major, 2, allocator);
+        macro[2] = VirtualMachine::DataToMemory("__SHADER_TARGET_MINOR", sizeof("__SHADER_TARGET_MINOR"), allocator);
+        macro[3] = VirtualMachine::DataToMemory(minor, 2, allocator);
+        macro[4] = 0;
+        macro[5] = 0;
+    }
+
+    std::string text;
+    if (profile == "vs_2_a")
+        text += "vs_2_x";
+    else if (profile == "ps_2_a" || profile == "ps_2_b")
+        text += "ps_2_x";
+    else
+        text += profile;
+    text += ';';
+    text += ShaderCompiler::text;
+
+    size_t D3DAssemble = symbol(cpu, nullptr, "D3DAssemble");
+    if (D3DAssemble) {
+        auto pSrcData = VirtualMachine::DataToMemory(text.data(), text.size(), allocator);
+        auto SrcDataSize = text.size();
+        auto pDefines = macro ? uint32_t((char*)macro - (char*)allocator->address()) : 0;
+
+        Push32(0);
+        auto ppErrorMsgs = ESP;
+        Push32(0);
+        auto ppCode = ESP;
+        Push32('D3DA');
+
+        Push32(ppErrorMsgs);    // **ppErrorMsgs    optional
+        Push32(ppCode);         // **ppCode
+        Push32(0);              // Flags
+        Push32(0);              // *pInclude        optional
+        Push32(pDefines);       // *pDefines        optional
+        Push32(0);              // pSourceName      optional
+        Push32(SrcDataSize);    // SrcDataSize
+        Push32(pSrcData);       // pSrcData
+
+        return D3DAssemble;
+    }
+
+    size_t D3DXAssembleShader = symbol(cpu, nullptr, "D3DXAssembleShader");
+    if (D3DXAssembleShader) {
+        auto pSrcData = VirtualMachine::DataToMemory(text.data(), text.size(), allocator);
+        auto SrcDataSize = text.size();
+        auto pDefines = macro ? uint32_t((char*)macro - (char*)allocator->address()) : 0;
+
+        Push32(0);
+        auto ppErrorMsgs = ESP;
+        Push32(0);
+        auto ppShader = ESP;
+        Push32('D3DA');
+
+        Push32(ppErrorMsgs);    // **ppErrorMsgs    optional
+        Push32(ppShader);       // **ppShader
+        Push32(0);              // Flags
+        Push32(0);              // pInclude         optional
+        Push32(pDefines);       // *pDefines        optional
+        Push32(SrcDataSize);    // SrcDataLen
+        Push32(pSrcData);       // pSrcData
+
+        return D3DXAssembleShader;
+    }
+
+    return 0;
+}
+
 size_t RunD3DCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
 {
     auto* allocator = cpu->Allocator;
@@ -18,8 +97,8 @@ size_t RunD3DCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
     auto profile = ShaderCompiler::DetectProfile();
     auto macro = (uint32_t*)allocator->allocate(sizeof(uint32_t) * 6);
     if (macro) {
-        char major[2] = { strlen(profile) > 3 ? profile[3] : '1' };
-        char minor[2] = { strlen(profile) > 5 ? profile[5] : '0' };
+        char major[2] = { profile.size() > 3 ? profile[3] : '1' };
+        char minor[2] = { profile.size() > 5 ? profile[5] : '0' };
         macro[0] = VirtualMachine::DataToMemory("__SHADER_TARGET_MAJOR", sizeof("__SHADER_TARGET_MAJOR"), allocator);
         macro[1] = VirtualMachine::DataToMemory(major, 2, allocator);
         macro[2] = VirtualMachine::DataToMemory("__SHADER_TARGET_MINOR", sizeof("__SHADER_TARGET_MINOR"), allocator);
@@ -36,7 +115,7 @@ size_t RunD3DCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
         auto SrcDataSize = ShaderCompiler::text.size();
         auto pDefines = macro ? uint32_t((char*)macro - (char*)allocator->address()) : 0;
         auto pEntrypoint = VirtualMachine::DataToMemory(ShaderCompiler::entry.data(), ShaderCompiler::entry.size() + 1, allocator);
-        auto pTarget = VirtualMachine::DataToMemory(profile, strlen(profile) + 1, allocator);
+        auto pTarget = VirtualMachine::DataToMemory(profile.data(), profile.size() + 1, allocator);
 
         Push32(0);
         auto ppErrorMsgs = ESP;
@@ -65,7 +144,7 @@ size_t RunD3DCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
         auto srcDataLen = ShaderCompiler::text.size();
         auto pDefines = macro ? uint32_t((char*)macro - (char*)allocator->address()) : 0;
         auto pFunctionName = VirtualMachine::DataToMemory(ShaderCompiler::entry.data(), ShaderCompiler::entry.size() + 1, allocator);
-        auto pProfile = VirtualMachine::DataToMemory(profile, strlen(profile) + 1, allocator);
+        auto pProfile = VirtualMachine::DataToMemory(profile.data(), profile.size() + 1, allocator);
 
         Push32(0);
         auto ppErrorMsgs = ESP;
@@ -143,6 +222,7 @@ mine* RunNextProcess(mine* cpu)
     auto* memory = (uint8_t*)allocator->address();
     auto* stack = (uint32_t*)(memory + cpu->Stack());
     switch (stack[0]) {
+    case 'D3DA':
     case 'D3DC': {
         auto* error = (uint32_t*)(memory + stack[2]);
         if (error) {

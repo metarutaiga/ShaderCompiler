@@ -29,6 +29,6 @@ extern int machine_index;
 extern std::map<std::string, std::string> binaries;
 extern std::vector<char> binary;
 
-extern const char* DetectProfile();
+extern std::string DetectProfile();
 
 };  // namespace ShaderCompiler

@@ -4,6 +4,7 @@
 
 namespace VirtualMachine {
 
+void Close(mine* cpu);
 mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, void*, const char*)), bool debug);
 size_t RunException(mine* cpu, size_t index);
 size_t GetSymbol(const char* file, const char* name, void* symbol_data);

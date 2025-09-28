@@ -15,8 +15,8 @@ size_t RunNVCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
     auto* i386 = (x86_i386*)cpu;
     auto& x86 = i386->x86;
 
-    size_t NVCompileShader = symbol(cpu, nullptr, "NVCompileShader");
-    if (NVCompileShader) {
+    size_t NvCompileShader = symbol(cpu, nullptr, "NvCompileShader");
+    if (NvCompileShader) {
         std::string gpu;
         if (ShaderCompiler::machines.size() > ShaderCompiler::machine_index)
             gpu = ShaderCompiler::machines[ShaderCompiler::machine_index];
@@ -44,7 +44,7 @@ size_t RunNVCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
         Push32(SrcDataSize);    // SrcDataSize
         Push32(pSrcData);       // pSrcData
 
-        return NVCompileShader;
+        return NvCompileShader;
     }
 
     return 0;
