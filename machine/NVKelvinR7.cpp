@@ -139,16 +139,6 @@ HRESULT WINAPI NvCompileShader(const uint32_t* shader, size_t size, const char* 
         VertexProgramOutput output = {};
         vp_CompileKelvin(&env, &parsed, program.dwNumInstructions, &output);
         free(output.residentProgram);
-
-        ID3DXBuffer* blob = nullptr;
-        D3DXCreateBuffer(DWORD(outputMemorySize), &blob);
-        if (blob) {
-            memcpy(blob->GetBufferPointer(), outputMemoryData, outputMemorySize); 
-        }        
-        (*binary) = blob;
-        free(outputMemoryData);
-
-        return blob ? 0 : 0x80000000;
     }
     else if (shader && size >= 4 && (shader[0] & 0xFFFF0000) == D3DPS_VERSION(0, 0)) {
         if ((shader[0] & 0xFFFF) > 0x0103) {
@@ -162,19 +152,19 @@ HRESULT WINAPI NvCompileShader(const uint32_t* shader, size_t size, const char* 
 
         CPixelShaderPublic pixelShader;
         pixelShader.create(nullptr, 0, size / sizeof(DWORD), (DWORD*)shader);
+    }
 
-        ID3DXBuffer* blob = nullptr;
+    ID3DXBuffer* blob = nullptr;
+    if (outputMemoryData && outputMemorySize) {
         D3DXCreateBuffer(DWORD(outputMemorySize), &blob);
         if (blob) {
             memcpy(blob->GetBufferPointer(), outputMemoryData, outputMemorySize); 
         }        
         (*binary) = blob;
         free(outputMemoryData);
-
-        return blob ? 0 : 0x80000000;
     }
 
-    return 0x80000000;
+    return blob ? 0 : 0x80000000;
 }
 
 #if 0

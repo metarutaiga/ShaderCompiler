@@ -77,6 +77,7 @@
 		F558E8122E8435560060F473 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E8112E84352E0060F473 /* Logger.cpp */; };
 		F558E8162E8533010060F473 /* D3DCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E8152E8533000060F473 /* D3DCompiler.cpp */; };
 		F558E81A2E8809600060F473 /* NVCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E8192E8809570060F473 /* NVCompiler.cpp */; };
+		F558E81E2E8AC3B00060F473 /* AMDCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E81D2E8AC3B00060F473 /* AMDCompiler.cpp */; };
 		F582D69D2E8272D000D70BDC /* imgui_widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6992E8272D000D70BDC /* imgui_widgets.cpp */; };
 		F582D69E2E8272D000D70BDC /* imgui_demo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6952E8272D000D70BDC /* imgui_demo.cpp */; };
 		F582D69F2E8272D000D70BDC /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6962E8272D000D70BDC /* imgui_draw.cpp */; };
@@ -196,6 +197,8 @@
 		F558E8172E8534E90060F473 /* ShaderCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderCompiler.h; sourceTree = "<group>"; };
 		F558E8182E88092F0060F473 /* NVCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NVCompiler.h; sourceTree = "<group>"; };
 		F558E8192E8809570060F473 /* NVCompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NVCompiler.cpp; sourceTree = "<group>"; };
+		F558E81C2E8AC3B00060F473 /* AMDCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMDCompiler.h; sourceTree = "<group>"; };
+		F558E81D2E8AC3B00060F473 /* AMDCompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AMDCompiler.cpp; sourceTree = "<group>"; };
 		F582D6922E8272D000D70BDC /* imconfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imconfig.h; sourceTree = "<group>"; };
 		F582D6932E8272D000D70BDC /* imgui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imgui.h; sourceTree = "<group>"; };
 		F582D6942E8272D000D70BDC /* imgui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = imgui.cpp; sourceTree = "<group>"; };
@@ -229,21 +232,16 @@
 		8307E7B520E9F9C700473790 = {
 			isa = PBXGroup;
 			children = (
-				F558E8152E8533000060F473 /* D3DCompiler.cpp */,
-				F558E8142E8532F60060F473 /* D3DCompiler.h */,
+				83BBE9F020EB544400295997 /* imgui */,
+				F558E81B2E8AC1090060F473 /* Machine */,
+				F558E6E52E827B290060F473 /* mine */,
 				F558E7BF2E82B74C0060F473 /* ImGuiHelper.h */,
 				F582D6A72E82754900D70BDC /* Info-macOS.plist */,
 				F558E5962E8276060060F473 /* main.mm */,
 				F558E8112E84352E0060F473 /* Logger.cpp */,
 				F558E80E2E8434C40060F473 /* Logger.h */,
-				F558E8192E8809570060F473 /* NVCompiler.cpp */,
-				F558E8182E88092F0060F473 /* NVCompiler.h */,
 				F558E7BD2E82A3C70060F473 /* ShaderCompiler.cpp */,
 				F558E8172E8534E90060F473 /* ShaderCompiler.h */,
-				F558E80C2E8433C30060F473 /* VirtualMachine.cpp */,
-				F558E8132E8439720060F473 /* VirtualMachine.h */,
-				83BBE9F020EB544400295997 /* imgui */,
-				F558E6E52E827B290060F473 /* mine */,
 				8307E7C520E9F9C900473790 /* Products */,
 				83BBE9E320EB46B800295997 /* Frameworks */,
 			);
@@ -435,6 +433,21 @@
 			path = mine;
 			sourceTree = "<group>";
 		};
+		F558E81B2E8AC1090060F473 /* Machine */ = {
+			isa = PBXGroup;
+			children = (
+				F558E81D2E8AC3B00060F473 /* AMDCompiler.cpp */,
+				F558E81C2E8AC3B00060F473 /* AMDCompiler.h */,
+				F558E8152E8533000060F473 /* D3DCompiler.cpp */,
+				F558E8142E8532F60060F473 /* D3DCompiler.h */,
+				F558E8192E8809570060F473 /* NVCompiler.cpp */,
+				F558E8182E88092F0060F473 /* NVCompiler.h */,
+				F558E80C2E8433C30060F473 /* VirtualMachine.cpp */,
+				F558E8132E8439720060F473 /* VirtualMachine.h */,
+			);
+			name = Machine;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -511,6 +524,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F558E81E2E8AC3B00060F473 /* AMDCompiler.cpp in Sources */,
 				F558E8162E8533010060F473 /* D3DCompiler.cpp in Sources */,
 				F558E8122E8435560060F473 /* Logger.cpp in Sources */,
 				F558E5972E8276060060F473 /* main.mm in Sources */,
@@ -567,11 +581,11 @@
 				F558E7D82E8425FC0060F473 /* x87_integer.cpp in Sources */,
 				F558E5CE2E8276680060F473 /* imgui_impl_metal.mm in Sources */,
 				F558E5CF2E8276680060F473 /* imgui_impl_osx.mm in Sources */,
-				F582D69D2E8272D000D70BDC /* imgui_widgets.cpp in Sources */,
+				F582D6A02E8272D000D70BDC /* imgui.cpp in Sources */,
 				F582D69E2E8272D000D70BDC /* imgui_demo.cpp in Sources */,
 				F582D69F2E8272D000D70BDC /* imgui_draw.cpp in Sources */,
-				F582D6A02E8272D000D70BDC /* imgui.cpp in Sources */,
 				F582D6A12E8272D000D70BDC /* imgui_tables.cpp in Sources */,
+				F582D69D2E8272D000D70BDC /* imgui_widgets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

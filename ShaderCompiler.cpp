@@ -9,6 +9,7 @@
 #include <chrono>
 #include <map>
 #include <vector>
+#include "AMDCompiler.h"
 #include "D3DCompiler.h"
 #include "ImGuiHelper.h"
 #include "Logger.h"
@@ -306,6 +307,11 @@ static void RefreshCompiler()
         std::string compiler = compilers[compiler_index];
         std::string path = compiler_path + "/" + compiler;
 
+        if (strncmp(text.c_str(), "!!ARB", 5) == 0) {
+            binary.assign(text.begin(), text.end());
+            return;
+        }
+
         if (strncasecmp(compiler.data(), "d3dx9", 5) == 0 ||
             strncasecmp(compiler.data(), "d3dcompiler", 11) == 0) {
             if (text.find('{') == std::string::npos) {
@@ -333,15 +339,31 @@ static void RefreshMachine()
     VirtualMachine::Close(cpu);
     cpu = nullptr;
 
-    ShaderCompiler::binaries["NVIDIA"].clear();
+    for (auto& [title, binary] : ShaderCompiler::binaries) {
+        if (title == "AMD" || title == "NVIDIA") {
+            binary.clear();
+        }
+    }
 
 //  logs[SYSTEM].clear();
 //  logs[CONSOLE].clear();
 
     if (machines.size() > machine_index) {
         std::string machine = machines[machine_index];
+
+        // AMD
+        if (machine.find("AMDIL") == 0 || machine.find("R") == 0) {
+            std::string path = machine_path + "/" + "GPUShaderAnalyzer_Catalyst_11_7_DX9.dll";
+            cpu = VirtualMachine::RunDLL(path, AMDCompiler::RunAMDCompile, debug_vm);
+            if (cpu) {
+                begin_execute = std::chrono::system_clock::now();
+            }
+            return;
+        }
+
+        // NVIDIA
         std::string path = machine_path + "/" + "NVShaderPerf.dll";
-        if (machine.find("NV20") != std::string::npos) {
+        if (machine.find("NV20") == 0) {
             path = machine_path + "/" + "NVKelvinR7.dll";
         }
         cpu = VirtualMachine::RunDLL(path, NVCompiler::RunNVCompile, debug_vm);
@@ -361,11 +383,22 @@ static void Loop()
         if (cpu->Step(1000) == false) {
             Logger<SYSTEM>("%s", cpu->Disassemble(1).c_str());
             Logger<SYSTEM>("%s", cpu->Status().c_str());
+
+            auto stack = cpu->Stack();
+            for (int i = 0; i < 16; ++i) {
+                auto* value = (uint32_t*)(cpu->Memory(stack + i * 4));
+                if (value == nullptr)
+                    break;
+                Logger<SYSTEM>("%08X : %08X", stack + i * 4, (*value));
+            }
+
             logs_index[CONSOLE] = (int)logs[CONSOLE].size();
             logs_index[SYSTEM] = (int)logs[SYSTEM].size();
 
             mine* origin = cpu;
             cpu = D3DCompiler::RunNextProcess(origin);
+            if (cpu == nullptr)
+                cpu = AMDCompiler::RunNextProcess(origin);
             if (cpu == nullptr)
                 cpu = NVCompiler::RunNextProcess(origin);
             if (cpu == nullptr) {
@@ -468,27 +501,47 @@ static void Init()
     realpath((cwd + "/../../../../../../machine").c_str(), machine_path.data());
     machine_path.resize(strlen(machine_path.c_str()));
     if (machine_path.empty() == false) {
-        std::vector<std::string> orders[3];
+        std::vector<std::string> orders[4];
         DIR* dir = opendir(machine_path.c_str());
         if (dir) {
             while (struct dirent* dirent = readdir(dir)) {
                 if (dirent->d_name[0] == '.')
                     continue;
+                if (strcmp(dirent->d_name, "GPUShaderAnalyzer_Catalyst_11_7_DX9.dll") == 0) {
+                    orders[0].push_back("AMDIL - 11.7");
+                    orders[0].push_back("R600 - 11.7");
+                    orders[0].push_back("RV610 - 11.7");
+                    orders[0].push_back("RV630 - 11.7");
+                    orders[0].push_back("RV670 - 11.7");
+                    orders[0].push_back("RV770 - 11.7");
+                    orders[0].push_back("RV730 - 11.7");
+                    orders[0].push_back("RV710 - 11.7");
+                    orders[0].push_back("RV740 - 11.7");
+                    orders[0].push_back("RV870 - 11.7");
+                    orders[0].push_back("RV840 - 11.7");
+                    orders[0].push_back("RV830 - 11.7");
+                    orders[0].push_back("RV810 - 11.7");
+                    orders[0].push_back("RV970 - 11.7");
+                    orders[0].push_back("RV940 - 11.7");
+                    orders[0].push_back("RV930 - 11.7");
+                    orders[0].push_back("RV910 - 11.7");
+                    continue;
+                }
                 if (strcmp(dirent->d_name, "NVKelvinR7.dll") == 0) {
-                    orders[0].push_back("NV20 - 7.58");
+                    orders[1].push_back("NV20 - 7.58");
                     continue;
                 }
                 if (strcmp(dirent->d_name, "2.01.10000.0305") == 0) {
-                    orders[1].push_back("NV30 - 101.31");
-                    orders[1].push_back("NV35 - 101.31");
-                    orders[1].push_back("NV40 - 101.31");
-                    orders[1].push_back("G70 - 101.31");
+                    orders[2].push_back("NV30 - 101.31");
+                    orders[2].push_back("NV35 - 101.31");
+                    orders[2].push_back("NV40 - 101.31");
+                    orders[2].push_back("G70 - 101.31");
                     continue;
                 }
                 if (strcmp(dirent->d_name, "2.07.0804.1530") == 0) {
-                    orders[2].push_back("NV40 - 174.74");
-                    orders[2].push_back("G70 - 174.74");
-                    orders[2].push_back("G80 - 174.74");
+                    orders[3].push_back("NV40 - 174.74");
+                    orders[3].push_back("G70 - 174.74");
+                    orders[3].push_back("G80 - 174.74");
                     continue;
                 }
             }

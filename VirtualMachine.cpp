@@ -72,6 +72,12 @@ mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, 
             cpu->Jump(address);
             size_t entry = PE::Entry(image);
             if (entry) {
+#if 1
+                Push32(0);
+                Push32(1);
+                Push32(0);
+                Push32(address);
+#else
                 Push32(0);
                 Push32(2);
                 Push32(0);
@@ -80,6 +86,7 @@ mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, 
                 Push32(1);
                 Push32(0);
                 Push32(entry);
+#endif
                 cpu->Jump(entry);
             }
         }
@@ -117,7 +124,9 @@ uint32_t DataToMemory(const void* data, size_t size, struct allocator_t* allocat
     auto* memory = (char*)allocator->address();
     auto* pointer = (char*)allocator->allocate(size);
     if (pointer) {
-        memcpy(pointer, data, size);
+        if (data) {
+            memcpy(pointer, data, size);
+        }
         return (uint32_t)(pointer - memory);
     }
     return 0;
