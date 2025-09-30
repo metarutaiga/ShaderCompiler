@@ -353,10 +353,29 @@ static void RefreshMachine()
 
         // AMD
         if (machine.find("AMDIL") == 0 || machine.find("R") == 0) {
-            std::string path = machine_path + "/" + "GPUShaderAnalyzer_Catalyst_11_7_DX9.dll";
-            cpu = VirtualMachine::RunDLL(path, AMDCompiler::RunAMDCompile, debug_vm);
-            if (cpu) {
-                begin_execute = std::chrono::system_clock::now();
+            std::string version;
+            if (machine.find("11.7") != std::string::npos)  version = "11_7";
+            if (machine.find("11.8") != std::string::npos)  version = "11_8";
+            if (machine.find("11.9") != std::string::npos)  version = "11_9";
+            if (machine.find("11.10") != std::string::npos) version = "11_10";
+            if (machine.find("11.11") != std::string::npos) version = "11_11";
+            if (machine.find("11.12") != std::string::npos) version = "11_12";
+            if (machine.find("12.1") != std::string::npos)  version = "12_1";
+            if (machine.find("12.2") != std::string::npos)  version = "12_2";
+            if (machine.find("12.3") != std::string::npos)  version = "12_3";
+            if (machine.find("12.4") != std::string::npos)  version = "12_4";
+            if (version.empty() == false) {
+                std::string profile = DetectProfile();
+                std::string dll = "GPUShaderAnalyzer_Catalyst";
+                if (profile[3] >= '4')
+                    dll = dll + "_" + version + "_" + "DX10.dll";
+                else
+                    dll = dll + "_" + version + "_" + "DX9.dll";
+                std::string path = machine_path + "/" + dll;
+                cpu = VirtualMachine::RunDLL(path, AMDCompiler::RunAMDCompile, debug_vm);
+                if (cpu) {
+                    begin_execute = std::chrono::system_clock::now();
+                }
             }
             return;
         }
@@ -507,38 +526,50 @@ static void Init()
             while (struct dirent* dirent = readdir(dir)) {
                 if (dirent->d_name[0] == '.')
                     continue;
-                if (strcmp(dirent->d_name, "GPUShaderAnalyzer_Catalyst_11_7_DX9.dll") == 0) {
-                    orders[0].push_back("AMDIL - 11.7");
-                    orders[0].push_back("R600 - 11.7");
-                    orders[0].push_back("RV610 - 11.7");
-                    orders[0].push_back("RV630 - 11.7");
-                    orders[0].push_back("RV670 - 11.7");
-                    orders[0].push_back("RV770 - 11.7");
-                    orders[0].push_back("RV730 - 11.7");
-                    orders[0].push_back("RV710 - 11.7");
-                    orders[0].push_back("RV740 - 11.7");
-                    orders[0].push_back("RV870 - 11.7");
-                    orders[0].push_back("RV840 - 11.7");
-                    orders[0].push_back("RV830 - 11.7");
-                    orders[0].push_back("RV810 - 11.7");
-                    orders[0].push_back("RV970 - 11.7");
-                    orders[0].push_back("RV940 - 11.7");
-                    orders[0].push_back("RV930 - 11.7");
-                    orders[0].push_back("RV910 - 11.7");
-                    continue;
+                if (strncasecmp(dirent->d_name, "GPUShaderAnalyzer_Catalyst", sizeof("GPUShaderAnalyzer_Catalyst") - 1) == 0) {
+                    std::string version;
+                    if (strstr(dirent->d_name, "11_7"))     version = "11.7";
+                    if (strstr(dirent->d_name, "11_8"))     version = "11.8";
+                    if (strstr(dirent->d_name, "11_9"))     version = "11.9";
+                    if (strstr(dirent->d_name, "11_10"))    version = "11.10";
+                    if (strstr(dirent->d_name, "11_11"))    version = "11.11";
+                    if (strstr(dirent->d_name, "11_12"))    version = "11.12";
+                    if (strstr(dirent->d_name, "12_1"))     version = "12.1";
+                    if (strstr(dirent->d_name, "12_2"))     version = "12.2";
+                    if (strstr(dirent->d_name, "12_3"))     version = "12.3";
+                    if (strstr(dirent->d_name, "12_4"))     version = "12.4";
+                    if (version.empty() == false) {
+                        orders[0].push_back("AMDIL - " + version);
+                        orders[0].push_back("R600 - " + version);
+                        orders[0].push_back("RV610 - " + version);
+                        orders[0].push_back("RV630 - " + version);
+                        orders[0].push_back("RV670 - " + version);
+                        orders[0].push_back("RV770 - " + version);
+                        orders[0].push_back("RV730 - " + version);
+                        orders[0].push_back("RV710 - " + version);
+                        orders[0].push_back("RV740 - " + version);
+                        orders[0].push_back("RV870 - " + version);
+                        orders[0].push_back("RV840 - " + version);
+                        orders[0].push_back("RV830 - " + version);
+                        orders[0].push_back("RV810 - " + version);
+                        orders[0].push_back("RV970 - " + version);
+                        orders[0].push_back("RV940 - " + version);
+                        orders[0].push_back("RV930 - " + version);
+                        orders[0].push_back("RV910 - " + version);
+                    }
                 }
-                if (strcmp(dirent->d_name, "NVKelvinR7.dll") == 0) {
+                if (strcasecmp(dirent->d_name, "NVKelvinR7.dll") == 0) {
                     orders[1].push_back("NV20 - 7.58");
                     continue;
                 }
-                if (strcmp(dirent->d_name, "2.01.10000.0305") == 0) {
+                if (strcasecmp(dirent->d_name, "2.01.10000.0305") == 0) {
                     orders[2].push_back("NV30 - 101.31");
                     orders[2].push_back("NV35 - 101.31");
                     orders[2].push_back("NV40 - 101.31");
                     orders[2].push_back("G70 - 101.31");
                     continue;
                 }
-                if (strcmp(dirent->d_name, "2.07.0804.1530") == 0) {
+                if (strcasecmp(dirent->d_name, "2.07.0804.1530") == 0) {
                     orders[3].push_back("NV40 - 174.74");
                     orders[3].push_back("G70 - 174.74");
                     orders[3].push_back("G80 - 174.74");
@@ -566,7 +597,13 @@ bool ShaderCompilerGUI(ImVec2 screen)
 
     ImGui::SetNextWindowPos(ImVec2((screen.x - window_size.x) / 2.0f, (screen.y - window_size.y) / 2.0f), ImGuiCond_Once);
     ImGui::SetNextWindowSize(window_size, ImGuiCond_Once);
-    if (ImGui::Begin("Shader Compiler", &show, ImGuiWindowFlags_NoCollapse)) {
+    if (ImGui::Begin("Shader Compiler", &show, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse)) {
+        if (ImGui::Button("X")) {
+            show = false;
+        }
+        ImGui::SameLine();
+        ImGui::TextUnformatted("Shader Compiler");
+
         Init();
         Text();
         Option();
