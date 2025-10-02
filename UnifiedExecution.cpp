@@ -33,14 +33,13 @@ size_t RunDriver(mine* cpu, size_t(*symbol)(mine*, void*, const char*)) __attrib
                 switch (parameter[0]) {
                 case 0:
                     break;
-                case '0' ... '9': {
+                case '0' ... '9':
                     if (parameter[1] == 'x') {
                         Push32(strtol(parameter, nullptr, 16));
                         break;
                     }
                     Push32(strtol(parameter, nullptr, 10));
                     break;
-                }
                 case '(': {
                     auto count = strtol(parameter + 1, nullptr, 10) - 1;
                     auto stack = ESP + sizeof(uint32_t) * count;

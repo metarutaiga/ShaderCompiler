@@ -1,5 +1,9 @@
 ## OSX artifacts
 .DS_Store
+*.xc*
 
 ## General build artifacts
 build/
+
+## Other DLL files
+*.dll

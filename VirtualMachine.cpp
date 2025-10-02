@@ -10,16 +10,6 @@
 
 namespace VirtualMachine {
 
-static int silent_logger(const char* format, ...)
-{
-    return 0;
-}
-
-static int silent_vlogger(const char* format, va_list)
-{
-    return 0;
-}
-
 void Close(mine* cpu)
 {
     if (cpu == nullptr)
@@ -51,8 +41,8 @@ mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, 
             .path = path.c_str(),
             .printf = Logger<CONSOLE>,
             .vprintf = LoggerV<CONSOLE>,
-            .debugPrintf = debug ? Logger<SYSTEM> : silent_logger,
-            .debugVprintf = debug ? LoggerV<SYSTEM> : silent_vlogger,
+            .debugPrintf = debug ? Logger<SYSTEM> : nullptr,
+            .debugVprintf = debug ? LoggerV<SYSTEM> : nullptr,
         };
         syscall_i386_new(cpu, &syscall);
 
