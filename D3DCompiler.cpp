@@ -214,7 +214,7 @@ size_t RunD3DDisassemble(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
     return 0;
 }
 
-mine* RunNextProcess(mine* cpu)
+mine* NextProcess(mine* cpu)
 {
     auto* allocator = cpu->Allocator;
     auto* i386 = (x86_i386*)cpu;
@@ -262,7 +262,9 @@ mine* RunNextProcess(mine* cpu)
             auto& pointer = blob[3];
             auto* code = (char*)(memory + pointer);
 
-            ShaderCompiler::binaries["Disassembly"].assign(code, code + size);
+            std::string& text = ShaderCompiler::binaries["Disassembly"];
+            text.assign(code, code + size);
+            text.resize(strlen(text.c_str()));
         }
         else {
             Logger<CONSOLE>("Disassemble : %08X\n", EAX);

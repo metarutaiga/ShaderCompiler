@@ -4,7 +4,6 @@ struct mine;
 
 namespace NVCompiler {
 
-size_t RunNVCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*));
-mine* RunNextProcess(mine* cpu);
+mine* NextProcess(mine* cpu);
 
 };  // namespace NVCompiler

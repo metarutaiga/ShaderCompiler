@@ -15,6 +15,8 @@
 #include "Logger.h"
 #include "NVCompiler.h"
 #include "ShaderCompiler.h"
+
+#include "UnifiedExecution.h"
 #include "VirtualMachine.h"
 
 static bool refresh_compiler;
@@ -30,17 +32,20 @@ namespace ShaderCompiler {
 
 std::string shader_path;
 std::string compiler_path;
-std::string machine_path;
+std::string driver_path;
 
 std::string text;
 std::vector<std::string> shaders;
 int shader_index;
+
 std::vector<std::string> compilers;
 int compiler_index;
 std::string entry;
 std::vector<std::string> profiles;
 int profile_index;
-std::vector<std::string> machines;
+
+std::vector<Driver> drivers;
+int driver_index;
 int machine_index;
 
 std::map<std::string, std::string> binaries;
@@ -187,13 +192,25 @@ static void Option()
             refresh_machine = true;
         }
 
-        // Machine
+        // Driver
         ImGui::NewLine();
+        ImGui::TextUnformatted("Driver");
+        ImGui::SetNextItemWidth(region.x);
+        if (ImGui::Combo("##204", &driver_index, [](void* user_data, int index) {
+            auto* drivers = (Driver*)user_data;
+            return drivers[index].name[0].c_str();
+        }, drivers.data(), (int)drivers.size()) || ImGui::ScrollCombo(&driver_index, drivers.size())) {
+            refresh_machine = true;
+        }
+
+        // Machine
+        static std::vector<std::vector<std::string>> empty_machines;
+        auto& machines = (drivers.size() > driver_index) ? drivers[driver_index].machines : empty_machines;
         ImGui::TextUnformatted("Machine");
         ImGui::SetNextItemWidth(region.x);
-        if (ImGui::Combo("##204", &machine_index, [](void* user_data, int index) {
-            auto* machines = (std::string*)user_data;
-            return machines[index].c_str();
+        if (ImGui::Combo("##205", &machine_index, [](void* user_data, int index) {
+            auto* machines = (std::vector<std::string>*)user_data;
+            return machines[index].front().c_str();
         }, machines.data(), (int)machines.size()) || ImGui::ScrollCombo(&machine_index, machines.size())) {
             refresh_machine = true;
         }
@@ -348,46 +365,14 @@ static void RefreshMachine()
 //  logs[SYSTEM].clear();
 //  logs[CONSOLE].clear();
 
-    if (machines.size() > machine_index) {
-        std::string machine = machines[machine_index];
-
-        // AMD
-        if (machine.find("AMDIL") == 0 || machine.find("R") == 0) {
-            std::string version;
-            if (machine.find("11.7") != std::string::npos)  version = "11_7";
-            if (machine.find("11.8") != std::string::npos)  version = "11_8";
-            if (machine.find("11.9") != std::string::npos)  version = "11_9";
-            if (machine.find("11.10") != std::string::npos) version = "11_10";
-            if (machine.find("11.11") != std::string::npos) version = "11_11";
-            if (machine.find("11.12") != std::string::npos) version = "11_12";
-            if (machine.find("12.1") != std::string::npos)  version = "12_1";
-            if (machine.find("12.2") != std::string::npos)  version = "12_2";
-            if (machine.find("12.3") != std::string::npos)  version = "12_3";
-            if (machine.find("12.4") != std::string::npos)  version = "12_4";
-            if (version.empty() == false) {
-                std::string profile = DetectProfile();
-                std::string dll = "GPUShaderAnalyzer_Catalyst";
-                if (profile[3] >= '4')
-                    dll = dll + "_" + version + "_" + "DX10.dll";
-                else
-                    dll = dll + "_" + version + "_" + "DX9.dll";
-                std::string path = machine_path + "/" + dll;
-                cpu = VirtualMachine::RunDLL(path, AMDCompiler::RunAMDCompile, debug_vm);
-                if (cpu) {
-                    begin_execute = std::chrono::system_clock::now();
-                }
+    if (drivers.size() > driver_index && drivers[driver_index].machines.size() > machine_index) {
+        auto& driver = drivers[driver_index];
+        if (driver.name.size() > 1) {
+            std::string path = driver_path + "/" + driver.name[1];
+            cpu = VirtualMachine::RunDLL(path, UnifiedExecution::RunDriver, debug_vm);
+            if (cpu) {
+                begin_execute = std::chrono::system_clock::now();
             }
-            return;
-        }
-
-        // NVIDIA
-        std::string path = machine_path + "/" + "NVShaderPerf.dll";
-        if (machine.find("NV20") == 0) {
-            path = machine_path + "/" + "NVKelvinR7.dll";
-        }
-        cpu = VirtualMachine::RunDLL(path, NVCompiler::RunNVCompile, debug_vm);
-        if (cpu) {
-            begin_execute = std::chrono::system_clock::now();
         }
     }
 }
@@ -415,11 +400,11 @@ static void Loop()
             logs_index[SYSTEM] = (int)logs[SYSTEM].size();
 
             mine* origin = cpu;
-            cpu = D3DCompiler::RunNextProcess(origin);
+            cpu = D3DCompiler::NextProcess(origin);
             if (cpu == nullptr)
-                cpu = AMDCompiler::RunNextProcess(origin);
+                cpu = AMDCompiler::NextProcess(origin);
             if (cpu == nullptr)
-                cpu = NVCompiler::RunNextProcess(origin);
+                cpu = NVCompiler::NextProcess(origin);
             if (cpu == nullptr) {
                 auto end_execute = std::chrono::system_clock::now();
                 auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_execute - begin_execute).count();
@@ -516,70 +501,53 @@ static void Init()
     }
     std::stable_sort(compilers.begin(), compilers.end());
 
-    machine_path.resize(1024, 0);
-    realpath((cwd + "/../../../../../../machine").c_str(), machine_path.data());
-    machine_path.resize(strlen(machine_path.c_str()));
-    if (machine_path.empty() == false) {
-        std::vector<std::string> orders[4];
-        DIR* dir = opendir(machine_path.c_str());
-        if (dir) {
-            while (struct dirent* dirent = readdir(dir)) {
-                if (dirent->d_name[0] == '.')
-                    continue;
-                if (strncasecmp(dirent->d_name, "GPUShaderAnalyzer_Catalyst", sizeof("GPUShaderAnalyzer_Catalyst") - 1) == 0) {
-                    std::string version;
-                    if (strstr(dirent->d_name, "11_7"))     version = "11.7";
-                    if (strstr(dirent->d_name, "11_8"))     version = "11.8";
-                    if (strstr(dirent->d_name, "11_9"))     version = "11.9";
-                    if (strstr(dirent->d_name, "11_10"))    version = "11.10";
-                    if (strstr(dirent->d_name, "11_11"))    version = "11.11";
-                    if (strstr(dirent->d_name, "11_12"))    version = "11.12";
-                    if (strstr(dirent->d_name, "12_1"))     version = "12.1";
-                    if (strstr(dirent->d_name, "12_2"))     version = "12.2";
-                    if (strstr(dirent->d_name, "12_3"))     version = "12.3";
-                    if (strstr(dirent->d_name, "12_4"))     version = "12.4";
-                    if (version.empty() == false) {
-                        orders[0].push_back("AMDIL - " + version);
-                        orders[0].push_back("R600 - " + version);
-                        orders[0].push_back("RV610 - " + version);
-                        orders[0].push_back("RV630 - " + version);
-                        orders[0].push_back("RV670 - " + version);
-                        orders[0].push_back("RV770 - " + version);
-                        orders[0].push_back("RV730 - " + version);
-                        orders[0].push_back("RV710 - " + version);
-                        orders[0].push_back("RV740 - " + version);
-                        orders[0].push_back("RV870 - " + version);
-                        orders[0].push_back("RV840 - " + version);
-                        orders[0].push_back("RV830 - " + version);
-                        orders[0].push_back("RV810 - " + version);
-                        orders[0].push_back("RV970 - " + version);
-                        orders[0].push_back("RV940 - " + version);
-                        orders[0].push_back("RV930 - " + version);
-                        orders[0].push_back("RV910 - " + version);
+    driver_path.resize(1024, 0);
+    realpath((cwd + "/../../../../../../driver").c_str(), driver_path.data());
+    driver_path.resize(strlen(driver_path.c_str()));
+    if (driver_path.empty() == false) {
+        FILE* file = fopen((driver_path + "/driver.ini").c_str(), "rb");
+        if (file) {
+            char line[256];
+            while (fgets(line, 256, file)) {
+                switch (line[0]) {
+                case 0:
+                    break;
+                case '[':
+                    drivers.push_back(Driver());
+                    for (int i = 1; i < 256; ++i) {
+                        char c = line[i];
+                        if (c == 0 || c == '\r' || c == '\n' || c == ']')
+                            break;
+                        if (c == '=') {
+                            drivers.back().name.push_back(std::string());
+                            continue;
+                        }
+                        if (drivers.back().name.empty())
+                            drivers.back().name.push_back(std::string());
+                        drivers.back().name.back().push_back(c);
                     }
-                }
-                if (strcasecmp(dirent->d_name, "NVKelvinR7.dll") == 0) {
-                    orders[1].push_back("NV20 - 7.58");
-                    continue;
-                }
-                if (strcasecmp(dirent->d_name, "2.01.10000.0305") == 0) {
-                    orders[2].push_back("NV30 - 101.31");
-                    orders[2].push_back("NV35 - 101.31");
-                    orders[2].push_back("NV40 - 101.31");
-                    orders[2].push_back("G70 - 101.31");
-                    continue;
-                }
-                if (strcasecmp(dirent->d_name, "2.07.0804.1530") == 0) {
-                    orders[3].push_back("NV40 - 174.74");
-                    orders[3].push_back("G70 - 174.74");
-                    orders[3].push_back("G80 - 174.74");
-                    continue;
+                    break;
+                default:
+                    std::vector<std::string> machine;
+                    for (int i = 0; i < 256; ++i) {
+                        char c = line[i];
+                        if (c == 0 || c == '\r' || c == '\n')
+                            break;
+                        if (c == '=' || c == ',') {
+                            machine.push_back(std::string());
+                            continue;
+                        }
+                        if (machine.empty())
+                            machine.push_back(std::string());
+                        machine.back().push_back(c);
+                    }
+                    if (drivers.empty() == false && machine.empty() == false) {
+                        drivers.back().machines.push_back(machine);
+                    }
+                    break;
                 }
             }
-            closedir(dir);
-        }
-        for (auto& order : orders) {
-            machines.insert(machines.end(), order.begin(), order.end());
+            fclose(file);
         }
     }
 
@@ -593,16 +561,20 @@ static void Init()
 bool ShaderCompilerGUI(ImVec2 screen)
 {
     bool show = true;
+    const char* title = "Shader Compiler";
     ImVec2 window_size = ImVec2(1536.0f, 864.0f);
 
     ImGui::SetNextWindowPos(ImVec2((screen.x - window_size.x) / 2.0f, (screen.y - window_size.y) / 2.0f), ImGuiCond_Once);
     ImGui::SetNextWindowSize(window_size, ImGuiCond_Once);
-    if (ImGui::Begin("Shader Compiler", &show, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse)) {
+    if (ImGui::Begin(title, &show, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse)) {
         if (ImGui::Button("X")) {
             show = false;
         }
         ImGui::SameLine();
-        ImGui::TextUnformatted("Shader Compiler");
+        ImVec2 region = ImGui::GetContentRegionAvail();
+        float offset = (region.x - ImGui::CalcTextSize(title).x) / 2.0f;
+        ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset);
+        ImGui::TextUnformatted(title);
 
         Init();
         Text();

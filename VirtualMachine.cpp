@@ -127,6 +127,9 @@ uint32_t DataToMemory(const void* data, size_t size, struct allocator_t* allocat
         if (data) {
             memcpy(pointer, data, size);
         }
+        else {
+            memset(pointer, 0, size);
+        }
         return (uint32_t)(pointer - memory);
     }
     return 0;

@@ -112,10 +112,10 @@ struct CPixelShaderPublic : public CPixelShader {
     using CPixelShader::PSProgramNames;
 };
 
-#pragma comment(linker, "/export:NvCompileShader=_NvCompileShader@20")
+#pragma comment(linker, "/export:NVCompileShader=_NVCompileShader@20")
 
 extern "C"
-HRESULT WINAPI NvCompileShader(const uint32_t* shader, size_t size, const char* folder, const char* gpu, void** binary)
+HRESULT WINAPI NVCompileShader(const uint32_t* shader, size_t size, const char* folder, const char* gpu, void** binary)
 {
     if (shader && size >= 4 && (shader[0] & 0xFFFF0000) == D3DVS_VERSION(0, 0)) {
         if ((shader[0] & 0xFFFF) > 0x0101) {

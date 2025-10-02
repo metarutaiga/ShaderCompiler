@@ -9,48 +9,7 @@
 
 namespace NVCompiler {
 
-size_t RunNVCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
-{
-    auto* allocator = cpu->Allocator;
-    auto* i386 = (x86_i386*)cpu;
-    auto& x86 = i386->x86;
-
-    size_t NvCompileShader = symbol(cpu, nullptr, "NvCompileShader");
-    if (NvCompileShader) {
-        std::string gpu;
-        if (ShaderCompiler::machines.size() > ShaderCompiler::machine_index)
-            gpu = ShaderCompiler::machines[ShaderCompiler::machine_index];
-
-        std::string version = "2.07.0804.1530";
-        if (gpu.find("101.31") != std::string::npos)
-            version = "2.01.10000.0305";
-
-        size_t space = gpu.find(' ');
-        if (space != std::string::npos)
-            gpu.resize(space);
-
-        auto pSrcData = VirtualMachine::DataToMemory(ShaderCompiler::binary.data(), ShaderCompiler::binary.size(), allocator);
-        auto SrcDataSize = ShaderCompiler::binary.size();
-        auto pVersion = VirtualMachine::DataToMemory(version.data(), version.size() + 1, allocator);
-        auto pGPU = VirtualMachine::DataToMemory(gpu.data(), gpu.size() + 1, allocator);
-
-        Push32(0);
-        auto ppCode = ESP;
-        Push32('NVDA');
-
-        Push32(ppCode);         // **ppCode
-        Push32(pGPU);           // pGPU
-        Push32(pVersion);       // pVersion
-        Push32(SrcDataSize);    // SrcDataSize
-        Push32(pSrcData);       // pSrcData
-
-        return NvCompileShader;
-    }
-
-    return 0;
-}
-
-mine* RunNextProcess(mine* cpu)
+mine* NextProcess(mine* cpu)
 {
     auto* allocator = cpu->Allocator;
     auto* i386 = (x86_i386*)cpu;
@@ -67,6 +26,7 @@ mine* RunNextProcess(mine* cpu)
 
             std::string& text = ShaderCompiler::binaries["NVIDIA"];
             text.assign(code, code + size);
+            text.resize(strlen(text.c_str()));
 
             for (size_t i = 0, column = 0; i < text.size(); ++i, ++column) {
                 switch (text[i]) {
