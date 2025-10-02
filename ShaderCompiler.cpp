@@ -357,7 +357,7 @@ static void RefreshMachine()
     cpu = nullptr;
 
     for (auto& [title, binary] : ShaderCompiler::binaries) {
-        if (title == "AMD" || title == "NVIDIA") {
+        if (title == "Machine") {
             binary.clear();
         }
     }
@@ -567,6 +567,8 @@ bool ShaderCompilerGUI(ImVec2 screen)
     ImGui::SetNextWindowPos(ImVec2((screen.x - window_size.x) / 2.0f, (screen.y - window_size.y) / 2.0f), ImGuiCond_Once);
     ImGui::SetNextWindowSize(window_size, ImGuiCond_Once);
     if (ImGui::Begin(title, &show, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse)) {
+        ImGui::PushStyleColor(ImGuiCol_ChildBg, ImGui::GetStyleColorVec4(ImGuiCol_TitleBgActive));
+        ImGui::BeginChild(title, ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetFrameHeight()));
         if (ImGui::Button("X")) {
             show = false;
         }
@@ -575,6 +577,8 @@ bool ShaderCompilerGUI(ImVec2 screen)
         float offset = (region.x - ImGui::CalcTextSize(title).x) / 2.0f;
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset);
         ImGui::TextUnformatted(title);
+        ImGui::EndChild();
+        ImGui::PopStyleColor();
 
         Init();
         Text();

@@ -84,6 +84,7 @@
 		F582D6A02E8272D000D70BDC /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6942E8272D000D70BDC /* imgui.cpp */; };
 		F582D6A12E8272D000D70BDC /* imgui_tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6982E8272D000D70BDC /* imgui_tables.cpp */; };
 		F5A7A0722E8E321100C7E565 /* UnifiedExecution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A7A0712E8E31A900C7E565 /* UnifiedExecution.cpp */; };
+		F5A7A0742E8E588800C7E565 /* shlwapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A7A0732E8E588100C7E565 /* shlwapi.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -214,6 +215,7 @@
 		F582D6A72E82754900D70BDC /* Info-macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-macOS.plist"; sourceTree = "<group>"; };
 		F5A7A0702E8E305400C7E565 /* UnifiedExecution.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnifiedExecution.h; sourceTree = "<group>"; };
 		F5A7A0712E8E31A900C7E565 /* UnifiedExecution.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UnifiedExecution.cpp; sourceTree = "<group>"; };
+		F5A7A0732E8E588100C7E565 /* shlwapi.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = shlwapi.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -332,6 +334,7 @@
 		F558E69F2E827B290060F473 /* windows */ = {
 			isa = PBXGroup;
 			children = (
+				F5A7A0732E8E588100C7E565 /* shlwapi.cpp */,
 				F558E6972E827B290060F473 /* kernel32.cpp */,
 				F558E6982E827B290060F473 /* msvcprt.cpp */,
 				F558E6992E827B290060F473 /* msvcrt.h */,
@@ -543,6 +546,7 @@
 				F558E8082E84262C0060F473 /* pe.cpp in Sources */,
 				F558E8092E84262C0060F473 /* xcoff32.cpp in Sources */,
 				F558E80A2E84262C0060F473 /* xcoff64.cpp in Sources */,
+				F5A7A0742E8E588800C7E565 /* shlwapi.cpp in Sources */,
 				F558E8002E8426240060F473 /* kernel32.cpp in Sources */,
 				F558E8012E8426240060F473 /* msvcprt.cpp in Sources */,
 				F558E8022E8426240060F473 /* msvcrt.cpp in Sources */,

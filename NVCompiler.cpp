@@ -24,7 +24,7 @@ mine* NextProcess(mine* cpu)
             auto& pointer = blob[3];
             auto* code = (char*)(memory + pointer);
 
-            std::string& text = ShaderCompiler::binaries["NVIDIA"];
+            std::string& text = ShaderCompiler::binaries["Machine"];
             text.assign(code, code + size);
             text.resize(strlen(text.c_str()));
 

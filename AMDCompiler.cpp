@@ -22,7 +22,7 @@ mine* NextProcess(mine* cpu)
         auto* output = (char*)(memory + stack[4 + 1]);
         auto size = stack[4 + 2];
         if (size && (EAX == 0 || EAX == 1)) {
-            std::string& text = ShaderCompiler::binaries["AMD"];
+            std::string& text = ShaderCompiler::binaries["Machine"];
             text.assign(output, output + size);
             text.resize(strlen(text.c_str()));
         }

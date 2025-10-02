@@ -44,6 +44,7 @@ mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, 
         return cpu->Memory(base, size);
     }, cpu, Logger<SYSTEM>);
     if (image) {
+        std::string file = "./" + dll.substr(dll.find_last_of("/\\") + 1);
         std::string path = dll.substr(0, dll.find_last_of("/\\") + 1);
 
         Syscall syscall = {
@@ -62,7 +63,7 @@ mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, 
             .symbol = GetSymbol,
         };
         syscall_windows_new(cpu, &syscall_windows);
-        syscall_windows_import(cpu, "main", image, true);
+        syscall_windows_import(cpu, file.c_str(), image, true);
 
         size_t address = parameter(cpu, GetProcAddress);
         if (address) {
@@ -72,21 +73,10 @@ mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, 
             cpu->Jump(address);
             size_t entry = PE::Entry(image);
             if (entry) {
-#if 1
                 Push32(0);
                 Push32(1);
                 Push32(0);
                 Push32(address);
-#else
-                Push32(0);
-                Push32(2);
-                Push32(0);
-                Push32(address);
-                Push32(0);
-                Push32(1);
-                Push32(0);
-                Push32(entry);
-#endif
                 cpu->Jump(entry);
             }
         }
