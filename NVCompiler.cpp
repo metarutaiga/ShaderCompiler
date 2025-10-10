@@ -18,24 +18,35 @@ mine* NextProcess(mine* cpu)
     auto* stack = (uint32_t*)(memory + cpu->Stack());
     switch (stack[0]) {
     case 'NVDA': {
-        auto* blob = (uint32_t*)(memory + stack[1]);
-        if (blob && EAX == 0) {
-            auto& size = blob[2];
-            auto& pointer = blob[3];
-            auto* code = (char*)(memory + pointer);
+        auto* binary_blob = stack[1] ? (uint32_t*)(memory + stack[1]) : nullptr;
+        auto* disasm_blob = stack[2] ? (uint32_t*)(memory + stack[2]) : nullptr;
+        if ((binary_blob || disasm_blob) && EAX == 0) {
+            if (binary_blob) {
+                auto& size = binary_blob[2];
+                auto& pointer = binary_blob[3];
+                auto* code = (char*)(memory + pointer);
 
-            std::string& disasm = ShaderCompiler::outputs["Machine"].disasm;
-            disasm.assign(code, code + size);
-            disasm.resize(strlen(disasm.c_str()));
+                std::vector<char>& binary = ShaderCompiler::outputs["Machine"].binary;
+                binary.assign(code, code + size);
+            }
+            if (disasm_blob) {
+                auto& size = disasm_blob[2];
+                auto& pointer = disasm_blob[3];
+                auto* code = (char*)(memory + pointer);
 
-            for (size_t i = 0, column = 0; i < disasm.size(); ++i, ++column) {
-                switch (disasm[i]) {
-                case '\n':
-                    column = 0;
-                    break;
-                case '\t':
-                    disasm.replace(i, 1, (8 - column % 8), ' ');
-                    break;
+                std::string& disasm = ShaderCompiler::outputs["Machine"].disasm;
+                disasm.assign(code, code + size);
+                disasm.resize(strlen(disasm.c_str()));
+
+                for (size_t i = 0, column = 0; i < disasm.size(); ++i, ++column) {
+                    switch (disasm[i]) {
+                    case '\n':
+                        column = 0;
+                        break;
+                    case '\t':
+                        disasm.replace(i, 1, (8 - column % 8), ' ');
+                        break;
+                    }
                 }
             }
         }

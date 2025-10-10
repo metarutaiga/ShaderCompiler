@@ -112,10 +112,10 @@ struct CPixelShaderPublic : public CPixelShader {
     using CPixelShader::PSProgramNames;
 };
 
-#pragma comment(linker, "/export:NVCompileShader=_NVCompileShader@20")
+#pragma comment(linker, "/export:NVCompileShader=_NVCompileShader@24")
 
 extern "C"
-HRESULT WINAPI NVCompileShader(const uint32_t* shader, size_t size, const char* folder, const char* gpu, void** binary)
+HRESULT WINAPI NVCompileShader(const uint32_t* shader, size_t size, const char* folder, const char* gpu, void** binary, void** disasm)
 {
     if (shader && size >= 4 && (shader[0] & 0xFFFF0000) == D3DVS_VERSION(0, 0)) {
         if ((shader[0] & 0xFFFF) > 0x0101) {
@@ -138,6 +138,16 @@ HRESULT WINAPI NVCompileShader(const uint32_t* shader, size_t size, const char* 
 
         VertexProgramOutput output = {};
         vp_CompileKelvin(&env, &parsed, program.dwNumInstructions, &output);
+
+        ID3DXBuffer* blob = nullptr;
+        if (output.residentProgram && output.residentNumInstructions) {
+            D3DXCreateBuffer(DWORD(output.residentNumInstructions * sizeof(vtxpgmInstPacked)), &blob);
+            if (blob) {
+                memcpy(blob->GetBufferPointer(), output.residentProgram, output.residentNumInstructions * sizeof(vtxpgmInstPacked)); 
+            }        
+            (*binary) = blob;
+        }
+
         free(output.residentProgram);
     }
     else if (shader && size >= 4 && (shader[0] & 0xFFFF0000) == D3DPS_VERSION(0, 0)) {
@@ -152,6 +162,17 @@ HRESULT WINAPI NVCompileShader(const uint32_t* shader, size_t size, const char* 
 
         CPixelShaderPublic pixelShader;
         pixelShader.create(nullptr, 0, size / sizeof(DWORD), (DWORD*)shader);
+
+        size_t constCount = sizeof(pixelShader.m_pixelShaderConsts);
+        size_t cwCount = pixelShader.m_dwStage * 16;
+
+        ID3DXBuffer* blob = nullptr;
+        D3DXCreateBuffer(DWORD(constCount + cwCount), &blob);
+        if (blob) {
+            memcpy((char*)blob->GetBufferPointer(), pixelShader.m_pixelShaderConsts, constCount); 
+            memcpy((char*)blob->GetBufferPointer() + constCount, pixelShader.m_cw, cwCount); 
+        }        
+        (*binary) = blob;
     }
 
     ID3DXBuffer* blob = nullptr;
@@ -160,9 +181,10 @@ HRESULT WINAPI NVCompileShader(const uint32_t* shader, size_t size, const char* 
         if (blob) {
             memcpy(blob->GetBufferPointer(), outputMemoryData, outputMemorySize); 
         }        
-        (*binary) = blob;
-        free(outputMemoryData);
+        (*disasm) = blob;
     }
+
+    free(outputMemoryData);
 
     return blob ? 0 : 0x80000000;
 }
