@@ -22,9 +22,21 @@ mine* NextProcess(mine* cpu)
         auto* output = (char*)(memory + stack[4 + 1]);
         auto size = stack[4 + 2];
         if (size && (EAX == 0 || EAX == 1)) {
-            std::string& text = ShaderCompiler::binaries["Machine"];
-            text.assign(output, output + size);
-            text.resize(strlen(text.c_str()));
+            std::string& disasm = ShaderCompiler::outputs["Machine"].disasm;
+            disasm.assign(output, output + size);
+            disasm.resize(strlen(disasm.c_str()));
+        }
+        else {
+            Logger<CONSOLE>("Compile : %08X\n", EAX);
+        }
+        break;
+    }
+    case 'AMDD': {
+        auto* output = (char*)(memory + stack[4 + 2]);
+        auto size = stack[4 + 3];
+        if (size && EAX == 0) {
+            std::vector<char>& binary = ShaderCompiler::outputs["Machine"].binary;
+            binary.assign(output, output + size);
         }
         else {
             Logger<CONSOLE>("Compile : %08X\n", EAX);

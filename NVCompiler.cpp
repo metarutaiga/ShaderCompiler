@@ -24,17 +24,17 @@ mine* NextProcess(mine* cpu)
             auto& pointer = blob[3];
             auto* code = (char*)(memory + pointer);
 
-            std::string& text = ShaderCompiler::binaries["Machine"];
-            text.assign(code, code + size);
-            text.resize(strlen(text.c_str()));
+            std::string& disasm = ShaderCompiler::outputs["Machine"].disasm;
+            disasm.assign(code, code + size);
+            disasm.resize(strlen(disasm.c_str()));
 
-            for (size_t i = 0, column = 0; i < text.size(); ++i, ++column) {
-                switch (text[i]) {
+            for (size_t i = 0, column = 0; i < disasm.size(); ++i, ++column) {
+                switch (disasm[i]) {
                 case '\n':
                     column = 0;
                     break;
                 case '\t':
-                    text.replace(i, 1, (8 - column % 8), ' ');
+                    disasm.replace(i, 1, (8 - column % 8), ' ');
                     break;
                 }
             }

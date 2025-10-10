@@ -179,8 +179,9 @@ size_t RunD3DDisassemble(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
     if (D3DDisassemble == 0)
         D3DDisassemble = symbol(cpu, nullptr, "D3DDisassembleCode");
     if (D3DDisassemble) {
-        auto pSrcData = VirtualMachine::DataToMemory(ShaderCompiler::binary.data(), ShaderCompiler::binary.size(), allocator);
-        auto SrcDataSize = ShaderCompiler::binary.size();
+        auto& output = ShaderCompiler::outputs[""];
+        auto pSrcData = VirtualMachine::DataToMemory(output.binary.data(), output.binary.size(), allocator);
+        auto SrcDataSize = output.binary.size();
 
         Push32(0);
         auto ppDisassembly = ESP;
@@ -197,7 +198,8 @@ size_t RunD3DDisassemble(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
 
     size_t D3DXDisassembleShader = symbol(cpu, nullptr, "D3DXDisassembleShader");
     if (D3DXDisassembleShader) {
-        auto pShader = VirtualMachine::DataToMemory(ShaderCompiler::binary.data(), ShaderCompiler::binary.size(), allocator);
+        auto& output = ShaderCompiler::outputs[""];
+        auto pShader = VirtualMachine::DataToMemory(output.binary.data(), output.binary.size(), allocator);
 
         Push32(0);
         auto ppDisassembly = ESP;
@@ -240,7 +242,8 @@ mine* NextProcess(mine* cpu)
             auto& pointer = blob[3];
             auto* code = (char*)(memory + pointer);
 
-            ShaderCompiler::binary.assign(code, code + size);
+            auto& output = ShaderCompiler::outputs[""];
+            output.binary.assign(code, code + size);
 
             size_t address = D3DCompiler::RunD3DDisassemble(cpu, VirtualMachine::GetProcAddress);
             if (address) {
@@ -262,9 +265,9 @@ mine* NextProcess(mine* cpu)
             auto& pointer = blob[3];
             auto* code = (char*)(memory + pointer);
 
-            std::string& text = ShaderCompiler::binaries["Disassembly"];
-            text.assign(code, code + size);
-            text.resize(strlen(text.c_str()));
+            auto& output = ShaderCompiler::outputs[""];
+            output.disasm.assign(code, code + size);
+            output.disasm.resize(strlen(output.disasm.c_str()));
         }
         else {
             Logger<CONSOLE>("Disassemble : %08X\n", EAX);

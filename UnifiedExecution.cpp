@@ -21,10 +21,12 @@ size_t RunDriver(mine* cpu, size_t(*symbol)(mine*, void*, const char*)) __attrib
         auto& machine = driver.machines[ShaderCompiler::machine_index];
         if (machine.size() < 2)
             return 0;
-        auto SrcDataSize = ShaderCompiler::binary.size();
-        auto pSrcData = VirtualMachine::DataToMemory(ShaderCompiler::binary.data(), ShaderCompiler::binary.size(), allocator);
-        auto OutputSize = 1048576;
-        auto pOutput = VirtualMachine::DataToMemory("", 1048576, allocator);
+        size_t SrcDataSize = 0;
+        size_t pSrcData = 0;
+        size_t SHDRDataSize = 0;
+        size_t pSHDRData = 0;
+        size_t OutputSize = 0;
+        size_t pOutput = 0;
 
         size_t entry = symbol(cpu, nullptr, machine[1].c_str());
         if (entry) {
@@ -66,17 +68,46 @@ size_t RunDriver(mine* cpu, size_t(*symbol)(mine*, void*, const char*)) __attrib
                     break;
                 }
                 default:
-                    if (machine[i] == "SrcDataSize") {
-                        Push32(SrcDataSize);
+                    if (machine[i] == "pSrcData" || machine[i] == "SrcDataSize") {
+                        if (pSrcData == 0 && SrcDataSize == 0) {
+                            auto& output = ShaderCompiler::outputs[""];
+                            pSrcData = VirtualMachine::DataToMemory(output.binary.data(), output.binary.size(), allocator);
+                            SrcDataSize = output.binary.size();
+                        }
+                        if (machine[i] == "pSrcData")
+                            Push32(pSrcData);
+                        if (machine[i] == "SrcDataSize")
+                            Push32(SrcDataSize);
                     }
-                    else if (machine[i] == "pSrcData") {
-                        Push32(pSrcData);
+                    else if (machine[i] == "pSHDRData" || machine[i] == "SHDRDataSize") {
+                        if (pSHDRData == 0 && SHDRDataSize == 0) {
+                            auto& output = ShaderCompiler::outputs[""];
+                            if (output.binary.empty() == false) {
+                                uint32_t* chunks = (uint32_t*)output.binary.data();
+                                size_t size = output.binary.size() / sizeof(uint32_t);
+                                for (size_t i = 0; i < size; ++i) {
+                                    if (chunks[i] == 'XEHS' || chunks[i] == 'RDHS') {
+                                        pSHDRData = VirtualMachine::DataToMemory(chunks + i + 2, chunks[i + 1], allocator);
+                                        SHDRDataSize = chunks[i + 1];
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (machine[i] == "pSHDRData")
+                            Push32(pSHDRData);
+                        if (machine[i] == "SHDRDataSize")
+                            Push32(SHDRDataSize);
                     }
-                    else if (machine[i] == "OutputSize") {
-                        Push32(OutputSize);
-                    }
-                    else if (machine[i] == "pOutput") {
-                        Push32(pOutput);
+                    else if (machine[i] == "pOutput" || machine[i] == "OutputSize") {
+                        if (pOutput == 0 && OutputSize == 0) {
+                            pOutput = VirtualMachine::DataToMemory("", 1048576, allocator);
+                            OutputSize = 1048576;
+                        }
+                        if (machine[i] == "pOutput")
+                            Push32(pOutput);
+                        if (machine[i] == "OutputSize")
+                            Push32(OutputSize);
                     }
                     else {
                         printf("%s\n", machine[i].c_str());

@@ -5,6 +5,7 @@
 #include <sys/dir.h>
 #include <mach-o/dyld.h>
 #endif
+#include <sys/stat.h>
 #include <algorithm>
 #include <chrono>
 #include <map>
@@ -38,9 +39,11 @@ std::string text;
 std::vector<std::string> shaders;
 int shader_index;
 
-std::vector<std::string> compilers;
+std::vector<Compiler> compilers;
 int compiler_index;
+
 std::string entry;
+
 std::vector<std::string> profiles;
 int profile_index;
 
@@ -48,9 +51,7 @@ std::vector<Driver> drivers;
 int driver_index;
 int machine_index;
 
-std::map<std::string, std::string> binaries;
-std::vector<char> binary;
-int binary_index;
+std::map<std::string, Output> outputs;
 
 std::string DetectProfile()
 {
@@ -85,9 +86,9 @@ static void LoadCompiler()
 {
     profiles.clear();
     if (compilers.size() > compiler_index) {
-        std::string compiler = compilers[compiler_index];
-        if (strncasecmp(compiler.data(), "d3dx9", 5) == 0 ||
-            strncasecmp(compiler.data(), "d3dcompiler", 11) == 0) {
+        auto& compiler = compilers[compiler_index];
+        if (strcasestr(compiler.path.c_str(), "d3dx9") ||
+            strcasestr(compiler.path.c_str(), "d3dcompiler")) {
             profiles.push_back("Shader Model 1.0");
             profiles.push_back("Shader Model 1.1");
             profiles.push_back("Shader Model 1.2");
@@ -166,8 +167,8 @@ static void Option()
         ImGui::TextUnformatted("Compiler");
         ImGui::SetNextItemWidth(region.x);
         if (ImGui::Combo("##201", &compiler_index, [](void* user_data, int index) {
-            auto* compilers = (std::string*)user_data;
-            return compilers[index].c_str();
+            auto* compilers = (Compiler*)user_data;
+            return compilers[index].name.c_str();
         }, compilers.data(), (int)compilers.size()) || ImGui::ScrollCombo(&compiler_index, compilers.size())) {
             LoadCompiler();
             refresh_compiler = true;
@@ -226,11 +227,8 @@ static void Binary()
 {
     int id = 300;
 
-    if (ImGui::Begin("Binary", nullptr, ImGuiWindowFlags_NoFocusOnAppearing)) {
-        ImVec2 region = ImGui::GetContentRegionAvail();
-        ImGui::SetNextWindowSize(region);
-        ImGui::PushID(id++);
-        ImGui::ListBox("", &binary_index, [](void* user_data, int index) -> const char* {
+    auto hex = [](std::vector<char>& data, int& index) {
+        ImGui::ListBox("", &index, [](void* user_data, int index) -> const char* {
             auto& binary = *(std::vector<char>*)user_data;
             auto code = (uint32_t*)binary.data();
             auto size = binary.size();
@@ -258,17 +256,31 @@ static void Binary()
             line[width + 16] = 0;
 
             return line;
-        }, &binary, (int)(binary.size() + 15) / 16);
-        ImGui::PopID();
-    }
-    ImGui::End();
+        }, &data, (int)(data.size() + 15) / 16);
+    };
 
-    for (auto& [title, binary] : binaries) {
-        ImGui::DockBuilderDockWindow(title.c_str(), binary_dockid);
-        if (ImGui::Begin(title.c_str(), nullptr, ImGuiWindowFlags_NoFocusOnAppearing)) {
+    for (auto& [title, output] : outputs) {
+        char name[64];
+
+        // Binary
+        snprintf(name, 64, "%s", title.empty() ? "Output" : title.c_str());
+        ImGui::DockBuilderDockWindow(name, binary_dockid);
+        if (ImGui::Begin(name, nullptr, ImGuiWindowFlags_NoFocusOnAppearing)) {
             ImVec2 region = ImGui::GetContentRegionAvail();
             ImGui::PushID(id++);
-            ImGui::InputTextMultiline("", binary, region, ImGuiInputTextFlags_ReadOnly);
+            ImGui::SetNextWindowSize(region);
+            hex(output.binary, output.binary_index);
+            ImGui::PopID();
+        }
+        ImGui::End();
+
+        // Disassembly
+        snprintf(name, 64, "%s:%s", title.empty() ? "Output" : title.c_str(), "Disassembly");
+        ImGui::DockBuilderDockWindow(name, binary_dockid);
+        if (ImGui::Begin(name, nullptr, ImGuiWindowFlags_NoFocusOnAppearing)) {
+            ImVec2 region = ImGui::GetContentRegionAvail();
+            ImGui::PushID(id++);
+            ImGui::InputTextMultiline("", output.disasm, region, ImGuiInputTextFlags_ReadOnly);
             ImGui::PopID();
         }
         ImGui::End();
@@ -312,25 +324,26 @@ static void RefreshCompiler()
     VirtualMachine::Close(cpu);
     cpu = nullptr;
 
-    for (auto& [title, binary] : binaries) {
-        binary.clear();
+    for (auto& [title, output] : outputs) {
+        output.binary.clear();
+        output.disasm.clear();
     }
-    binary.clear();
 
     logs[SYSTEM].clear();
     logs[CONSOLE].clear();
 
     if (compilers.size() > compiler_index) {
-        std::string compiler = compilers[compiler_index];
-        std::string path = compiler_path + "/" + compiler;
+        auto& compiler = compilers[compiler_index];
+        std::string path = compiler_path + "/" + compiler.path;
 
         if (strncmp(text.c_str(), "!!ARB", 5) == 0) {
-            binary.assign(text.begin(), text.end());
+            auto& output = outputs[""];
+            output.binary.assign(text.begin(), text.end());
             return;
         }
 
-        if (strncasecmp(compiler.data(), "d3dx9", 5) == 0 ||
-            strncasecmp(compiler.data(), "d3dcompiler", 11) == 0) {
+        if (strcasestr(compiler.path.c_str(), "d3dx9") ||
+            strcasestr(compiler.path.c_str(), "d3dcompiler")) {
             if (text.find('{') == std::string::npos) {
                 cpu = VirtualMachine::RunDLL(path, D3DCompiler::RunD3DAssemble, debug_vm);
             }
@@ -346,7 +359,8 @@ static void RefreshCompiler()
 
 static void RefreshMachine()
 {
-    if (binary.empty() || cpu)
+    auto& output = outputs[""];
+    if (output.binary.empty() || cpu)
         return;
 
     if (refresh_machine == false)
@@ -356,9 +370,10 @@ static void RefreshMachine()
     VirtualMachine::Close(cpu);
     cpu = nullptr;
 
-    for (auto& [title, binary] : ShaderCompiler::binaries) {
-        if (title == "Machine") {
-            binary.clear();
+    for (auto& [title, output] : outputs) {
+        if (title.empty() == false) {
+            output.binary.clear();
+            output.disasm.clear();
         }
     }
 
@@ -389,11 +404,11 @@ static void Loop()
             Logger<SYSTEM>("%s", cpu->Status().c_str());
 
             auto stack = cpu->Stack();
-            for (int i = 0; i < 16; ++i) {
+            for (int i = -4; i < 16; ++i) {
                 auto* value = (uint32_t*)(cpu->Memory(stack + i * 4));
                 if (value == nullptr)
                     break;
-                Logger<SYSTEM>("%08X : %08X", stack + i * 4, (*value));
+                Logger<SYSTEM>("%s%08X : %08X", i == 0 ? ">" : " ", stack + i * 4, (*value));
             }
 
             logs_index[CONSOLE] = (int)logs[CONSOLE].size();
@@ -440,12 +455,12 @@ static void Init()
 
     ImGuiID dockid = ImGui::DockBuilderAddNode(id);
     ImGuiID bottom = ImGui::DockBuilderSplitNode(dockid, ImGuiDir_Down, 1.0f / 4.0f, nullptr, &dockid);
-    ImGuiID left = ImGui::DockBuilderSplitNode(dockid, ImGuiDir_Left, 3.0f / 7.0f, nullptr, &dockid);
-    ImGuiID middle = ImGui::DockBuilderSplitNode(dockid, ImGuiDir_Left, 1.0f / 4.0f, nullptr, &dockid);
+    ImGuiID left = ImGui::DockBuilderSplitNode(dockid, ImGuiDir_Left, 2.0f / 5.0f, nullptr, &dockid);
+    ImGuiID middle = ImGui::DockBuilderSplitNode(dockid, ImGuiDir_Left, 1.0f / 3.0f, nullptr, &dockid);
     ImGuiID right = binary_dockid = dockid;
     ImGui::DockBuilderDockWindow("Text", left);
     ImGui::DockBuilderDockWindow("Option", middle);
-    ImGui::DockBuilderDockWindow("Binary", right);
+    ImGui::DockBuilderDockWindow("Output", right);
     ImGui::DockBuilderDockWindow("System", bottom);
     ImGui::DockBuilderDockWindow("Console", bottom);
     ImGui::DockBuilderFinish(dockid);
@@ -487,19 +502,35 @@ static void Init()
     realpath((cwd + "/../../../../../../compiler").c_str(), compiler_path.data());
     compiler_path.resize(strlen(compiler_path.c_str()));
     if (compiler_path.empty() == false) {
-        DIR* dir = opendir(compiler_path.c_str());
-        if (dir) {
-            while (struct dirent* dirent = readdir(dir)) {
-                if (dirent->d_name[0] == '.')
-                    continue;
-                if (strcasestr(dirent->d_name, ".dll") == nullptr)
-                    continue;
-                compilers.push_back(dirent->d_name);
+        FILE* file = fopen((compiler_path + "/compiler.ini").c_str(), "rb");
+        if (file) {
+            char line[256];
+            while (fgets(line, 256, file)) {
+                Compiler compiler;
+                for (int i = 0; i < 256; ++i) {
+                    char c = line[i];
+                    if (c == 0 || c == '\r' || c == '\n')
+                        break;
+                    if (c == '=') {
+                        compiler.name.swap(compiler.path);
+                        continue;
+                    }
+                    compiler.name.push_back(c);
+                }
+                compilers.push_back(compiler);
             }
-            closedir(dir);
+            fclose(file);
+        }
+
+        // Remove unavailable
+        struct stat st;
+        for (int64_t i = compilers.size() - 1; i >= 0; --i) {
+            auto path = compiler_path + "/" + compilers[i].path;
+            if (stat(path.c_str(), &st) != 0) {
+                compilers.erase(compilers.begin() + i);
+            }
         }
     }
-    std::stable_sort(compilers.begin(), compilers.end());
 
     driver_path.resize(1024, 0);
     realpath((cwd + "/../../../../../../driver").c_str(), driver_path.data());
@@ -548,6 +579,15 @@ static void Init()
                 }
             }
             fclose(file);
+        }
+
+        // Remove unavailable
+        struct stat st;
+        for (int64_t i = drivers.size() - 1; i >= 0; --i) {
+            auto path = driver_path + "/" + drivers[i].name.back();
+            if (stat(path.c_str(), &st) != 0) {
+                drivers.erase(drivers.begin() + i);
+            }
         }
     }
 

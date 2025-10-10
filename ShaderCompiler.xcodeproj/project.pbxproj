@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D61CAA9E2E915BE90031B205 /* mmx_sse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAA962E915BE90031B205 /* mmx_sse.cpp */; };
+		D61CAA9F2E915BE90031B205 /* sse3_instruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAA9B2E915BE90031B205 /* sse3_instruction.cpp */; };
+		D61CAAA02E915BE90031B205 /* sse2_instruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAA992E915BE90031B205 /* sse2_instruction.cpp */; };
+		D61CAAA12E915BE90031B205 /* x86_ia32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAA9D2E915BE90031B205 /* x86_ia32.cpp */; };
+		D61CAAA22E915BE90031B205 /* mmx_instruction.inl in Resources */ = {isa = PBXBuildFile; fileRef = D61CAA952E915BE90031B205 /* mmx_instruction.inl */; };
+		D61CAAA32E915BE90031B205 /* sse_instruction.inl in Resources */ = {isa = PBXBuildFile; fileRef = D61CAA972E915BE90031B205 /* sse_instruction.inl */; };
+		D61CAAA62E9184270031B205 /* ssse3_instruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAAA52E9184260031B205 /* ssse3_instruction.cpp */; };
+		D61CAAA82E921B590031B205 /* mmx_ssse3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAAA72E921B520031B205 /* mmx_ssse3.cpp */; };
 		F558E5972E8276060060F473 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = F558E5962E8276060060F473 /* main.mm */; };
 		F558E5CE2E8276680060F473 /* imgui_impl_metal.mm in Sources */ = {isa = PBXBuildFile; fileRef = F558E5B42E8276460060F473 /* imgui_impl_metal.mm */; };
 		F558E5CF2E8276680060F473 /* imgui_impl_osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = F558E5BB2E8276460060F473 /* imgui_impl_osx.mm */; };
@@ -83,12 +91,25 @@
 		F582D69F2E8272D000D70BDC /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6962E8272D000D70BDC /* imgui_draw.cpp */; };
 		F582D6A02E8272D000D70BDC /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6942E8272D000D70BDC /* imgui.cpp */; };
 		F582D6A12E8272D000D70BDC /* imgui_tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6982E8272D000D70BDC /* imgui_tables.cpp */; };
+		F595FFE72E97D4A70096661A /* mmx_sse2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F595FFE62E97D4A70096661A /* mmx_sse2.cpp */; };
 		F5A7A0722E8E321100C7E565 /* UnifiedExecution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A7A0712E8E31A900C7E565 /* UnifiedExecution.cpp */; };
 		F5A7A0742E8E588800C7E565 /* shlwapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A7A0732E8E588100C7E565 /* shlwapi.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8307E7DA20E9F9C900473790 /* shadercompiler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shadercompiler.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D61CAA952E915BE90031B205 /* mmx_instruction.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = mmx_instruction.inl; sourceTree = "<group>"; };
+		D61CAA962E915BE90031B205 /* mmx_sse.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mmx_sse.cpp; sourceTree = "<group>"; };
+		D61CAA972E915BE90031B205 /* sse_instruction.inl */ = {isa = PBXFileReference; lastKnownFileType = text; path = sse_instruction.inl; sourceTree = "<group>"; };
+		D61CAA982E915BE90031B205 /* sse2_instruction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sse2_instruction.h; sourceTree = "<group>"; };
+		D61CAA992E915BE90031B205 /* sse2_instruction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sse2_instruction.cpp; sourceTree = "<group>"; };
+		D61CAA9A2E915BE90031B205 /* sse3_instruction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sse3_instruction.h; sourceTree = "<group>"; };
+		D61CAA9B2E915BE90031B205 /* sse3_instruction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sse3_instruction.cpp; sourceTree = "<group>"; };
+		D61CAA9C2E915BE90031B205 /* x86_ia32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = x86_ia32.h; sourceTree = "<group>"; };
+		D61CAA9D2E915BE90031B205 /* x86_ia32.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = x86_ia32.cpp; sourceTree = "<group>"; };
+		D61CAAA42E9184110031B205 /* ssse3_instruction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ssse3_instruction.h; sourceTree = "<group>"; };
+		D61CAAA52E9184260031B205 /* ssse3_instruction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ssse3_instruction.cpp; sourceTree = "<group>"; };
+		D61CAAA72E921B520031B205 /* mmx_ssse3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mmx_ssse3.cpp; sourceTree = "<group>"; };
 		F558E5962E8276060060F473 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		F558E5B32E8276460060F473 /* imgui_impl_metal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imgui_impl_metal.h; sourceTree = "<group>"; };
 		F558E5B42E8276460060F473 /* imgui_impl_metal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = imgui_impl_metal.mm; sourceTree = "<group>"; };
@@ -213,6 +234,7 @@
 		F582D69B2E8272D000D70BDC /* imstb_textedit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imstb_textedit.h; sourceTree = "<group>"; };
 		F582D69C2E8272D000D70BDC /* imstb_truetype.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imstb_truetype.h; sourceTree = "<group>"; };
 		F582D6A72E82754900D70BDC /* Info-macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-macOS.plist"; sourceTree = "<group>"; };
+		F595FFE62E97D4A70096661A /* mmx_sse2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mmx_sse2.cpp; sourceTree = "<group>"; };
 		F5A7A0702E8E305400C7E565 /* UnifiedExecution.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnifiedExecution.h; sourceTree = "<group>"; };
 		F5A7A0712E8E31A900C7E565 /* UnifiedExecution.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UnifiedExecution.cpp; sourceTree = "<group>"; };
 		F5A7A0732E8E588100C7E565 /* shlwapi.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = shlwapi.cpp; sourceTree = "<group>"; };
@@ -337,10 +359,10 @@
 				F5A7A0732E8E588100C7E565 /* shlwapi.cpp */,
 				F558E6972E827B290060F473 /* kernel32.cpp */,
 				F558E6982E827B290060F473 /* msvcprt.cpp */,
-				F558E6992E827B290060F473 /* msvcrt.h */,
 				F558E69A2E827B290060F473 /* msvcrt.cpp */,
-				F558E69B2E827B290060F473 /* syscall_windows.h */,
+				F558E6992E827B290060F473 /* msvcrt.h */,
 				F558E69C2E827B290060F473 /* syscall_windows.cpp */,
+				F558E69B2E827B290060F473 /* syscall_windows.h */,
 				F558E69D2E827B290060F473 /* ucrt.cpp */,
 				F558E69E2E827B290060F473 /* windows.h */,
 			);
@@ -378,32 +400,45 @@
 		F558E6E02E827B290060F473 /* x86 */ = {
 			isa = PBXGroup;
 			children = (
-				F558E6B52E827B290060F473 /* mmx_instruction.h */,
 				F558E6B62E827B290060F473 /* mmx_instruction.cpp */,
+				F558E6B52E827B290060F473 /* mmx_instruction.h */,
+				D61CAA952E915BE90031B205 /* mmx_instruction.inl */,
 				F558E6B72E827B290060F473 /* mmx_register.h */,
 				F558E6B82E827B290060F473 /* mmx_register.inl */,
-				F558E6B92E827B290060F473 /* sse_instruction.h */,
+				D61CAA962E915BE90031B205 /* mmx_sse.cpp */,
+				F595FFE62E97D4A70096661A /* mmx_sse2.cpp */,
+				D61CAAA72E921B520031B205 /* mmx_ssse3.cpp */,
 				F558E6BA2E827B290060F473 /* sse_instruction.cpp */,
+				D61CAA972E915BE90031B205 /* sse_instruction.inl */,
+				F558E6B92E827B290060F473 /* sse_instruction.h */,
 				F558E6BB2E827B290060F473 /* sse_register.h */,
 				F558E6BC2E827B290060F473 /* sse_register.inl */,
+				D61CAA992E915BE90031B205 /* sse2_instruction.cpp */,
+				D61CAA982E915BE90031B205 /* sse2_instruction.h */,
+				D61CAA9B2E915BE90031B205 /* sse3_instruction.cpp */,
+				D61CAA9A2E915BE90031B205 /* sse3_instruction.h */,
+				D61CAAA52E9184260031B205 /* ssse3_instruction.cpp */,
+				D61CAAA42E9184110031B205 /* ssse3_instruction.h */,
 				F558E6BD2E827B290060F473 /* x86_arithmetic.cpp */,
 				F558E6BE2E827B290060F473 /* x86_atomic.cpp */,
 				F558E6BF2E827B290060F473 /* x86_bcd.cpp */,
 				F558E6C02E827B290060F473 /* x86_bitwise.cpp */,
-				F558E6C12E827B290060F473 /* x86_format.h */,
 				F558E6C22E827B290060F473 /* x86_format.cpp */,
-				F558E6C32E827B290060F473 /* x86_i86.h */,
+				F558E6C12E827B290060F473 /* x86_format.h */,
 				F558E6C42E827B290060F473 /* x86_i86.cpp */,
-				F558E6C52E827B290060F473 /* x86_i386.h */,
+				F558E6C32E827B290060F473 /* x86_i86.h */,
 				F558E6C62E827B290060F473 /* x86_i386.cpp */,
-				F558E6C72E827B290060F473 /* x86_i486.h */,
+				F558E6C52E827B290060F473 /* x86_i386.h */,
 				F558E6C82E827B290060F473 /* x86_i486.cpp */,
-				F558E6C92E827B290060F473 /* x86_i586.h */,
+				F558E6C72E827B290060F473 /* x86_i486.h */,
 				F558E6CA2E827B290060F473 /* x86_i586.cpp */,
-				F558E6CB2E827B290060F473 /* x86_i686.h */,
+				F558E6C92E827B290060F473 /* x86_i586.h */,
 				F558E6CC2E827B290060F473 /* x86_i686.cpp */,
-				F558E6CD2E827B290060F473 /* x86_instruction.h */,
+				F558E6CB2E827B290060F473 /* x86_i686.h */,
+				D61CAA9D2E915BE90031B205 /* x86_ia32.cpp */,
+				D61CAA9C2E915BE90031B205 /* x86_ia32.h */,
 				F558E6CE2E827B290060F473 /* x86_instruction.cpp */,
+				F558E6CD2E827B290060F473 /* x86_instruction.h */,
 				F558E6CF2E827B290060F473 /* x86_instruction.inl */,
 				F558E6D02E827B290060F473 /* x86_logical.cpp */,
 				F558E6D12E827B290060F473 /* x86_register.h */,
@@ -415,8 +450,8 @@
 				F558E6D72E827B290060F473 /* x87_compare.cpp */,
 				F558E6D82E827B290060F473 /* x87_compute.cpp */,
 				F558E6D92E827B290060F473 /* x87_floating.cpp */,
-				F558E6DA2E827B290060F473 /* x87_instruction.h */,
 				F558E6DB2E827B290060F473 /* x87_instruction.cpp */,
+				F558E6DA2E827B290060F473 /* x87_instruction.h */,
 				F558E6DC2E827B290060F473 /* x87_instruction.inl */,
 				F558E6DD2E827B290060F473 /* x87_integer.cpp */,
 				F558E6DE2E827B290060F473 /* x87_register.h */,
@@ -518,6 +553,8 @@
 				F558E7652E827B290060F473 /* x87_register.inl in Resources */,
 				F558E76C2E827B290060F473 /* README.md in Resources */,
 				F558E76E2E827B290060F473 /* x86_instruction.inl in Resources */,
+				D61CAAA22E915BE90031B205 /* mmx_instruction.inl in Resources */,
+				D61CAAA32E915BE90031B205 /* sse_instruction.inl in Resources */,
 				F558E7792E827B290060F473 /* x86_register.inl in Resources */,
 				F558E77F2E827B290060F473 /* sse_register.inl in Resources */,
 				F558E7982E827B290060F473 /* LICENSE.txt in Resources */,
@@ -567,7 +604,13 @@
 				F558E7FE2E84261D0060F473 /* wchar.cpp in Sources */,
 				F558E7FF2E84261D0060F473 /* wctype.cpp in Sources */,
 				F558E7C22E8425FC0060F473 /* mmx_instruction.cpp in Sources */,
+				D61CAA9E2E915BE90031B205 /* mmx_sse.cpp in Sources */,
+				F595FFE72E97D4A70096661A /* mmx_sse2.cpp in Sources */,
+				D61CAAA82E921B590031B205 /* mmx_ssse3.cpp in Sources */,
 				F558E7C32E8425FC0060F473 /* sse_instruction.cpp in Sources */,
+				D61CAAA02E915BE90031B205 /* sse2_instruction.cpp in Sources */,
+				D61CAA9F2E915BE90031B205 /* sse3_instruction.cpp in Sources */,
+				D61CAAA62E9184270031B205 /* ssse3_instruction.cpp in Sources */,
 				F558E7C42E8425FC0060F473 /* x86_arithmetic.cpp in Sources */,
 				F558E7C52E8425FC0060F473 /* x86_atomic.cpp in Sources */,
 				F558E7C62E8425FC0060F473 /* x86_bcd.cpp in Sources */,
@@ -578,6 +621,7 @@
 				F558E7CB2E8425FC0060F473 /* x86_i486.cpp in Sources */,
 				F558E7CC2E8425FC0060F473 /* x86_i586.cpp in Sources */,
 				F558E7CD2E8425FC0060F473 /* x86_i686.cpp in Sources */,
+				D61CAAA12E915BE90031B205 /* x86_ia32.cpp in Sources */,
 				F558E7CE2E8425FC0060F473 /* x86_instruction.cpp in Sources */,
 				F558E7CF2E8425FC0060F473 /* x86_logical.cpp in Sources */,
 				F558E7D02E8425FC0060F473 /* x86_rotate.cpp in Sources */,

@@ -5,6 +5,7 @@
 #include "mine/syscall/syscall.h"
 #include "mine/syscall/windows/syscall_windows.h"
 #include "mine/x86/x86_i386.h"
+#include "mine/x86/x86_ia32.h"
 #include "mine/x86/x86_instruction.inl"
 #include "mine/x86/x86_register.inl"
 
@@ -22,10 +23,10 @@ void Close(mine* cpu)
 
 mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, void*, const char*)), bool debug)
 {
-    static const int allocator_size = 256 * 1024 * 1024;
-    static const int stack_size = 1 * 1024 * 1024;
+    static const size_t allocator_size = 256 * 1024 * 1024;
+    static const size_t stack_size = 1 * 1024 * 1024;
 
-    mine* cpu = new x86_i386;
+    mine* cpu = new x86_ia32;
     cpu->Initialize(simple_allocator<16>::construct(allocator_size), stack_size);
     cpu->Exception = RunException;
 
@@ -77,11 +78,11 @@ mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, 
 
 size_t RunException(mine* cpu, size_t index)
 {
-    size_t result = 0;
-    if (result == 0) {
+    size_t result = SIZE_MAX;
+    if (result == SIZE_MAX) {
         result = syscall_windows_execute(cpu, index);
     }
-    if (result == 0) {
+    if (result == SIZE_MAX) {
         result = syscall_i386_execute(cpu, index);
     }
     return result;

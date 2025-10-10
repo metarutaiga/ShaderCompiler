@@ -15,7 +15,11 @@ extern std::string text;
 extern std::vector<std::string> shaders;
 extern int shader_index;
 
-extern std::vector<std::string> compilers;
+struct Compiler {
+    std::string name;
+    std::string path;
+};
+extern std::vector<Compiler> compilers;
 extern int compiler_index;
 
 extern std::string entry;
@@ -31,8 +35,13 @@ extern std::vector<Driver> drivers;
 extern int driver_index;
 extern int machine_index;
 
-extern std::map<std::string, std::string> binaries;
-extern std::vector<char> binary;
+struct Output {
+    std::vector<char> binary;
+    std::string disasm;
+    int binary_index = 0;
+};
+extern std::map<std::string, Output> outputs;
+
 
 extern std::string DetectProfile();
 
