@@ -1,13 +1,15 @@
 #include "Logger.h"
 #include "VirtualMachine.h"
-#include "mine/format/coff/pe.h"
-#include "mine/syscall/simple_allocator.h"
-#include "mine/syscall/syscall.h"
-#include "mine/syscall/windows/syscall_windows.h"
-#include "mine/x86/x86_i386.h"
-#include "mine/x86/x86_ia32.h"
-#include "mine/x86/x86_instruction.inl"
-#include "mine/x86/x86_register.inl"
+#include "../mine/format/coff/pe.h"
+#include "../mine/syscall/allocator.h"
+#include "../mine/syscall/simple_allocator.h"
+#include "../mine/syscall/syscall.h"
+#include "../mine/syscall/windows/syscall_windows.h"
+#include "../mine/x86/x86_i386.h"
+#include "../mine/x86/x86_i686.h"
+#include "../mine/x86/x86_ia32.h"
+#include "../mine/x86/x86_instruction.inl"
+#include "../mine/x86/x86_register.inl"
 
 namespace VirtualMachine {
 

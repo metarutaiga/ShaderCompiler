@@ -1,6 +1,7 @@
 #pragma once
 
-#include "mine/mine.h"
+struct allocator_t;
+struct mine;
 
 namespace VirtualMachine {
 

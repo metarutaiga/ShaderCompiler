@@ -10,15 +10,15 @@
 #include <chrono>
 #include <map>
 #include <vector>
-#include "AMDCompiler.h"
-#include "D3DCompiler.h"
+#include "mine/mine.h"
+#include "src/AMDCompiler.h"
+#include "src/D3DCompiler.h"
+#include "src/NVCompiler.h"
+#include "src/UnifiedExecution.h"
+#include "src/VirtualMachine.h"
 #include "ImGuiHelper.h"
 #include "Logger.h"
-#include "NVCompiler.h"
 #include "ShaderCompiler.h"
-
-#include "UnifiedExecution.h"
-#include "VirtualMachine.h"
 
 static bool refresh_compiler;
 static bool refresh_machine;

@@ -2,10 +2,10 @@
 #include "Logger.h"
 #include "ShaderCompiler.h"
 #include "VirtualMachine.h"
-#include "mine/syscall/allocator.h"
-#include "mine/x86/x86_i386.h"
-#include "mine/x86/x86_instruction.inl"
-#include "mine/x86/x86_register.inl"
+#include "../mine/syscall/allocator.h"
+#include "../mine/x86/x86_i386.h"
+#include "../mine/x86/x86_instruction.inl"
+#include "../mine/x86/x86_register.inl"
 
 namespace NVCompiler {
 

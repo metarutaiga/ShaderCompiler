@@ -15,6 +15,11 @@
 		D61CAAA32E915BE90031B205 /* sse_instruction.inl in Resources */ = {isa = PBXBuildFile; fileRef = D61CAA972E915BE90031B205 /* sse_instruction.inl */; };
 		D61CAAA62E9184270031B205 /* ssse3_instruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAAA52E9184260031B205 /* ssse3_instruction.cpp */; };
 		D61CAAA82E921B590031B205 /* mmx_ssse3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAAA72E921B520031B205 /* mmx_ssse3.cpp */; };
+		F528691F2E9A7DB4003CC84C /* VirtualMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F528691D2E9A7DB4003CC84C /* VirtualMachine.cpp */; };
+		F52869202E9A7DB4003CC84C /* AMDCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F52869152E9A7DB4003CC84C /* AMDCompiler.cpp */; };
+		F52869212E9A7DB4003CC84C /* D3DCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F52869172E9A7DB4003CC84C /* D3DCompiler.cpp */; };
+		F52869222E9A7DB4003CC84C /* NVCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F52869192E9A7DB4003CC84C /* NVCompiler.cpp */; };
+		F52869232E9A7DB4003CC84C /* UnifiedExecution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F528691B2E9A7DB4003CC84C /* UnifiedExecution.cpp */; };
 		F558E5972E8276060060F473 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = F558E5962E8276060060F473 /* main.mm */; };
 		F558E5CE2E8276680060F473 /* imgui_impl_metal.mm in Sources */ = {isa = PBXBuildFile; fileRef = F558E5B42E8276460060F473 /* imgui_impl_metal.mm */; };
 		F558E5CF2E8276680060F473 /* imgui_impl_osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = F558E5BB2E8276460060F473 /* imgui_impl_osx.mm */; };
@@ -81,18 +86,13 @@
 		F558E8092E84262C0060F473 /* xcoff32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E5F52E827B290060F473 /* xcoff32.cpp */; };
 		F558E80A2E84262C0060F473 /* xcoff64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E5F72E827B290060F473 /* xcoff64.cpp */; };
 		F558E80B2E84263D0060F473 /* ShaderCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E7BD2E82A3C70060F473 /* ShaderCompiler.cpp */; };
-		F558E80D2E8433E70060F473 /* VirtualMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E80C2E8433C30060F473 /* VirtualMachine.cpp */; };
 		F558E8122E8435560060F473 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E8112E84352E0060F473 /* Logger.cpp */; };
-		F558E8162E8533010060F473 /* D3DCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E8152E8533000060F473 /* D3DCompiler.cpp */; };
-		F558E81A2E8809600060F473 /* NVCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E8192E8809570060F473 /* NVCompiler.cpp */; };
-		F558E81E2E8AC3B00060F473 /* AMDCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E81D2E8AC3B00060F473 /* AMDCompiler.cpp */; };
 		F582D69D2E8272D000D70BDC /* imgui_widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6992E8272D000D70BDC /* imgui_widgets.cpp */; };
 		F582D69E2E8272D000D70BDC /* imgui_demo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6952E8272D000D70BDC /* imgui_demo.cpp */; };
 		F582D69F2E8272D000D70BDC /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6962E8272D000D70BDC /* imgui_draw.cpp */; };
 		F582D6A02E8272D000D70BDC /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6942E8272D000D70BDC /* imgui.cpp */; };
 		F582D6A12E8272D000D70BDC /* imgui_tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6982E8272D000D70BDC /* imgui_tables.cpp */; };
 		F595FFE72E97D4A70096661A /* mmx_sse2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F595FFE62E97D4A70096661A /* mmx_sse2.cpp */; };
-		F5A7A0722E8E321100C7E565 /* UnifiedExecution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A7A0712E8E31A900C7E565 /* UnifiedExecution.cpp */; };
 		F5A7A0742E8E588800C7E565 /* shlwapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A7A0732E8E588100C7E565 /* shlwapi.cpp */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +110,16 @@
 		D61CAAA42E9184110031B205 /* ssse3_instruction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ssse3_instruction.h; sourceTree = "<group>"; };
 		D61CAAA52E9184260031B205 /* ssse3_instruction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ssse3_instruction.cpp; sourceTree = "<group>"; };
 		D61CAAA72E921B520031B205 /* mmx_ssse3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mmx_ssse3.cpp; sourceTree = "<group>"; };
+		F52869142E9A7DB4003CC84C /* AMDCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMDCompiler.h; sourceTree = "<group>"; };
+		F52869152E9A7DB4003CC84C /* AMDCompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AMDCompiler.cpp; sourceTree = "<group>"; };
+		F52869162E9A7DB4003CC84C /* D3DCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = D3DCompiler.h; sourceTree = "<group>"; };
+		F52869172E9A7DB4003CC84C /* D3DCompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = D3DCompiler.cpp; sourceTree = "<group>"; };
+		F52869182E9A7DB4003CC84C /* NVCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NVCompiler.h; sourceTree = "<group>"; };
+		F52869192E9A7DB4003CC84C /* NVCompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NVCompiler.cpp; sourceTree = "<group>"; };
+		F528691A2E9A7DB4003CC84C /* UnifiedExecution.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnifiedExecution.h; sourceTree = "<group>"; };
+		F528691B2E9A7DB4003CC84C /* UnifiedExecution.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UnifiedExecution.cpp; sourceTree = "<group>"; };
+		F528691C2E9A7DB4003CC84C /* VirtualMachine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualMachine.h; sourceTree = "<group>"; };
+		F528691D2E9A7DB4003CC84C /* VirtualMachine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualMachine.cpp; sourceTree = "<group>"; };
 		F558E5962E8276060060F473 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		F558E5B32E8276460060F473 /* imgui_impl_metal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imgui_impl_metal.h; sourceTree = "<group>"; };
 		F558E5B42E8276460060F473 /* imgui_impl_metal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = imgui_impl_metal.mm; sourceTree = "<group>"; };
@@ -211,17 +221,9 @@
 		F558E7BD2E82A3C70060F473 /* ShaderCompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderCompiler.cpp; sourceTree = "<group>"; };
 		F558E7BF2E82B74C0060F473 /* ImGuiHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImGuiHelper.h; sourceTree = "<group>"; };
 		F558E7C02E82C34B0060F473 /* libSystem.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libSystem.tbd; path = usr/lib/libSystem.tbd; sourceTree = SDKROOT; };
-		F558E80C2E8433C30060F473 /* VirtualMachine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualMachine.cpp; sourceTree = "<group>"; };
 		F558E80E2E8434C40060F473 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		F558E8112E84352E0060F473 /* Logger.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
-		F558E8132E8439720060F473 /* VirtualMachine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualMachine.h; sourceTree = "<group>"; };
-		F558E8142E8532F60060F473 /* D3DCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = D3DCompiler.h; sourceTree = "<group>"; };
-		F558E8152E8533000060F473 /* D3DCompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = D3DCompiler.cpp; sourceTree = "<group>"; };
 		F558E8172E8534E90060F473 /* ShaderCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderCompiler.h; sourceTree = "<group>"; };
-		F558E8182E88092F0060F473 /* NVCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NVCompiler.h; sourceTree = "<group>"; };
-		F558E8192E8809570060F473 /* NVCompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NVCompiler.cpp; sourceTree = "<group>"; };
-		F558E81C2E8AC3B00060F473 /* AMDCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMDCompiler.h; sourceTree = "<group>"; };
-		F558E81D2E8AC3B00060F473 /* AMDCompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AMDCompiler.cpp; sourceTree = "<group>"; };
 		F582D6922E8272D000D70BDC /* imconfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imconfig.h; sourceTree = "<group>"; };
 		F582D6932E8272D000D70BDC /* imgui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imgui.h; sourceTree = "<group>"; };
 		F582D6942E8272D000D70BDC /* imgui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = imgui.cpp; sourceTree = "<group>"; };
@@ -235,8 +237,6 @@
 		F582D69C2E8272D000D70BDC /* imstb_truetype.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imstb_truetype.h; sourceTree = "<group>"; };
 		F582D6A72E82754900D70BDC /* Info-macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-macOS.plist"; sourceTree = "<group>"; };
 		F595FFE62E97D4A70096661A /* mmx_sse2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mmx_sse2.cpp; sourceTree = "<group>"; };
-		F5A7A0702E8E305400C7E565 /* UnifiedExecution.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UnifiedExecution.h; sourceTree = "<group>"; };
-		F5A7A0712E8E31A900C7E565 /* UnifiedExecution.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UnifiedExecution.cpp; sourceTree = "<group>"; };
 		F5A7A0732E8E588100C7E565 /* shlwapi.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = shlwapi.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -260,8 +260,8 @@
 			isa = PBXGroup;
 			children = (
 				83BBE9F020EB544400295997 /* imgui */,
-				F558E81B2E8AC1090060F473 /* Machine */,
 				F558E6E52E827B290060F473 /* mine */,
+				F528691E2E9A7DB4003CC84C /* src */,
 				F558E7BF2E82B74C0060F473 /* ImGuiHelper.h */,
 				F582D6A72E82754900D70BDC /* Info-macOS.plist */,
 				F558E5962E8276060060F473 /* main.mm */,
@@ -312,6 +312,23 @@
 				F582D69C2E8272D000D70BDC /* imstb_truetype.h */,
 			);
 			path = imgui;
+			sourceTree = "<group>";
+		};
+		F528691E2E9A7DB4003CC84C /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F52869152E9A7DB4003CC84C /* AMDCompiler.cpp */,
+				F52869142E9A7DB4003CC84C /* AMDCompiler.h */,
+				F52869172E9A7DB4003CC84C /* D3DCompiler.cpp */,
+				F52869162E9A7DB4003CC84C /* D3DCompiler.h */,
+				F52869192E9A7DB4003CC84C /* NVCompiler.cpp */,
+				F52869182E9A7DB4003CC84C /* NVCompiler.h */,
+				F528691B2E9A7DB4003CC84C /* UnifiedExecution.cpp */,
+				F528691A2E9A7DB4003CC84C /* UnifiedExecution.h */,
+				F528691D2E9A7DB4003CC84C /* VirtualMachine.cpp */,
+				F528691C2E9A7DB4003CC84C /* VirtualMachine.h */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		F558E5CD2E8276460060F473 /* backends */ = {
@@ -474,23 +491,6 @@
 			path = mine;
 			sourceTree = "<group>";
 		};
-		F558E81B2E8AC1090060F473 /* Machine */ = {
-			isa = PBXGroup;
-			children = (
-				F558E81D2E8AC3B00060F473 /* AMDCompiler.cpp */,
-				F558E81C2E8AC3B00060F473 /* AMDCompiler.h */,
-				F558E8152E8533000060F473 /* D3DCompiler.cpp */,
-				F558E8142E8532F60060F473 /* D3DCompiler.h */,
-				F558E8192E8809570060F473 /* NVCompiler.cpp */,
-				F558E8182E88092F0060F473 /* NVCompiler.h */,
-				F5A7A0712E8E31A900C7E565 /* UnifiedExecution.cpp */,
-				F5A7A0702E8E305400C7E565 /* UnifiedExecution.h */,
-				F558E80C2E8433C30060F473 /* VirtualMachine.cpp */,
-				F558E8132E8439720060F473 /* VirtualMachine.h */,
-			);
-			name = Machine;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -569,14 +569,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F558E81E2E8AC3B00060F473 /* AMDCompiler.cpp in Sources */,
-				F558E8162E8533010060F473 /* D3DCompiler.cpp in Sources */,
 				F558E8122E8435560060F473 /* Logger.cpp in Sources */,
 				F558E5972E8276060060F473 /* main.mm in Sources */,
-				F558E81A2E8809600060F473 /* NVCompiler.cpp in Sources */,
 				F558E80B2E84263D0060F473 /* ShaderCompiler.cpp in Sources */,
-				F5A7A0722E8E321100C7E565 /* UnifiedExecution.cpp in Sources */,
-				F558E80D2E8433E70060F473 /* VirtualMachine.cpp in Sources */,
+				F52869202E9A7DB4003CC84C /* AMDCompiler.cpp in Sources */,
+				F52869212E9A7DB4003CC84C /* D3DCompiler.cpp in Sources */,
+				F52869222E9A7DB4003CC84C /* NVCompiler.cpp in Sources */,
+				F52869232E9A7DB4003CC84C /* UnifiedExecution.cpp in Sources */,
+				F528691F2E9A7DB4003CC84C /* VirtualMachine.cpp in Sources */,
 				F558E8052E84262C0060F473 /* coff.cpp in Sources */,
 				F558E8062E84262C0060F473 /* ecoff.cpp in Sources */,
 				F558E8072E84262C0060F473 /* ecoff64.cpp in Sources */,
