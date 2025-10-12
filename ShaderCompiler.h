@@ -27,6 +27,9 @@ extern std::string entry;
 extern std::vector<std::string> profiles;
 extern int profile_index;
 
+extern std::vector<std::string> types;
+extern int type_index;
+
 struct Driver {
     std::vector<std::string> name;
     std::vector<std::vector<std::string>> machines;

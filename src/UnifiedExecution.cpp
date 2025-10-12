@@ -25,6 +25,7 @@ size_t RunDriver(mine* cpu, size_t(*symbol)(mine*, void*, const char*)) __attrib
         size_t pSrcData = 0;
         size_t SHDRDataSize = 0;
         size_t pSHDRData = 0;
+        size_t ShaderType = 0;
         size_t OutputSize = 0;
         size_t pOutput = 0;
 
@@ -98,6 +99,22 @@ size_t RunDriver(mine* cpu, size_t(*symbol)(mine*, void*, const char*)) __attrib
                             Push32(pSHDRData);
                         if (machine[i] == "SHDRDataSize")
                             Push32(SHDRDataSize);
+                    }
+                    else if (machine[i] == "ShaderType" || machine[i] == "shader_type") {
+                        if (ShaderType == 0) {
+                            std::string type;
+                            if (ShaderCompiler::types.size() > ShaderCompiler::type_index) {
+                                type = ShaderCompiler::types[ShaderCompiler::type_index];
+                                if (machine[i] == "shader_type") {
+                                    if (type == "Vertex")
+                                        type = "vertex";
+                                    if (type == "Pixel")
+                                        type = "fragment";
+                                }
+                            }
+                            ShaderType = VirtualMachine::DataToMemory(type.data(), type.size() + 1, allocator);
+                        }
+                        Push32(ShaderType);
                     }
                     else if (machine[i] == "pOutput" || machine[i] == "OutputSize") {
                         if (pOutput == 0 && OutputSize == 0) {

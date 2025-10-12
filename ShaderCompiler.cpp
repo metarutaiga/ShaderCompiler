@@ -13,6 +13,7 @@
 #include "mine/mine.h"
 #include "src/AMDCompiler.h"
 #include "src/D3DCompiler.h"
+#include "src/MaliCompiler.h"
 #include "src/NVCompiler.h"
 #include "src/UnifiedExecution.h"
 #include "src/VirtualMachine.h"
@@ -46,6 +47,9 @@ std::string entry;
 
 std::vector<std::string> profiles;
 int profile_index;
+
+std::vector<std::string> types;
+int type_index;
 
 std::vector<Driver> drivers;
 int driver_index;
@@ -113,6 +117,10 @@ static void LoadCompiler()
 //          profiles.push_back("Shader Model 6.8");
         }
     }
+
+    types.clear();
+    types.push_back("Vertex");
+    types.push_back("Pixel");
 }
 
 static void LoadShader()
@@ -193,11 +201,22 @@ static void Option()
             refresh_machine = true;
         }
 
+        // Type
+        ImGui::TextUnformatted("Type");
+        ImGui::SetNextItemWidth(region.x);
+        if (ImGui::Combo("##204", &type_index, [](void* user_data, int index) {
+            auto* types = (std::string*)user_data;
+            return types[index].c_str();
+        }, types.data(), (int)types.size()) || ImGui::ScrollCombo(&type_index, types.size())) {
+            refresh_compiler = true;
+            refresh_machine = true;
+        }
+
         // Driver
         ImGui::NewLine();
         ImGui::TextUnformatted("Driver");
         ImGui::SetNextItemWidth(region.x);
-        if (ImGui::Combo("##204", &driver_index, [](void* user_data, int index) {
+        if (ImGui::Combo("##205", &driver_index, [](void* user_data, int index) {
             auto* drivers = (Driver*)user_data;
             return drivers[index].name[0].c_str();
         }, drivers.data(), (int)drivers.size()) || ImGui::ScrollCombo(&driver_index, drivers.size())) {
@@ -209,7 +228,7 @@ static void Option()
         auto& machines = (drivers.size() > driver_index) ? drivers[driver_index].machines : empty_machines;
         ImGui::TextUnformatted("Machine");
         ImGui::SetNextItemWidth(region.x);
-        if (ImGui::Combo("##205", &machine_index, [](void* user_data, int index) {
+        if (ImGui::Combo("##206", &machine_index, [](void* user_data, int index) {
             auto* machines = (std::vector<std::string>*)user_data;
             return machines[index].front().c_str();
         }, machines.data(), (int)machines.size()) || ImGui::ScrollCombo(&machine_index, machines.size())) {
@@ -336,6 +355,12 @@ static void RefreshCompiler()
         auto& compiler = compilers[compiler_index];
         std::string path = compiler_path + "/" + compiler.path;
 
+        if (strncasecmp(text.c_str(), "#version", 8) == 0) {
+            auto& output = outputs[""];
+            output.binary.assign(text.begin(), text.end());
+            return;
+        }
+
         if (strncmp(text.c_str(), "!!ARB", 5) == 0) {
             auto& output = outputs[""];
             output.binary.assign(text.begin(), text.end());
@@ -418,6 +443,8 @@ static void Loop()
             cpu = D3DCompiler::NextProcess(origin);
             if (cpu == nullptr)
                 cpu = AMDCompiler::NextProcess(origin);
+            if (cpu == nullptr)
+                cpu = MaliCompiler::NextProcess(origin);
             if (cpu == nullptr)
                 cpu = NVCompiler::NextProcess(origin);
             if (cpu == nullptr) {
@@ -544,6 +571,11 @@ static void Init()
                 case 0:
                     break;
                 case '[':
+                    for (auto& driver : drivers) {
+                        if (driver.machines.empty()) {
+                            driver.machines = drivers.back().machines;
+                        }
+                    }
                     drivers.push_back(Driver());
                     for (int i = 1; i < 256; ++i) {
                         char c = line[i];
