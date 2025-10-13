@@ -568,17 +568,23 @@ static void Init()
     if (driver_path.empty() == false) {
         FILE* file = fopen((driver_path + "/driver.ini").c_str(), "rb");
         if (file) {
+            auto finish = []() {
+                for (auto& driver : drivers) {
+                    if (driver.machines.empty()) {
+                        driver.machines = drivers.back().machines;
+                    }
+                }
+            };
+
+            bool quotation_mark = false;
             char line[256];
             while (fgets(line, 256, file)) {
                 switch (line[0]) {
                 case 0:
                     break;
                 case '[':
-                    for (auto& driver : drivers) {
-                        if (driver.machines.empty()) {
-                            driver.machines = drivers.back().machines;
-                        }
-                    }
+                    finish();
+
                     drivers.push_back(Driver());
                     for (int i = 1; i < 256; ++i) {
                         char c = line[i];
@@ -599,9 +605,12 @@ static void Init()
                         char c = line[i];
                         if (c == 0 || c == '\r' || c == '\n')
                             break;
-                        if (c == '=' || c == ',') {
+                        if ((c == '=' || c == ',') && quotation_mark == false) {
                             machine.push_back(std::string());
                             continue;
+                        }
+                        if (c == '\"') {
+                            quotation_mark = !quotation_mark;
                         }
                         if (machine.empty())
                             machine.push_back(std::string());
@@ -614,6 +623,8 @@ static void Init()
                 }
             }
             fclose(file);
+
+            finish();
         }
 
         // Remove unavailable
