@@ -15,6 +15,7 @@
 #include "src/D3DCompiler.h"
 #include "src/MaliCompiler.h"
 #include "src/NVCompiler.h"
+#include "src/QCOMCompiler.h"
 #include "src/UnifiedExecution.h"
 #include "src/VirtualMachine.h"
 #include "ImGuiHelper.h"
@@ -447,6 +448,8 @@ static void Loop()
                 cpu = MaliCompiler::NextProcess(origin);
             if (cpu == nullptr)
                 cpu = NVCompiler::NextProcess(origin);
+            if (cpu == nullptr)
+                cpu = QCOMCompiler::NextProcess(origin);
             if (cpu == nullptr) {
                 auto end_execute = std::chrono::system_clock::now();
                 auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_execute - begin_execute).count();
