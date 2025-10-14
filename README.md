@@ -5,6 +5,7 @@
 |--------|----------------------|-----------|-----------------------------|
 |AMD     |GPU ShaderAnalyzer    |11.7 ~ 12.4|R600 ~ RV970                 |
 |AMD     |Catalyst              |16.3 ~     |GCN                          |
+|ATI     |Radeon                |133.1      |R200                         |
 |ARM     |Mali Offline Compiler |6.4.0      |Utgard / Midgard / Bifrost   |
 |NVIDIA  |KelvinR7              |R7         |NV20                         |
 |NVIDIA  |NVShaderPerf          |101.31     |NV30 ~ G70                   |

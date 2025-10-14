@@ -12,6 +12,7 @@
 #include <vector>
 #include "mine/mine.h"
 #include "src/AMDCompiler.h"
+#include "src/ATICompiler.h"
 #include "src/D3DCompiler.h"
 #include "src/MaliCompiler.h"
 #include "src/NVCompiler.h"
@@ -444,6 +445,8 @@ static void Loop()
             cpu = D3DCompiler::NextProcess(origin);
             if (cpu == nullptr)
                 cpu = AMDCompiler::NextProcess(origin);
+            if (cpu == nullptr)
+                cpu = ATICompiler::NextProcess(origin);
             if (cpu == nullptr)
                 cpu = MaliCompiler::NextProcess(origin);
             if (cpu == nullptr)

@@ -23,6 +23,7 @@
 		F52869262E9BD095003CC84C /* MaliCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F52869252E9BD094003CC84C /* MaliCompiler.cpp */; };
 		F528692D2E9D2299003CC84C /* advapi32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F528692C2E9D2299003CC84C /* advapi32.cpp */; };
 		F52869302E9D22DE003CC84C /* QCOMCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F528692F2E9D22DE003CC84C /* QCOMCompiler.cpp */; };
+		F52869332E9E3E64003CC84C /* ATICompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F52869322E9E3E63003CC84C /* ATICompiler.cpp */; };
 		F558E5972E8276060060F473 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = F558E5962E8276060060F473 /* main.mm */; };
 		F558E5CE2E8276680060F473 /* imgui_impl_metal.mm in Sources */ = {isa = PBXBuildFile; fileRef = F558E5B42E8276460060F473 /* imgui_impl_metal.mm */; };
 		F558E5CF2E8276680060F473 /* imgui_impl_osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = F558E5BB2E8276460060F473 /* imgui_impl_osx.mm */; };
@@ -128,6 +129,8 @@
 		F528692C2E9D2299003CC84C /* advapi32.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = advapi32.cpp; sourceTree = "<group>"; };
 		F528692E2E9D22CE003CC84C /* QCOMCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QCOMCompiler.h; sourceTree = "<group>"; };
 		F528692F2E9D22DE003CC84C /* QCOMCompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = QCOMCompiler.cpp; sourceTree = "<group>"; };
+		F52869312E9E3E5D003CC84C /* ATICompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ATICompiler.h; sourceTree = "<group>"; };
+		F52869322E9E3E63003CC84C /* ATICompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ATICompiler.cpp; sourceTree = "<group>"; };
 		F558E5962E8276060060F473 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		F558E5B32E8276460060F473 /* imgui_impl_metal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imgui_impl_metal.h; sourceTree = "<group>"; };
 		F558E5B42E8276460060F473 /* imgui_impl_metal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = imgui_impl_metal.mm; sourceTree = "<group>"; };
@@ -327,6 +330,8 @@
 			children = (
 				F52869152E9A7DB4003CC84C /* AMDCompiler.cpp */,
 				F52869142E9A7DB4003CC84C /* AMDCompiler.h */,
+				F52869322E9E3E63003CC84C /* ATICompiler.cpp */,
+				F52869312E9E3E5D003CC84C /* ATICompiler.h */,
 				F52869172E9A7DB4003CC84C /* D3DCompiler.cpp */,
 				F52869162E9A7DB4003CC84C /* D3DCompiler.h */,
 				F52869252E9BD094003CC84C /* MaliCompiler.cpp */,
@@ -586,6 +591,7 @@
 				F558E5972E8276060060F473 /* main.mm in Sources */,
 				F558E80B2E84263D0060F473 /* ShaderCompiler.cpp in Sources */,
 				F52869202E9A7DB4003CC84C /* AMDCompiler.cpp in Sources */,
+				F52869332E9E3E64003CC84C /* ATICompiler.cpp in Sources */,
 				F52869212E9A7DB4003CC84C /* D3DCompiler.cpp in Sources */,
 				F52869262E9BD095003CC84C /* MaliCompiler.cpp in Sources */,
 				F52869222E9A7DB4003CC84C /* NVCompiler.cpp in Sources */,
