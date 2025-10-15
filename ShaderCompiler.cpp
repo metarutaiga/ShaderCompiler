@@ -457,7 +457,7 @@ static void Loop()
                 auto end_execute = std::chrono::system_clock::now();
                 auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_execute - begin_execute).count();
                 Logger<CONSOLE>("Duration : %lldms\n", duration);
-                delete origin;
+                VirtualMachine::Close(origin);
             }
             return;
         }

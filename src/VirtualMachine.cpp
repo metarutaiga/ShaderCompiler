@@ -18,6 +18,10 @@ void Close(mine* cpu)
     if (cpu == nullptr)
         return;
 
+    auto allocator = cpu->Allocator;
+    if (allocator) {
+        Logger<SYSTEM>("Peek allocated size : %zd", allocator->peek_size());
+    }
     syscall_windows_delete(cpu);
     syscall_i386_delete(cpu);
     delete cpu;
