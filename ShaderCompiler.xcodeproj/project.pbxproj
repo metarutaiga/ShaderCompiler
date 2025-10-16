@@ -138,7 +138,12 @@
 		F5286A232EA103D3003CC84C /* NVKelvinR7.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NVKelvinR7.cpp; sourceTree = "<group>"; };
 		F5286A272EA103D3003CC84C /* r2um.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = r2um.cpp; sourceTree = "<group>"; };
 		F5286A8D2EA11149003CC84C /* disasm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disasm.h; sourceTree = "<group>"; };
-		F5286A8F2EA11AC2003CC84C /* regmask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = regmask.h; sourceTree = "<group>"; };
+		F5286A902EA1331A003CC84C /* bitset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bitset.h; sourceTree = "<group>"; };
+		F5286A912EA1331A003CC84C /* ir3-isa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ir3-isa.h"; sourceTree = "<group>"; };
+		F5286A922EA1331A003CC84C /* ir3-isa.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "ir3-isa.c"; sourceTree = "<group>"; };
+		F5286A932EA1331A003CC84C /* isaspec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = isaspec.h; sourceTree = "<group>"; };
+		F5286A942EA1331A003CC84C /* isaspec_decode_decl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = isaspec_decode_decl.h; sourceTree = "<group>"; };
+		F5286A952EA1331A003CC84C /* isaspec_decode_impl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = isaspec_decode_impl.c; sourceTree = "<group>"; usesTabs = 1; };
 		F558E5962E8276060060F473 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		F558E5B32E8276460060F473 /* imgui_impl_metal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imgui_impl_metal.h; sourceTree = "<group>"; };
 		F558E5B42E8276460060F473 /* imgui_impl_metal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = imgui_impl_metal.mm; sourceTree = "<group>"; };
@@ -362,10 +367,15 @@
 		F52869382EA10373003CC84C /* adreno */ = {
 			isa = PBXGroup;
 			children = (
+				F5286A902EA1331A003CC84C /* bitset.h */,
 				F5286A8D2EA11149003CC84C /* disasm.h */,
 				F52869362EA10373003CC84C /* disasm-a3xx.c */,
 				F52869372EA10373003CC84C /* instr-a3xx.h */,
-				F5286A8F2EA11AC2003CC84C /* regmask.h */,
+				F5286A912EA1331A003CC84C /* ir3-isa.h */,
+				F5286A922EA1331A003CC84C /* ir3-isa.c */,
+				F5286A932EA1331A003CC84C /* isaspec.h */,
+				F5286A942EA1331A003CC84C /* isaspec_decode_decl.h */,
+				F5286A952EA1331A003CC84C /* isaspec_decode_impl.c */,
 			);
 			path = adreno;
 			sourceTree = "<group>";

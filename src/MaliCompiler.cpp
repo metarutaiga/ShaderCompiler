@@ -16,14 +16,18 @@ static int inside_fprintf(FILE* fp, const char* format, ...)
     int ret = vsnprintf(temp, 256, format, args);
     va_end(args);
 
-    auto& string = *(std::string*)fp;
-    string += temp;
+    if (fp) {
+        auto& string = *(std::string*)fp;
+        string += temp;
+    }
     return ret;
 }
 static int inside_fputs(const char* str, FILE* fp)
 {
-    auto& string = *(std::string*)fp;
-    string + str;
+    if (fp) {
+        auto& string = *(std::string*)fp;
+        string += str;
+    }
     return 0;
 }
 #define fprintf inside_fprintf
@@ -35,7 +39,7 @@ static int inside_fputs(const char* str, FILE* fp)
 #define UNUSED __attribute__((unused))
 #define util_bitcount __builtin_popcount
 #define util_logbase2(n) ((sizeof(unsigned) * 8 - 1) - __builtin_clz(n | 1))
-#define util_sign_extend(v,w) ((int)(v) << (32 - w) >> w)
+#define util_sign_extend(v, w) (((int)(v) << (32 - w)) >> w)
 #define _mesa_half_to_float(v) (float)(*(__fp16*)&v)
 #include <assert.h>
 #pragma clang diagnostic ignored "-Winitializer-overrides"
