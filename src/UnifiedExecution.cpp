@@ -102,15 +102,14 @@ size_t RunDriver(mine* cpu, size_t(*symbol)(mine*, void*, const char*)) __attrib
                     }
                     else if (machine[i] == "ShaderType" || machine[i] == "shader_type") {
                         if (ShaderType == 0) {
-                            std::string type;
-                            if (ShaderCompiler::types.size() > ShaderCompiler::type_index) {
-                                type = ShaderCompiler::types[ShaderCompiler::type_index];
-                                if (machine[i] == "shader_type") {
-                                    if (type == "Vertex")
-                                        type = "vertex";
-                                    if (type == "Pixel")
-                                        type = "fragment";
-                                }
+                            std::string type = "vertex";
+                            switch (ShaderCompiler::GetShaderType()) {
+                            case 'vert':
+                                type = "vertex";
+                                break;
+                            case 'frag':
+                                type = "fragment";
+                                break;
                             }
                             ShaderType = VirtualMachine::DataToMemory(type.data(), type.size() + 1, allocator);
                         }

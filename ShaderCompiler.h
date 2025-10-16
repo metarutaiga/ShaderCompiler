@@ -45,7 +45,7 @@ struct Output {
 };
 extern std::map<std::string, Output> outputs;
 
-
-extern std::string DetectProfile();
+extern int GetShaderType();
+extern std::string GetProfile();
 
 };  // namespace ShaderCompiler

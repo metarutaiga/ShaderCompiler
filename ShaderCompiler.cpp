@@ -59,15 +59,36 @@ int machine_index;
 
 std::map<std::string, Output> outputs;
 
-std::string DetectProfile()
+int GetShaderType()
 {
-    int type = 'vert';
-    if (text.find("ps_") != std::string::npos ||
-        text.find("):COLOR") != std::string::npos ||
-        text.find("): COLOR") != std::string::npos ||
-        text.find(") : COLOR") != std::string::npos) {
-        type = 'frag';
+    std::string type;
+    if (types.size() > type_index)
+        type = types[type_index];
+
+    if (type == "Auto Detect") {
+        if (text.find("precision mediump float;") != std::string::npos ||
+            text.find("gl_FragColor") != std::string::npos) {
+            return 'frag';
+        }
+        if (text.find("ps_") != std::string::npos ||
+            text.find("):COLOR") != std::string::npos ||
+            text.find("): COLOR") != std::string::npos ||
+            text.find(") : COLOR") != std::string::npos) {
+            return 'frag';
+        }
     }
+    else if (type == "Vertex") {
+        return 'vert';
+    }
+    else if (type == "Pixel") {
+        return 'frag';
+    }
+    return 'vert';
+}
+
+std::string GetProfile()
+{
+    auto type = GetShaderType();
     if (profiles.size() > profile_index) {
         std::string profile = profiles[profile_index];
         if (profile.find("1.0") != std::string::npos)   return (type == 'vert') ? "vs_1_0" : "ps_1_0";
@@ -121,6 +142,7 @@ static void LoadCompiler()
     }
 
     types.clear();
+    types.push_back("Auto Detect");
     types.push_back("Vertex");
     types.push_back("Pixel");
 }
@@ -507,26 +529,18 @@ static void Init()
     realpath((cwd + "/../../../../../../shader").c_str(), shader_path.data());
     shader_path.resize(strlen(shader_path.c_str()));
     if (shader_path.empty() == false) {
-        for (int type = 0; type < 2; ++type) {
-            DIR* dir = opendir(shader_path.c_str());
-            if (dir) {
-                while (struct dirent* dirent = readdir(dir)) {
-                    if (dirent->d_name[0] == '.')
-                        continue;
-                    switch (type) {
-                    case 0:
-                        if (strcasestr(dirent->d_name, ".asm") == nullptr)
-                            continue;
-                        break;
-                    case 1:
-                        if (strcasestr(dirent->d_name, ".hlsl") == nullptr)
-                            continue;
-                        break;
-                    }
-                    shaders.push_back(dirent->d_name);
-                }
-                closedir(dir);
+        DIR* dir = opendir(shader_path.c_str());
+        if (dir) {
+            while (struct dirent* dirent = readdir(dir)) {
+                if (dirent->d_name[0] == '.')
+                    continue;
+                if (strcasestr(dirent->d_name, ".asm") == nullptr &&
+                    strcasestr(dirent->d_name, ".glsl") == nullptr &&
+                    strcasestr(dirent->d_name, ".hlsl") == nullptr)
+                    continue;
+                shaders.push_back(dirent->d_name);
             }
+            closedir(dir);
         }
     }
     std::stable_sort(shaders.begin(), shaders.end());

@@ -41,7 +41,7 @@ mine* NextProcess(mine* cpu)
                 for (size_t i = 0, column = 0; i < disasm.size(); ++i, ++column) {
                     switch (disasm[i]) {
                     case '\n':
-                        column = 0;
+                        column = -1;
                         break;
                     case '\t':
                         disasm.replace(i, 1, (8 - column % 8), ' ');

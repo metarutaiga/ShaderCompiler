@@ -15,7 +15,7 @@ size_t RunD3DAssemble(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
     auto* i386 = (x86_i386*)cpu;
     auto& x86 = i386->x86;
 
-    auto profile = ShaderCompiler::DetectProfile();
+    auto profile = ShaderCompiler::GetProfile();
     auto macro = (uint32_t*)allocator->allocate(sizeof(uint32_t) * 6);
     if (macro) {
         char major[2] = { profile.size() > 3 ? profile[3] : '1' };
@@ -94,7 +94,7 @@ size_t RunD3DCompile(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
     auto* i386 = (x86_i386*)cpu;
     auto& x86 = i386->x86;
 
-    auto profile = ShaderCompiler::DetectProfile();
+    auto profile = ShaderCompiler::GetProfile();
     auto macro = (uint32_t*)allocator->allocate(sizeof(uint32_t) * 6);
     if (macro) {
         char major[2] = { profile.size() > 3 ? profile[3] : '1' };
