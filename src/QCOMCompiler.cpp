@@ -1,3 +1,4 @@
+#include <array>
 #include <string>
 #include "Logger.h"
 #include "ShaderCompiler.h"
@@ -6,6 +7,30 @@
 #include "../mine/x86/x86_i386.h"
 #include "../mine/x86/x86_instruction.inl"
 #include "../mine/x86/x86_register.inl"
+
+static int inside_fprintf(FILE* fp, const char* format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    char temp[256];
+    int ret = vsnprintf(temp, 256, format, args);
+    va_end(args);
+
+    auto& string = *(std::string*)fp;
+    string += temp;
+    return ret;
+}
+#define fprintf inside_fprintf
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
+#define BITSET_CLEAR(set, index) set[index] = false
+#define BITSET_DECLARE(name, width) std::array<bool, width> name
+#define BITSET_SET(set, index) set[index] = true
+#define BITSET_TEST(set, index) set[index]
+#define MAX2(a, b) (a > b ? a : b)
+#define _mesa_half_to_float(v) (float)(*(__fp16*)&v)
+namespace Adreno {
+#   include "../disassembler/adreno/disasm-a3xx.c"
+};
 
 namespace QCOMCompiler {
 
@@ -26,6 +51,47 @@ mine* NextProcess(mine* cpu)
 
             std::vector<char>& binary = ShaderCompiler::outputs["Machine"].binary;
             binary.assign(code, code + size);
+
+            std::string& disasm = ShaderCompiler::outputs["Machine"].disasm;
+            if (binary.size() > 6) {
+                uint32_t* datas = (uint32_t*)binary.data();
+                uint32_t section_binary = datas[1];
+                uint32_t section_gpu = datas[4];
+                uint32_t section_offset = datas[5];
+                uint32_t section_count = datas[6];
+
+                int gpu_id = 300;
+                switch (section_gpu) {
+                case 0: gpu_id = 300;   break;
+                case 1: gpu_id = 400;   break;
+                case 2: gpu_id = 500;   break;
+                case 3: gpu_id = 600;   break;
+                case 4: gpu_id = 700;   break;
+                }
+
+                for (size_t i = 0; i < section_count; ++i) {
+                    uint32_t* section = &datas[section_offset / sizeof(uint32_t) + i * 5];
+                    uint32_t number = section[0];
+                    uint32_t offset = section[1];
+                    uint32_t size = section[2];
+                    if (number == section_binary) {
+                        Adreno::disasm_a3xx_set_debug(Adreno::PRINT_RAW);
+                        Adreno::try_disasm_a3xx(&datas[offset / sizeof(uint32_t)], size / sizeof(uint32_t), 0, (FILE*)&disasm, gpu_id);
+                        break;
+                    }
+                }
+
+                for (size_t i = 0, column = 0; i < disasm.size(); ++i, ++column) {
+                    switch (disasm[i]) {
+                    case '\n':
+                        column = -1;
+                        break;
+                    case '\t':
+                        disasm.replace(i, 1, (8 - column % 8), ' ');
+                        break;
+                    }
+                }
+            }
         }
         if (EAX != 0) {
             Logger<CONSOLE>("Compile : %08X\n", EAX);

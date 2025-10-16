@@ -10,4 +10,4 @@
 |NVIDIA  |KelvinR7              |R7         |NV20                         |From Xbox            |
 |NVIDIA  |NVShaderPerf          |101.31     |NV30 ~ G70                   |                     |
 |NVIDIA  |NVShaderPerf          |174.74     |NV40 ~ G86                   |                     |
-|Qualcomm|Adreno Shader Compiler|DX09.02.02 |Oxili / A4x / A5x / A6x / A7x|Binary only          |
+|Qualcomm|Adreno Shader Compiler|DX09.02.02 |Oxili / A4x / A5x / A6x / A7x|Disassembly from Mesa|

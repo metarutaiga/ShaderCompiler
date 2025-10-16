@@ -73,9 +73,9 @@ mine* NextProcess(mine* cpu)
             std::vector<char>& binary = ShaderCompiler::outputs["Machine"].binary;
             binary.assign(code, code + size);
 
-            int type = 0;
             std::string& disasm = ShaderCompiler::outputs["Machine"].disasm;
             uint32_t* chunks = (uint32_t*)binary.data();
+            int type = 0;
             for (size_t i = 0, size = binary.size() / 4; i < size; ++i) {
                 if (chunks[i] == __builtin_bswap32('CVER')) {
                     type = 'vert';

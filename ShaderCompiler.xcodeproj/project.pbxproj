@@ -11,8 +11,6 @@
 		D61CAA9F2E915BE90031B205 /* sse3_instruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAA9B2E915BE90031B205 /* sse3_instruction.cpp */; };
 		D61CAAA02E915BE90031B205 /* sse2_instruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAA992E915BE90031B205 /* sse2_instruction.cpp */; };
 		D61CAAA12E915BE90031B205 /* x86_ia32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAA9D2E915BE90031B205 /* x86_ia32.cpp */; };
-		D61CAAA22E915BE90031B205 /* mmx_instruction.inl in Resources */ = {isa = PBXBuildFile; fileRef = D61CAA952E915BE90031B205 /* mmx_instruction.inl */; };
-		D61CAAA32E915BE90031B205 /* sse_instruction.inl in Resources */ = {isa = PBXBuildFile; fileRef = D61CAA972E915BE90031B205 /* sse_instruction.inl */; };
 		D61CAAA62E9184270031B205 /* ssse3_instruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAAA52E9184260031B205 /* ssse3_instruction.cpp */; };
 		D61CAAA82E921B590031B205 /* mmx_ssse3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAAA72E921B520031B205 /* mmx_ssse3.cpp */; };
 		F528691F2E9A7DB4003CC84C /* VirtualMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F528691D2E9A7DB4003CC84C /* VirtualMachine.cpp */; };
@@ -32,15 +30,6 @@
 		F558E5D82E8276D70060F473 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F558E5D72E8276D70060F473 /* MetalKit.framework */; };
 		F558E5D92E8276EB0060F473 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F558E5D02E8276870060F473 /* Metal.framework */; };
 		F558E5DF2E8277780060F473 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F558E5DE2E8277780060F473 /* QuartzCore.framework */; };
-		F558E74E2E827B290060F473 /* x87_instruction.inl in Resources */ = {isa = PBXBuildFile; fileRef = F558E6DC2E827B290060F473 /* x87_instruction.inl */; };
-		F558E74F2E827B290060F473 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = F558E6E12E827B290060F473 /* .gitignore */; };
-		F558E7652E827B290060F473 /* x87_register.inl in Resources */ = {isa = PBXBuildFile; fileRef = F558E6DF2E827B290060F473 /* x87_register.inl */; };
-		F558E76C2E827B290060F473 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F558E6E42E827B290060F473 /* README.md */; };
-		F558E76E2E827B290060F473 /* x86_instruction.inl in Resources */ = {isa = PBXBuildFile; fileRef = F558E6CF2E827B290060F473 /* x86_instruction.inl */; };
-		F558E7792E827B290060F473 /* x86_register.inl in Resources */ = {isa = PBXBuildFile; fileRef = F558E6D22E827B290060F473 /* x86_register.inl */; };
-		F558E77F2E827B290060F473 /* sse_register.inl in Resources */ = {isa = PBXBuildFile; fileRef = F558E6BC2E827B290060F473 /* sse_register.inl */; };
-		F558E7982E827B290060F473 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = F558E6E22E827B290060F473 /* LICENSE.txt */; };
-		F558E7A32E827B290060F473 /* mmx_register.inl in Resources */ = {isa = PBXBuildFile; fileRef = F558E6B82E827B290060F473 /* mmx_register.inl */; };
 		F558E7C22E8425FC0060F473 /* mmx_instruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E6B62E827B290060F473 /* mmx_instruction.cpp */; };
 		F558E7C32E8425FC0060F473 /* sse_instruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E6BA2E827B290060F473 /* sse_instruction.cpp */; };
 		F558E7C42E8425FC0060F473 /* x86_arithmetic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F558E6BD2E827B290060F473 /* x86_arithmetic.cpp */; };
@@ -131,6 +120,25 @@
 		F528692F2E9D22DE003CC84C /* QCOMCompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = QCOMCompiler.cpp; sourceTree = "<group>"; };
 		F52869312E9E3E5D003CC84C /* ATICompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ATICompiler.h; sourceTree = "<group>"; };
 		F52869322E9E3E63003CC84C /* ATICompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ATICompiler.cpp; sourceTree = "<group>"; };
+		F52869362EA10373003CC84C /* disasm-a3xx.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "disasm-a3xx.c"; sourceTree = "<group>"; usesTabs = 1; };
+		F52869372EA10373003CC84C /* instr-a3xx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "instr-a3xx.h"; sourceTree = "<group>"; };
+		F52869392EA10373003CC84C /* disassemble.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = disassemble.c; sourceTree = "<group>"; };
+		F528693A2EA10373003CC84C /* helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = helpers.h; sourceTree = "<group>"; };
+		F528693B2EA10373003CC84C /* midgard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = midgard.h; sourceTree = "<group>"; };
+		F528693C2EA10373003CC84C /* midgard_ops.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = midgard_ops.h; sourceTree = "<group>"; };
+		F528693D2EA10373003CC84C /* midgard_ops.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = midgard_ops.c; sourceTree = "<group>"; };
+		F528693E2EA10373003CC84C /* midgard_print_constant.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = midgard_print_constant.c; sourceTree = "<group>"; };
+		F528693F2EA10373003CC84C /* midgard_quirks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = midgard_quirks.h; sourceTree = "<group>"; };
+		F52869412EA10373003CC84C /* codegen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = codegen.h; sourceTree = "<group>"; };
+		F52869422EA10373003CC84C /* disasm.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = disasm.c; sourceTree = "<group>"; };
+		F52869442EA10373003CC84C /* codegen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = codegen.h; sourceTree = "<group>"; };
+		F52869452EA10373003CC84C /* disasm.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = disasm.c; sourceTree = "<group>"; };
+		F52869892EA103C1003CC84C /* compiler.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = compiler.ini; sourceTree = "<group>"; };
+		F52869F62EA103D3003CC84C /* driver.ini */ = {isa = PBXFileReference; lastKnownFileType = text; path = driver.ini; sourceTree = "<group>"; };
+		F5286A232EA103D3003CC84C /* NVKelvinR7.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NVKelvinR7.cpp; sourceTree = "<group>"; };
+		F5286A272EA103D3003CC84C /* r2um.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = r2um.cpp; sourceTree = "<group>"; };
+		F5286A8D2EA11149003CC84C /* disasm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disasm.h; sourceTree = "<group>"; };
+		F5286A8F2EA11AC2003CC84C /* regmask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = regmask.h; sourceTree = "<group>"; };
 		F558E5962E8276060060F473 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		F558E5B32E8276460060F473 /* imgui_impl_metal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imgui_impl_metal.h; sourceTree = "<group>"; };
 		F558E5B42E8276460060F473 /* imgui_impl_metal.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = imgui_impl_metal.mm; sourceTree = "<group>"; };
@@ -270,6 +278,9 @@
 		8307E7B520E9F9C700473790 = {
 			isa = PBXGroup;
 			children = (
+				F528698A2EA103C1003CC84C /* compiler */,
+				F52869482EA10373003CC84C /* disassembler */,
+				F5286A292EA103D3003CC84C /* driver */,
 				83BBE9F020EB544400295997 /* imgui */,
 				F558E6E52E827B290060F473 /* mine */,
 				F528691E2E9A7DB4003CC84C /* src */,
@@ -346,6 +357,86 @@
 				F528691C2E9A7DB4003CC84C /* VirtualMachine.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		F52869382EA10373003CC84C /* adreno */ = {
+			isa = PBXGroup;
+			children = (
+				F5286A8D2EA11149003CC84C /* disasm.h */,
+				F52869362EA10373003CC84C /* disasm-a3xx.c */,
+				F52869372EA10373003CC84C /* instr-a3xx.h */,
+				F5286A8F2EA11AC2003CC84C /* regmask.h */,
+			);
+			path = adreno;
+			sourceTree = "<group>";
+		};
+		F52869402EA10373003CC84C /* midgard */ = {
+			isa = PBXGroup;
+			children = (
+				F52869392EA10373003CC84C /* disassemble.c */,
+				F528693A2EA10373003CC84C /* helpers.h */,
+				F528693B2EA10373003CC84C /* midgard.h */,
+				F528693C2EA10373003CC84C /* midgard_ops.h */,
+				F528693D2EA10373003CC84C /* midgard_ops.c */,
+				F528693E2EA10373003CC84C /* midgard_print_constant.c */,
+				F528693F2EA10373003CC84C /* midgard_quirks.h */,
+			);
+			path = midgard;
+			sourceTree = "<group>";
+		};
+		F52869432EA10373003CC84C /* gp */ = {
+			isa = PBXGroup;
+			children = (
+				F52869412EA10373003CC84C /* codegen.h */,
+				F52869422EA10373003CC84C /* disasm.c */,
+			);
+			path = gp;
+			sourceTree = "<group>";
+		};
+		F52869462EA10373003CC84C /* pp */ = {
+			isa = PBXGroup;
+			children = (
+				F52869442EA10373003CC84C /* codegen.h */,
+				F52869452EA10373003CC84C /* disasm.c */,
+			);
+			path = pp;
+			sourceTree = "<group>";
+		};
+		F52869472EA10373003CC84C /* utgard */ = {
+			isa = PBXGroup;
+			children = (
+				F52869432EA10373003CC84C /* gp */,
+				F52869462EA10373003CC84C /* pp */,
+			);
+			path = utgard;
+			sourceTree = "<group>";
+		};
+		F52869482EA10373003CC84C /* disassembler */ = {
+			isa = PBXGroup;
+			children = (
+				F52869382EA10373003CC84C /* adreno */,
+				F52869402EA10373003CC84C /* midgard */,
+				F52869472EA10373003CC84C /* utgard */,
+			);
+			path = disassembler;
+			sourceTree = "<group>";
+		};
+		F528698A2EA103C1003CC84C /* compiler */ = {
+			isa = PBXGroup;
+			children = (
+				F52869892EA103C1003CC84C /* compiler.ini */,
+			);
+			path = compiler;
+			sourceTree = "<group>";
+		};
+		F5286A292EA103D3003CC84C /* driver */ = {
+			isa = PBXGroup;
+			children = (
+				F52869F62EA103D3003CC84C /* driver.ini */,
+				F5286A232EA103D3003CC84C /* NVKelvinR7.cpp */,
+				F5286A272EA103D3003CC84C /* r2um.cpp */,
+			);
+			path = driver;
 			sourceTree = "<group>";
 		};
 		F558E5CD2E8276460060F473 /* backends */ = {
@@ -566,17 +657,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F558E74E2E827B290060F473 /* x87_instruction.inl in Resources */,
-				F558E74F2E827B290060F473 /* .gitignore in Resources */,
-				F558E7652E827B290060F473 /* x87_register.inl in Resources */,
-				F558E76C2E827B290060F473 /* README.md in Resources */,
-				F558E76E2E827B290060F473 /* x86_instruction.inl in Resources */,
-				D61CAAA22E915BE90031B205 /* mmx_instruction.inl in Resources */,
-				D61CAAA32E915BE90031B205 /* sse_instruction.inl in Resources */,
-				F558E7792E827B290060F473 /* x86_register.inl in Resources */,
-				F558E77F2E827B290060F473 /* sse_register.inl in Resources */,
-				F558E7982E827B290060F473 /* LICENSE.txt in Resources */,
-				F558E7A32E827B290060F473 /* mmx_register.inl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
