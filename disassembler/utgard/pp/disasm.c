@@ -24,10 +24,12 @@
  *
  */
 
+#include "../../mesa/macros.h"
+
 #include "codegen.h"
 
 typedef struct {
-   const char *name;
+   char *name;
    unsigned srcs;
 } asm_op;
 
@@ -56,7 +58,7 @@ print_mask(uint8_t mask, FILE *fp)
 }
 
 static void
-print_reg(unsigned reg, const char *special, FILE *fp)
+print_reg(ppir_codegen_vec4_reg reg, const char *special, FILE *fp)
 {
    if (special) {
       fprintf(fp, "%s", special);
@@ -83,7 +85,7 @@ print_reg(unsigned reg, const char *special, FILE *fp)
 }
 
 static void
-print_vector_source(unsigned reg, const char *special,
+print_vector_source(ppir_codegen_vec4_reg reg, const char *special,
                     uint8_t swizzle, bool abs, bool neg, FILE *fp)
 {
    if (neg)
@@ -179,7 +181,7 @@ print_const0(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
 
-   print_const(0, (uint16_t *)code, fp);
+   print_const(0, code, fp);
 }
 
 static void
@@ -187,14 +189,14 @@ print_const1(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
 
-   print_const(1, (uint16_t *)code, fp);
+   print_const(1, code, fp);
 }
 
 static void
 print_varying(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
-   ppir_codegen_field_varying *varying = (ppir_codegen_field_varying *)code;
+   ppir_codegen_field_varying *varying = code;
 
    fprintf(fp, "load");
 
@@ -275,7 +277,7 @@ static void
 print_sampler(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
-   ppir_codegen_field_sampler *sampler = (ppir_codegen_field_sampler *)code;
+   ppir_codegen_field_sampler *sampler = code;
 
    fprintf(fp, "texld");
    if (sampler->lod_bias_en)
@@ -311,7 +313,7 @@ static void
 print_uniform(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
-   ppir_codegen_field_uniform *uniform = (ppir_codegen_field_uniform *)code;
+   ppir_codegen_field_uniform *uniform = code;
 
    fprintf(fp, "load.");
 
@@ -376,7 +378,7 @@ static void
 print_vec4_mul(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
-   ppir_codegen_field_vec4_mul *vec4_mul = (ppir_codegen_field_vec4_mul *)code;
+   ppir_codegen_field_vec4_mul *vec4_mul = code;
 
    asm_op op = vec4_mul_ops[vec4_mul->op];
 
@@ -443,7 +445,7 @@ static void
 print_vec4_acc(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
-   ppir_codegen_field_vec4_acc *vec4_acc = (ppir_codegen_field_vec4_acc *)code;
+   ppir_codegen_field_vec4_acc *vec4_acc = code;
 
    asm_op op = vec4_acc_ops[vec4_acc->op];
 
@@ -504,7 +506,7 @@ static void
 print_float_mul(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
-   ppir_codegen_field_float_mul *float_mul = (ppir_codegen_field_float_mul *)code;
+   ppir_codegen_field_float_mul *float_mul = code;
 
    asm_op op = float_mul_ops[float_mul->op];
 
@@ -564,7 +566,7 @@ static void
 print_float_acc(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
-   ppir_codegen_field_float_acc *float_acc = (ppir_codegen_field_float_acc *)code;
+   ppir_codegen_field_float_acc *float_acc = code;
 
    asm_op op = float_acc_ops[float_acc->op];
 
@@ -615,7 +617,7 @@ static void
 print_combine_mul(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
-   ppir_codegen_field_combine *combine = (ppir_codegen_field_combine *)code;
+   ppir_codegen_field_combine *combine = code;
 
    fprintf(fp, "mul.s2 ");
    fprintf(fp, "$%u", combine->vector.dest);
@@ -636,7 +638,7 @@ static void
 print_combine_atan_pt2(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
-   ppir_codegen_field_combine *combine = (ppir_codegen_field_combine *)code;
+   ppir_codegen_field_combine *combine = code;
 
    fprintf(fp, "atan_pt2.s2 ");
    print_outmod(combine->scalar.dest_modifier, fp);
@@ -651,7 +653,7 @@ static void
 print_combine(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
-   ppir_codegen_field_combine *combine = (ppir_codegen_field_combine *)code;
+   ppir_codegen_field_combine *combine = code;
 
    if (combine->scalar.dest_vec &&
        combine->scalar.src_vec) {
@@ -711,7 +713,7 @@ static void
 print_temp_write(void *code, unsigned offset, FILE *fp)
 {
    (void) offset;
-   ppir_codegen_field_temp_write *temp_write = (ppir_codegen_field_temp_write *)code;
+   ppir_codegen_field_temp_write *temp_write = code;
 
    if (temp_write->fb_read.unknown_0 == 0x7) {
       if (temp_write->fb_read.source)
@@ -756,7 +758,7 @@ print_temp_write(void *code, unsigned offset, FILE *fp)
 static void
 print_branch(void *code, unsigned offset, FILE *fp)
 {
-   ppir_codegen_field_branch *branch = (ppir_codegen_field_branch *)code;
+   ppir_codegen_field_branch *branch = code;
 
    if (branch->discard.word0 == PPIR_CODEGEN_DISCARD_WORD0 &&
        branch->discard.word1 == PPIR_CODEGEN_DISCARD_WORD1 &&

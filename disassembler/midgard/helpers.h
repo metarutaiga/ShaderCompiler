@@ -25,7 +25,7 @@
 
 #include <stdio.h>
 #include <string.h>
-//#include "util/macros.h"
+#include "../mesa/macros.h"
 #include "midgard.h"
 
 #define OP_IS_LOAD_VARY_F(op)                                                  \

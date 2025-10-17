@@ -33,11 +33,11 @@ struct shader_stats {
    uint16_t instrs_per_cat[8];
 };
 
-int disasm_a3xx(uint32_t *dwords, int sizedwords, unsigned level, FILE *out,
+int disasm_a3xx(uint32_t *dwords, int sizedwords, int level, FILE *out,
                 unsigned gpu_id);
-int disasm_a3xx_stat(uint32_t *dwords, int sizedwords, unsigned level, FILE *out,
+int disasm_a3xx_stat(uint32_t *dwords, int sizedwords, int level, FILE *out,
                      unsigned gpu_id, struct shader_stats *stats);
-int try_disasm_a3xx(uint32_t *dwords, int sizedwords, unsigned level, FILE *out,
+int try_disasm_a3xx(uint32_t *dwords, int sizedwords, int level, FILE *out,
                     unsigned gpu_id);
 
 void disasm_a3xx_set_debug(enum debug_t debug);

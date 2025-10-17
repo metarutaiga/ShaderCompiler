@@ -26,6 +26,8 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
+#include "../mesa/macros.h"
+
 void
 isa_print(struct isa_print_state *state, const char *fmt, ...)
 {

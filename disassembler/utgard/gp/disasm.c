@@ -24,6 +24,8 @@
  *
  */
 
+#include "../../mesa/macros.h"
+
 #include "codegen.h"
 
 typedef enum {

@@ -34,14 +34,6 @@
 #include <string.h>
 
 #include "bitset.h"
-//#include "util/compiler.h"
-//#include "util/half_float.h"
-//#include "hash_table.h"
-//#include "util/ralloc.h"
-//#include "util/u_debug.h"
-//#include "util/u_math.h"
-
-//#include "isa.h"
 
 /**
  * The set of leaf node bitsets in the bitset hiearchy which defines all
@@ -234,7 +226,7 @@ pop_expr(struct decode_state *state)
 static struct decode_scope *
 push_scope(struct decode_state *state, const struct isa_bitset *bitset, bitmask_t val)
 {
-	struct decode_scope *scope = (struct decode_scope *)rzalloc_size(state, sizeof(*scope));
+	struct decode_scope *scope = rzalloc_size(state, sizeof(*scope));
 
 	BITSET_COPY(scope->val.bitset, val.bitset);
 	scope->bitset = bitset;
@@ -262,7 +254,7 @@ static uint64_t
 evaluate_expr(struct decode_scope *scope, isa_expr_t expr)
 {
 	if (scope->cache) {
-		struct hash_entry *entry = _mesa_hash_table_search(scope->cache, (void *)expr);
+		struct hash_entry *entry = _mesa_hash_table_search(scope->cache, expr);
 		if (entry) {
 			return *(uint64_t *)entry->data;
 		}
@@ -277,9 +269,9 @@ evaluate_expr(struct decode_scope *scope, isa_expr_t expr)
 
 	pop_expr(scope->state);
 
-	uint64_t *retp = (uint64_t *)ralloc_size(scope->cache, sizeof(*retp));
+	uint64_t *retp = ralloc_size(scope->cache, sizeof(*retp));
 	*retp = ret;
-	_mesa_hash_table_insert(scope->cache, (void *)expr, retp);
+	_mesa_hash_table_insert(scope->cache, expr, retp);
 
 	return ret;
 }
@@ -333,7 +325,7 @@ find_bitset(struct decode_state *state, const struct isa_bitset **bitsets,
 		BITSET_AND(m.bitset, match->dontcare.bitset, val.bitset);
 
 		if (BITSET_COUNT(m.bitset)) {
-			decode_error(state, "dontcare bits in %s: %" BITSET_FORMAT,
+			decode_error(state, "dontcare bits in %s: %"BITSET_FORMAT,
 					match->name, BITSET_VALUE(m.bitset));
 		}
 	}
@@ -411,14 +403,14 @@ find_display(struct decode_scope *scope, const struct isa_bitset *bitset)
 		 * to check asserted bits:
 		 */
 		for (unsigned j = 0; j < c->num_fields; j++) {
-			if (c->fields[j].type == c->fields[j].TYPE_ASSERT) {
+			if (c->fields[j].type == TYPE_ASSERT) {
 				const struct isa_field *f = &c->fields[j];
 				bitmask_t val;
 
 				val = extract_field(scope, f);
 				if (!BITSET_EQUAL(val.bitset, f->val.bitset)) {
 					decode_error(scope->state, "WARNING: unexpected "
-							"bits[%u:%u] in %s: %" BITSET_FORMAT" vs %" BITSET_FORMAT,
+							"bits[%u:%u] in %s: %"BITSET_FORMAT" vs %"BITSET_FORMAT,
 							f->low, f->high, bitset->name,
 							BITSET_VALUE(val.bitset), BITSET_VALUE(f->val.bitset));
 				}
@@ -447,7 +439,7 @@ display_bitset_field(struct decode_scope *scope, const struct isa_field *field, 
 {
 	const struct isa_bitset *b = find_bitset(scope->state, field->bitsets, val);
 	if (!b) {
-		decode_error(scope->state, "no match: FIELD: '%s.%s': %" BITSET_FORMAT,
+		decode_error(scope->state, "no match: FIELD: '%s.%s': %"BITSET_FORMAT,
 				scope->bitset->name, field->name, BITSET_VALUE(val.bitset));
 		return;
 	}
@@ -562,10 +554,9 @@ display_field(struct decode_scope *scope, const char *field_name)
 	/* Special case 'NAME' maps to instruction/bitset name: */
 	if (!strncmp("NAME", field_name, field_name_len)) {
 		if (options->field_cb) {
-			struct isa_decode_value value = {
+			options->field_cb(options->cbdata, field_name, &(struct isa_decode_value){
 				.str = scope->bitset->name,
-			};
-			options->field_cb(options->cbdata, field_name, &value);
+			});
 		}
 
 		while (scope->state->print.line_column < num_align)
@@ -586,10 +577,9 @@ display_field(struct decode_scope *scope, const char *field_name)
 	uint64_t val = bitmask_to_uint64_t(v);
 
 	if (options->field_cb) {
-		struct isa_decode_value value = {
+		options->field_cb(options->cbdata, field_name, &(struct isa_decode_value){
 			.num = val,
-		};
-		options->field_cb(options->cbdata, field_name, &value);
+		});
 	}
 
 	unsigned width = 1 + field->high - field->low;
@@ -599,14 +589,14 @@ display_field(struct decode_scope *scope, const char *field_name)
 
 	switch (field->type) {
 	/* Basic types: */
-	case isa_field::TYPE_BRANCH:
-		case isa_field::TYPE_ABSBRANCH:
+	case TYPE_BRANCH:
+        case TYPE_ABSBRANCH:
 		if (scope->state->options->branch_labels) {
 			int offset;
-			if (field->type == isa_field::TYPE_BRANCH) {
+			if (field->type == TYPE_BRANCH) {
 				offset = util_sign_extend(val, width) + scope->state->n;
 			} else {
-				offset = (int)val;
+				offset = val;
 			}
 			if (offset < scope->state->num_instr) {
 				if (field->call) {
@@ -620,27 +610,27 @@ display_field(struct decode_scope *scope, const char *field_name)
 			}
 		}
 		FALLTHROUGH;
-	case isa_field::TYPE_INT:
-		isa_print(print, "%" PRId64, util_sign_extend(val, width));
+	case TYPE_INT:
+		isa_print(print, "%"PRId64, util_sign_extend(val, width));
 		break;
-	case isa_field::TYPE_UINT:
-		isa_print(print, "%" PRIu64, val);
+	case TYPE_UINT:
+		isa_print(print, "%"PRIu64, val);
 		break;
-	case isa_field::TYPE_HEX:
+	case TYPE_HEX:
 		// TODO format # of digits based on field width?
-		isa_print(print, "%" PRIx64, val);
+		isa_print(print, "%"PRIx64, val);
 		break;
-	case isa_field::TYPE_OFFSET:
+	case TYPE_OFFSET:
 		if (val != 0) {
-			isa_print(print, "%+" PRId64, util_sign_extend(val, width));
+			isa_print(print, "%+"PRId64, util_sign_extend(val, width));
 		}
 		break;
-	case isa_field::TYPE_UOFFSET:
+	case TYPE_UOFFSET:
 		if (val != 0) {
-			isa_print(print, "+%" PRIu64, val);
+			isa_print(print, "+%"PRIu64, val);
 		}
 		break;
-	case isa_field::TYPE_FLOAT:
+	case TYPE_FLOAT:
 		if (width == 16) {
 			isa_print(print, "%f", _mesa_half_to_float(val));
 		} else {
@@ -648,7 +638,7 @@ display_field(struct decode_scope *scope, const char *field_name)
 			isa_print(print, "%f", uif(val));
 		}
 		break;
-	case isa_field::TYPE_BOOL:
+	case TYPE_BOOL:
 		if (field->display) {
 			if (val) {
 				isa_print(print, "%s", field->display);
@@ -657,7 +647,7 @@ display_field(struct decode_scope *scope, const char *field_name)
 			isa_print(print, "%u", (unsigned)val);
 		}
 		break;
-	case isa_field::TYPE_BOOL_INV: {
+	case TYPE_BOOL_INV: {
 		if (field->display) {
 			if (!val) {
 				isa_print(print, "%s", field->display);
@@ -667,10 +657,10 @@ display_field(struct decode_scope *scope, const char *field_name)
 		}
 		break;
 	}
-	case isa_field::TYPE_ENUM:
+	case TYPE_ENUM:
 		display_enum_field(scope, field, v);
 		break;
-	case isa_field::TYPE_CUSTOM:
+	case TYPE_CUSTOM:
 		/* The user has to provide a field_print_cb, but this can
 		 * still be NULL during the branch offset pre-pass.
 		 */
@@ -679,13 +669,13 @@ display_field(struct decode_scope *scope, const char *field_name)
 		}
 		break;
 
-	case isa_field::TYPE_ASSERT:
+	case TYPE_ASSERT:
 		/* assert fields are not for display */
 		assert(0);
 		break;
 
 	/* For fields that are decoded with another bitset hierarchy: */
-	case isa_field::TYPE_BITSET:
+	case TYPE_BITSET:
 		display_bitset_field(scope, field, v);
 		break;
 	default:
@@ -730,7 +720,7 @@ display(struct decode_scope *scope)
 static void
 disasm(struct decode_state *state, void *bin, int sz)
 {
-	BITSET_WORD *instrs = (BITSET_WORD *)bin;
+	BITSET_WORD *instrs = bin;
 	unsigned errors = 0;   /* number of consecutive unmatched instructions */
 
 	assert(sz % BITMASK_WORDS == 0);
@@ -798,7 +788,7 @@ disasm(struct decode_state *state, void *bin, int sz)
 			if (state->options->no_match_cb) {
 				state->options->no_match_cb(state->print.out, instr.bitset, BITMASK_WORDS);
 			} else {
-				isa_print(&state->print, "no match: %" BITSET_FORMAT "\n", BITSET_VALUE(instr.bitset));
+				isa_print(&state->print, "no match: %"BITSET_FORMAT"\n", BITSET_VALUE(instr.bitset));
 			}
 			errors++;
 			continue;
@@ -924,7 +914,7 @@ static bool
 decode(void *out, struct decode_state *state, void *bin)
 {
 	bitmask_t instr = { 0 };
-	next_instruction(&instr, (BITSET_WORD *)bin);
+	next_instruction(&instr, bin);
 
 	const struct isa_bitset *b = find_bitset(state, __instruction, instr);
 	if (!b)
@@ -941,7 +931,7 @@ decode(void *out, struct decode_state *state, void *bin)
 static int
 cmp_entrypoints(const void *_a, const void *_b)
 {
-	const struct isa_entrypoint *a = (struct isa_entrypoint *)_a, *b = (struct isa_entrypoint *)_b;
+	const struct isa_entrypoint *a = _a, *b = _b;
 
 	/* For stable output, if we have multiple entrypoints with the same
 	 * offset, sort them by string name:
@@ -964,20 +954,22 @@ isa_disasm(void *bin, int sz, FILE *out, const struct isa_decode_options *option
 	if (!options)
 		options = &default_options;
 
-	state = (struct decode_state *)rzalloc_size(NULL, sizeof(*state));
+	state = rzalloc_size(NULL, sizeof(*state));
 	state->options = options;
 	state->num_instr = sz / (BITMASK_WORDS * sizeof(BITSET_WORD));
 
 	if (state->options->branch_labels) {
-		state->branch_targets = (BITSET_WORD *)rzalloc_size(state,
+		state->branch_targets = rzalloc_size(state,
 				sizeof(BITSET_WORD) * BITSET_WORDS(state->num_instr));
-		state->call_targets = (BITSET_WORD *)rzalloc_size(state,
+		state->call_targets = rzalloc_size(state,
 				sizeof(BITSET_WORD) * BITSET_WORDS(state->num_instr));
 
 		/* Do a pre-pass to find all the branch targets: */
 		state->print.out = nullptr;
+//		state->print.out = fopen("/dev/null", "w");
 		state->options = &default_options;   /* skip hooks for prepass */
 		disasm(state, bin, sz);
+//		fclose(state->print.out);
 		if (options) {
 			state->options = options;
 		}
@@ -986,7 +978,7 @@ isa_disasm(void *bin, int sz, FILE *out, const struct isa_decode_options *option
 		 * state.
 		 */
 		if (options->entrypoint_count) {
-			struct isa_entrypoint *entrypoints = (struct isa_entrypoint *)
+			struct isa_entrypoint *entrypoints =
 				ralloc_array(state, struct isa_entrypoint,
 					     options->entrypoint_count);
 			memcpy(entrypoints, options->entrypoints,
@@ -1008,7 +1000,7 @@ isa_disasm(void *bin, int sz, FILE *out, const struct isa_decode_options *option
 static bool
 isa_decode(void *out, void *bin, const struct isa_decode_options *options)
 {
-	struct decode_state *state = (struct decode_state *)rzalloc_size(NULL, sizeof(*state));
+	struct decode_state *state = rzalloc_size(NULL, sizeof(*state));
 	state->options = options;
 
 	bool result = decode(out, state, bin);

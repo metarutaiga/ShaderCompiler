@@ -24,7 +24,7 @@
 
 #include <inttypes.h>
 #include <math.h>
-//#include "util/half_float.h"
+#include "../mesa/macros.h"
 #include "helpers.h"
 #include "midgard.h"
 #include "midgard_ops.h"
@@ -60,7 +60,7 @@ mir_print_constant_component(FILE *fp, const midgard_constants *consts,
    }
 
    if (half)
-      reg_mode = (midgard_reg_mode)(reg_mode - 1);
+      reg_mode--;
 
    switch (reg_mode) {
    case midgard_reg_mode_64:
@@ -160,10 +160,10 @@ mir_print_constant_component(FILE *fp, const midgard_constants *consts,
    }
 }
 
-static const char *const outmod_names_float[4] = {"", ".clamp_0_inf", ".clamp_m1_1",
-                                                  ".clamp_0_1"};
+static char *outmod_names_float[4] = {"", ".clamp_0_inf", ".clamp_m1_1",
+                                      ".clamp_0_1"};
 
-static const char *const outmod_names_int[4] = {".ssat", ".usat", ".keeplo", ".keephi"};
+static char *outmod_names_int[4] = {".ssat", ".usat", ".keeplo", ".keephi"};
 
 void
 mir_print_outmod(FILE *fp, unsigned outmod, bool is_int)

@@ -14,18 +14,7 @@
 
 #include "disasm.h"
 #include "instr-a3xx.h"
-
-typedef enum {
-   ALIAS_TEX = 0,
-   ALIAS_RT = 1,
-   ALIAS_MEM = 2,
-} ir3_alias_scope;
-
-/* r0.x - r47.w are "normal" registers. r48.x - r55.w are shared registers.
- * Everything above those are non-GPR registers like a0.x and p0.x that aren't
- * assigned by RA.
- */
-#define GPR_REG_SIZE (4 * 48)
+#include "ir3.h"
 
 static enum debug_t debug;
 
@@ -437,7 +426,7 @@ disasm_a3xx_instr_name(opc_t opc)
 static void
 disasm_field_cb(void *d, const char *field_name, struct isa_decode_value *val)
 {
-   struct disasm_ctx *ctx = (struct disasm_ctx *)d;
+   struct disasm_ctx *ctx = d;
 
    if (!strcmp(field_name, "NAME")) {
       if (!strcmp("nop", val->str)) {
@@ -477,16 +466,16 @@ disasm_field_cb(void *d, const char *field_name, struct isa_decode_value *val)
       ctx->stats->ss += val->num;
       ctx->last.ss = !!val->num;
    } else if (!strcmp(field_name, "CONST")) {
-      ctx->reg.num = (unsigned)val->num;
-      ctx->reg.file = ctx->reg.FILE_CONST;
+      ctx->reg.num = val->num;
+      ctx->reg.file = FILE_CONST;
    } else if (!strcmp(field_name, "GPR")) {
       /* don't count GPR regs r48.x (shared) or higher: */
       if (val->num < 48) {
-         ctx->reg.num = (unsigned)val->num;
-         ctx->reg.file = ctx->reg.FILE_GPR;
+         ctx->reg.num = val->num;
+         ctx->reg.file = FILE_GPR;
       }
    } else if (!strcmp(field_name, "RT")) {
-      ctx->reg.file = ctx->reg.FILE_RT;
+      ctx->reg.file = FILE_RT;
    } else if (!strcmp(field_name, "SRC_R") || !strcmp(field_name, "SRC1_R") ||
               !strcmp(field_name, "SRC2_R") || !strcmp(field_name, "SRC3_R")) {
       ctx->reg.r = val->num;
@@ -513,13 +502,13 @@ disasm_field_cb(void *d, const char *field_name, struct isa_decode_value *val)
          ctx->last.alias_full = val->num == 1;
       }
    } else if (!strcmp(field_name, "SWIZ")) {
-      unsigned num = (ctx->reg.num << 2) | (unsigned)val->num;
+      unsigned num = (ctx->reg.num << 2) | val->num;
       if (ctx->reg.r)
          num += ctx->last.repeat;
 
-      if (ctx->reg.file == ctx->reg.FILE_CONST) {
+      if (ctx->reg.file == FILE_CONST) {
          ctx->stats->constlen = MAX2(ctx->stats->constlen, num);
-      } else if (ctx->reg.file == ctx->reg.FILE_GPR) {
+      } else if (ctx->reg.file == FILE_GPR) {
          if (ctx->reg.half && !BITSET_TEST(ctx->half_aliases, num)) {
             ctx->stats->halfreg = MAX2(ctx->stats->halfreg, num);
          } else if (!BITSET_TEST(ctx->full_aliases, num)){
@@ -529,7 +518,7 @@ disasm_field_cb(void *d, const char *field_name, struct isa_decode_value *val)
 
       memset(&ctx->reg, 0, sizeof(ctx->reg));
    } else if (!strcmp(field_name, "SCOPE")) {
-      ctx->last.alias_scope = (ir3_alias_scope)val->num;
+      ctx->last.alias_scope = val->num;
    }
 }
 
@@ -564,7 +553,7 @@ disasm_handle_last(struct disasm_ctx *ctx)
 static void
 disasm_instr_cb(void *d, unsigned n, void *instr)
 {
-   struct disasm_ctx *ctx = (struct disasm_ctx *)d;
+   struct disasm_ctx *ctx = d;
    uint32_t *dwords = (uint32_t *)instr;
    uint64_t val = dwords[1];
    val = val << 32;
@@ -612,7 +601,7 @@ disasm_instr_cb(void *d, unsigned n, void *instr)
 }
 
 int
-disasm_a3xx_stat(uint32_t *dwords, int sizedwords, unsigned level, FILE *out,
+disasm_a3xx_stat(uint32_t *dwords, int sizedwords, int level, FILE *out,
                  unsigned gpu_id, struct shader_stats *stats)
 {
    struct isa_decode_options decode_options = {
@@ -679,7 +668,7 @@ ir3_assert_handler(const char *expr, const char *file, int line,
    } while (0)
 
 int
-disasm_a3xx(uint32_t *dwords, int sizedwords, unsigned level, FILE *out,
+disasm_a3xx(uint32_t *dwords, int sizedwords, int level, FILE *out,
             unsigned gpu_id)
 {
    struct shader_stats stats;
@@ -687,7 +676,7 @@ disasm_a3xx(uint32_t *dwords, int sizedwords, unsigned level, FILE *out,
 }
 
 int
-try_disasm_a3xx(uint32_t *dwords, int sizedwords, unsigned level, FILE *out,
+try_disasm_a3xx(uint32_t *dwords, int sizedwords, int level, FILE *out,
                 unsigned gpu_id)
 {
    struct shader_stats stats;

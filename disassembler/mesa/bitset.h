@@ -31,6 +31,9 @@
 #ifndef BITSET_H
 #define BITSET_H
 
+#include "bitscan.h"
+#include "macros.h"
+
 /****************************************************************************
  * generic bitset implementation
  */

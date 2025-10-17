@@ -25,6 +25,7 @@
  * THE SOFTWARE.
  */
 
+#include "disassemble.h"
 #include <assert.h>
 #include <ctype.h>
 #include <inttypes.h>
@@ -32,6 +33,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../mesa/macros.h"
 #include "helpers.h"
 #include "midgard.h"
 #include "midgard_ops.h"
@@ -125,8 +127,8 @@ validate_sampler_type(enum mali_texture_op op,
 }
 
 static void
-validate_expand_mode(unsigned expand_mode,
-                     unsigned reg_mode)
+validate_expand_mode(midgard_src_expand_mode expand_mode,
+                     midgard_reg_mode reg_mode)
 {
    switch (expand_mode) {
    case midgard_src_passthrough:
@@ -253,7 +255,7 @@ print_ldst_read_reg(FILE *fp, unsigned reg)
 static void
 print_tex_reg(FILE *fp, unsigned reg, bool is_write)
 {
-   const char *str = is_write ? "TA" : "AT";
+   char *str = is_write ? "TA" : "AT";
    int select = reg & 1;
 
    switch (reg) {
@@ -274,20 +276,20 @@ print_tex_reg(FILE *fp, unsigned reg, bool is_write)
    }
 }
 
-static const char *const srcmod_names_int[4] = {
+static char *srcmod_names_int[4] = {
    ".sext",
    ".zext",
    ".replicate",
    ".lshift",
 };
 
-static const char *const argmod_names[3] = {
+static char *argmod_names[3] = {
    "",
    ".inv",
    ".x2",
 };
 
-static const char *const index_format_names[4] = {"", ".u64", ".u32", ".s32"};
+static char *index_format_names[4] = {"", ".u64", ".u32", ".s32"};
 
 static void
 print_alu_outmod(FILE *fp, unsigned outmod, bool is_int, bool half)
@@ -334,10 +336,10 @@ print_quad_word(FILE *fp, const uint32_t *words, unsigned tabs)
    fprintf(fp, "\n");
 }
 
-static const char components[] = "xyzwefghijklmnop";
+static const char components[16] = "xyzwefghijklmnop";
 
 static int
-bits_for_mode(unsigned mode)
+bits_for_mode(midgard_reg_mode mode)
 {
    switch (mode) {
    case midgard_reg_mode_8:
@@ -355,7 +357,7 @@ bits_for_mode(unsigned mode)
 }
 
 static int
-bits_for_mode_halved(unsigned mode, bool half)
+bits_for_mode_halved(midgard_reg_mode mode, bool half)
 {
    unsigned bits = bits_for_mode(mode);
 
@@ -366,8 +368,8 @@ bits_for_mode_halved(unsigned mode, bool half)
 }
 
 static void
-print_vec_selectors_64(FILE *fp, unsigned swizzle, unsigned reg_mode,
-                       unsigned expand_mode,
+print_vec_selectors_64(FILE *fp, unsigned swizzle, midgard_reg_mode reg_mode,
+                       midgard_src_expand_mode expand_mode,
                        unsigned selector_offset, uint8_t mask)
 {
    bool expands = INPUT_EXPANDS(expand_mode);
@@ -401,7 +403,7 @@ print_vec_selectors_64(FILE *fp, unsigned swizzle, unsigned reg_mode,
 }
 
 static void
-print_vec_selectors(FILE *fp, unsigned swizzle, unsigned reg_mode,
+print_vec_selectors(FILE *fp, unsigned swizzle, midgard_reg_mode reg_mode,
                     unsigned selector_offset, uint8_t mask,
                     unsigned *mask_offset)
 {
@@ -430,8 +432,8 @@ print_vec_selectors(FILE *fp, unsigned swizzle, unsigned reg_mode,
 }
 
 static void
-print_vec_swizzle(FILE *fp, unsigned swizzle, unsigned expand,
-                  unsigned mode, uint8_t mask)
+print_vec_swizzle(FILE *fp, unsigned swizzle, midgard_src_expand_mode expand,
+                  midgard_reg_mode mode, uint8_t mask)
 {
    unsigned bits = bits_for_mode_halved(mode, INPUT_EXPANDS(expand));
 
@@ -628,9 +630,9 @@ print_srcmod(FILE *fp, bool is_int, bool expands, unsigned mod, bool scalar)
 
 static void
 print_vector_src(disassemble_context *ctx, FILE *fp, unsigned src_binary,
-                 unsigned mode, unsigned reg,
-                 unsigned shrink_mode, uint8_t src_mask, bool is_int,
-                 unsigned arg_mod)
+                 midgard_reg_mode mode, unsigned reg,
+                 midgard_shrink_mode shrink_mode, uint8_t src_mask, bool is_int,
+                 midgard_special_arg_mod arg_mod)
 {
    midgard_vector_alu_src *src = (midgard_vector_alu_src *)&src_binary;
 
@@ -690,7 +692,7 @@ print_dest(disassemble_context *ctx, FILE *fp, unsigned reg)
 
 static void
 print_alu_mask(FILE *fp, uint8_t mask, unsigned bits,
-               unsigned shrink_mode)
+               midgard_shrink_mode shrink_mode)
 {
    /* Skip 'complete' masks */
 
@@ -1024,7 +1026,7 @@ static bool
 print_compact_branch_writeout_field(disassemble_context *ctx, FILE *fp,
                                     uint16_t word)
 {
-   midgard_jmp_writeout_op op = (midgard_jmp_writeout_op)(word & 0x7);
+   midgard_jmp_writeout_op op = word & 0x7;
 
    switch (op) {
    case midgard_jmp_writeout_op_branch_uncond: {
@@ -1595,7 +1597,7 @@ print_texture_barrier(FILE *fp, const uint32_t *word)
 #undef DEFINE_CASE
 
 static const char *
-texture_mode(unsigned mode)
+texture_mode(enum mali_texture_mode mode)
 {
    switch (mode) {
    case TEXTURE_NORMAL:
@@ -1618,7 +1620,7 @@ texture_mode(unsigned mode)
 }
 
 static const char *
-derivative_mode(unsigned mode)
+derivative_mode(enum mali_derivative_mode mode)
 {
    switch (mode) {
    case TEXTURE_DFDX:
@@ -1631,7 +1633,7 @@ derivative_mode(unsigned mode)
 }
 
 static const char *
-partial_exection_mode(unsigned mode)
+partial_exection_mode(enum midgard_partial_execution mode)
 {
    switch (mode) {
    case MIDGARD_PARTIAL_EXECUTION_NONE:
@@ -1820,7 +1822,7 @@ disassemble_midgard(FILE *fp, const void *code, size_t size, unsigned gpu_id,
                     bool verbose)
 {
    const uint32_t *words = (const uint32_t *)code;
-   unsigned num_words = (unsigned)size / 4;
+   unsigned num_words = size / 4;
    int tabs = 0;
 
    bool branch_forward = false;
@@ -1830,7 +1832,7 @@ disassemble_midgard(FILE *fp, const void *code, size_t size, unsigned gpu_id,
    unsigned i = 0;
 
    disassemble_context ctx = {
-      .midg_tags = (unsigned*)calloc(sizeof(ctx.midg_tags[0]), num_words),
+      .midg_tags = calloc(sizeof(ctx.midg_tags[0]), num_words),
       .midg_ever_written = 0,
    };
 

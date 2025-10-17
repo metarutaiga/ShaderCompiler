@@ -1,5 +1,3 @@
-#include <math.h>
-#include <string>
 #include "Logger.h"
 #include "ShaderCompiler.h"
 #include "VirtualMachine.h"
@@ -8,49 +6,12 @@
 #include "../mine/x86/x86_instruction.inl"
 #include "../mine/x86/x86_register.inl"
 
-static int inside_fprintf(FILE* fp, const char* format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    char temp[256];
-    int ret = vsnprintf(temp, 256, format, args);
-    va_end(args);
-
-    if (fp) {
-        auto& string = *(std::string*)fp;
-        string += temp;
-    }
-    return ret;
-}
-static int inside_fputs(const char* str, FILE* fp)
-{
-    if (fp) {
-        auto& string = *(std::string*)fp;
-        string += str;
-    }
-    return 0;
-}
-#define fprintf inside_fprintf
-#define fputs inside_fputs
-#define MAX2(a, b) (a > b ? a : b)
-#define MIN2(a, b) (a < b ? a : b)
-#define NDEBUG
-#define unreachable(...)
-#define UNUSED __attribute__((unused))
-#define util_bitcount __builtin_popcount
-#define util_logbase2(n) ((sizeof(unsigned) * 8 - 1) - __builtin_clz(n | 1))
-#define util_sign_extend(v, w) (((int)(v) << (32 - w)) >> w)
-#define _mesa_half_to_float(v) (float)(*(__fp16*)&v)
-#include <assert.h>
-#pragma clang diagnostic ignored "-Winitializer-overrides"
-namespace utgard {
-#   include "../disassembler/utgard/gp/disasm.c"
-#   include "../disassembler/utgard/pp/disasm.c"
-};
-namespace midgard {
-#   include "../disassembler/midgard/disassemble.c"
-#   include "../disassembler/midgard/midgard_ops.c"
-#   include "../disassembler/midgard/midgard_print_constant.c"
+extern "C" {
+    int mesa_fprintf(FILE* fp, const char* format, ...);
+    void mesa_cleanup();
+#   include "../disassembler/utgard/gp/codegen.h"
+#   include "../disassembler/utgard/pp/codegen.h"
+#   include "../disassembler/midgard/disassemble.h"
 };
 
 namespace MaliCompiler {
@@ -93,27 +54,29 @@ mine* NextProcess(mine* cpu)
                     int size = chunks[i + 1];
                     uint32_t* bin = chunks + i + 2;
                     if (type == 'vert') {
-                        utgard::gpir_codegen_instr* instr = (utgard::gpir_codegen_instr *)bin;
-                        utgard::gpir_disassemble_program(instr, size / sizeof(utgard::gpir_codegen_instr), (FILE*)&disasm);
+                        gpir_codegen_instr* instr = (gpir_codegen_instr *)bin;
+                        gpir_disassemble_program(instr, size / sizeof(gpir_codegen_instr), (FILE*)&disasm);
                     }
                     else if (type == 'frag') {
                         size >>= 2;
                         uint32_t offset = 0;
                         do {
-                            utgard::ppir_codegen_ctrl *ctrl = (utgard::ppir_codegen_ctrl *)bin;
-                            inside_fprintf((FILE*)&disasm, "@%6d: ", offset);
-                            utgard::ppir_disassemble_instr(bin, offset, (FILE*)&disasm);
+                            ppir_codegen_ctrl *ctrl = (ppir_codegen_ctrl *)bin;
+                            mesa_fprintf((FILE*)&disasm, "@%6d: ", offset);
+                            ppir_disassemble_instr(bin, offset, (FILE*)&disasm);
                             bin += ctrl->count;
                             offset += ctrl->count;
                             size -= ctrl->count;
                         } while (size > 0);
                     }
+                    mesa_cleanup();
                     break;
                 }
                 if (chunks[i] == __builtin_bswap32('OBJC')) {
                     int size = chunks[i + 1];
                     uint32_t* bin = chunks + i + 2;
-                    midgard::disassemble_midgard((FILE*)&disasm, bin, size, 0, false);
+                    disassemble_midgard((FILE*)&disasm, bin, size, 0, false);
+                    mesa_cleanup();
                     break;
                 }
             }

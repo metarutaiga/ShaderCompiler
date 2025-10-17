@@ -52,8 +52,8 @@ static inline bitmask_t
 uint64_t_to_bitmask(uint64_t val)
 {
     bitmask_t mask = {
-        .bitset[0] = (BITSET_WORD)(val & 0xffffffff),
-        .bitset[1] = (BITSET_WORD)((val >> 32) & 0xffffffff),
+        .bitset[0] = val & 0xffffffff,
+        .bitset[1] = (val >> 32) & 0xffffffff,
     };
 
     return mask;
@@ -1906,403 +1906,403 @@ static void decode_atomic_s_xor_gen_500(void *out, struct decode_scope *scope);
  * emit various tables when they have pointers to each other)
  */
 
-extern const struct isa_bitset bitset___reg_gpr_gen_0;
-extern const struct isa_bitset bitset___reg_const_gen_0;
-extern const struct isa_bitset bitset___reg_relative_gpr_gen_0;
-extern const struct isa_bitset bitset___reg_relative_const_gen_0;
-extern const struct isa_bitset bitset___multisrc_gen_0;
-extern const struct isa_bitset bitset___mulitsrc_immed_gen_0;
-extern const struct isa_bitset bitset___mulitsrc_immed_flut_gen_0;
-extern const struct isa_bitset bitset___multisrc_immed_flut_full_gen_0;
-extern const struct isa_bitset bitset___multisrc_immed_flut_half_gen_0;
-extern const struct isa_bitset bitset___multisrc_gpr_gen_0;
-extern const struct isa_bitset bitset___multisrc_const_gen_0;
-extern const struct isa_bitset bitset___multisrc_relative_gen_0;
-extern const struct isa_bitset bitset___multisrc_relative_gpr_gen_0;
-extern const struct isa_bitset bitset___multisrc_relative_const_gen_0;
-extern const struct isa_bitset bitset___instruction_cat0_gen_0;
-extern const struct isa_bitset bitset___instruction_cat0_0src_gen_0;
-extern const struct isa_bitset bitset_nop_gen_0;
-extern const struct isa_bitset bitset_end_gen_0;
-extern const struct isa_bitset bitset_ret_gen_0;
-extern const struct isa_bitset bitset_emit_gen_0;
-extern const struct isa_bitset bitset_cut_gen_0;
-extern const struct isa_bitset bitset_chmask_gen_0;
-extern const struct isa_bitset bitset_chsh_gen_0;
-extern const struct isa_bitset bitset_flow_rev_gen_0;
-extern const struct isa_bitset bitset_shpe_gen_0;
-extern const struct isa_bitset bitset_predt_gen_0;
-extern const struct isa_bitset bitset_predf_gen_0;
-extern const struct isa_bitset bitset_prede_gen_0;
-extern const struct isa_bitset bitset___instruction_cat0_1src_gen_0;
-extern const struct isa_bitset bitset_kill_gen_0;
-extern const struct isa_bitset bitset___instruction_cat0_immed_gen_0;
-extern const struct isa_bitset bitset_jump_gen_0;
-extern const struct isa_bitset bitset_call_gen_0;
-extern const struct isa_bitset bitset_bkt_gen_0;
-extern const struct isa_bitset bitset_getlast_gen_600;
-extern const struct isa_bitset bitset_getone_gen_0;
-extern const struct isa_bitset bitset_shps_gen_0;
-extern const struct isa_bitset bitset___instruction_cat0_branch_gen_0;
-extern const struct isa_bitset bitset_brac_gen_0;
-extern const struct isa_bitset bitset_brax_gen_0;
-extern const struct isa_bitset bitset___instruction_cat0_branch_1src_gen_0;
-extern const struct isa_bitset bitset_br_gen_0;
-extern const struct isa_bitset bitset_bany_gen_0;
-extern const struct isa_bitset bitset_ball_gen_0;
-extern const struct isa_bitset bitset___instruction_cat0_branch_2src_gen_0;
-extern const struct isa_bitset bitset_brao_gen_0;
-extern const struct isa_bitset bitset_braa_gen_0;
-extern const struct isa_bitset bitset___cat1_dst_gen_0;
-extern const struct isa_bitset bitset___instruction_cat1_gen_0;
-extern const struct isa_bitset bitset___instruction_cat1_typed_gen_0;
-extern const struct isa_bitset bitset___instruction_cat1_mov_gen_0;
-extern const struct isa_bitset bitset___cat1_immed_src_gen_0;
-extern const struct isa_bitset bitset___cat1_const_src_gen_0;
-extern const struct isa_bitset bitset___cat1_gpr_src_gen_0;
-extern const struct isa_bitset bitset___cat1_relative_gpr_src_gen_0;
-extern const struct isa_bitset bitset___cat1_relative_const_src_gen_0;
-extern const struct isa_bitset bitset_mov_immed_gen_0;
-extern const struct isa_bitset bitset_mov_const_gen_0;
-extern const struct isa_bitset bitset___instruction_cat1_mov_gpr_gen_0;
-extern const struct isa_bitset bitset_mov_gpr_gen_0;
-extern const struct isa_bitset bitset___instruction_cat1_movs_gen_0;
-extern const struct isa_bitset bitset_movs_immed_gen_0;
-extern const struct isa_bitset bitset_movs_a0_gen_0;
-extern const struct isa_bitset bitset___instruction_cat1_relative_gen_0;
-extern const struct isa_bitset bitset_mov_relgpr_gen_0;
-extern const struct isa_bitset bitset_mov_relconst_gen_0;
-extern const struct isa_bitset bitset___cat1_multi_src_gen_0;
-extern const struct isa_bitset bitset___cat1_multi_dst_gen_0;
-extern const struct isa_bitset bitset___instruction_cat1_multi_gen_500;
-extern const struct isa_bitset bitset_swz_gen_0;
-extern const struct isa_bitset bitset_gat_gen_0;
-extern const struct isa_bitset bitset_sct_gen_0;
-extern const struct isa_bitset bitset_movmsk_gen_0;
-extern const struct isa_bitset bitset___instruction_cat2_gen_0;
-extern const struct isa_bitset bitset___instruction_cat2_1src_gen_0;
-extern const struct isa_bitset bitset___instruction_cat2_2src_gen_0;
-extern const struct isa_bitset bitset___instruction_cat2_2src_cond_gen_0;
-extern const struct isa_bitset bitset___instruction_cat2_2src_input_gen_0;
-extern const struct isa_bitset bitset_bary_f_gen_0;
-extern const struct isa_bitset bitset_flat_b_gen_600;
-extern const struct isa_bitset bitset_add_f_gen_0;
-extern const struct isa_bitset bitset_min_f_gen_0;
-extern const struct isa_bitset bitset_max_f_gen_0;
-extern const struct isa_bitset bitset_mul_f_gen_0;
-extern const struct isa_bitset bitset_sign_f_gen_0;
-extern const struct isa_bitset bitset_cmps_f_gen_0;
-extern const struct isa_bitset bitset_absneg_f_gen_0;
-extern const struct isa_bitset bitset_cmpv_f_gen_0;
-extern const struct isa_bitset bitset_floor_f_gen_0;
-extern const struct isa_bitset bitset_ceil_f_gen_0;
-extern const struct isa_bitset bitset_rndne_f_gen_0;
-extern const struct isa_bitset bitset_rndaz_f_gen_0;
-extern const struct isa_bitset bitset_trunc_f_gen_0;
-extern const struct isa_bitset bitset_add_u_gen_0;
-extern const struct isa_bitset bitset_add_s_gen_0;
-extern const struct isa_bitset bitset_sub_u_gen_0;
-extern const struct isa_bitset bitset_sub_s_gen_0;
-extern const struct isa_bitset bitset_cmps_u_gen_0;
-extern const struct isa_bitset bitset_cmps_s_gen_0;
-extern const struct isa_bitset bitset_min_u_gen_0;
-extern const struct isa_bitset bitset_min_s_gen_0;
-extern const struct isa_bitset bitset_max_u_gen_0;
-extern const struct isa_bitset bitset_max_s_gen_0;
-extern const struct isa_bitset bitset_absneg_s_gen_0;
-extern const struct isa_bitset bitset_and_b_gen_0;
-extern const struct isa_bitset bitset_or_b_gen_0;
-extern const struct isa_bitset bitset_not_b_gen_0;
-extern const struct isa_bitset bitset_xor_b_gen_0;
-extern const struct isa_bitset bitset_cmpv_u_gen_0;
-extern const struct isa_bitset bitset_cmpv_s_gen_0;
-extern const struct isa_bitset bitset_mul_u24_gen_0;
-extern const struct isa_bitset bitset_mul_s24_gen_0;
-extern const struct isa_bitset bitset_mull_u_gen_0;
-extern const struct isa_bitset bitset_bfrev_b_gen_0;
-extern const struct isa_bitset bitset_clz_s_gen_0;
-extern const struct isa_bitset bitset_clz_b_gen_0;
-extern const struct isa_bitset bitset_shl_b_gen_0;
-extern const struct isa_bitset bitset_shr_b_gen_0;
-extern const struct isa_bitset bitset_ashr_b_gen_0;
-extern const struct isa_bitset bitset_mgen_b_gen_0;
-extern const struct isa_bitset bitset_getbit_b_gen_0;
-extern const struct isa_bitset bitset_setrm_gen_0;
-extern const struct isa_bitset bitset_cbits_b_gen_0;
-extern const struct isa_bitset bitset_shb_gen_0;
-extern const struct isa_bitset bitset_msad_gen_0;
-extern const struct isa_bitset bitset___cat3_src_gen_0;
-extern const struct isa_bitset bitset___cat3_src_gpr_gen_0;
-extern const struct isa_bitset bitset___cat3_src_const_or_immed_gen_0;
-extern const struct isa_bitset bitset___cat3_src_relative_gen_0;
-extern const struct isa_bitset bitset___cat3_src_relative_gpr_gen_0;
-extern const struct isa_bitset bitset___cat3_src_relative_const_gen_0;
-extern const struct isa_bitset bitset___instruction_cat3_base_gen_0;
-extern const struct isa_bitset bitset___instruction_cat3_gen_0;
-extern const struct isa_bitset bitset___instruction_cat3_alt_gen_600;
-extern const struct isa_bitset bitset_mad_u16_gen_0;
-extern const struct isa_bitset bitset_madsh_u16_gen_0;
-extern const struct isa_bitset bitset_mad_s16_gen_0;
-extern const struct isa_bitset bitset_madsh_m16_gen_0;
-extern const struct isa_bitset bitset_mad_u24_gen_0;
-extern const struct isa_bitset bitset_mad_s24_gen_0;
-extern const struct isa_bitset bitset_mad_f16_gen_0;
-extern const struct isa_bitset bitset_mad_f32_gen_0;
-extern const struct isa_bitset bitset_sel_b16_gen_0;
-extern const struct isa_bitset bitset_sel_b32_gen_0;
-extern const struct isa_bitset bitset_sel_s16_gen_0;
-extern const struct isa_bitset bitset_sel_s32_gen_0;
-extern const struct isa_bitset bitset_sel_f16_gen_0;
-extern const struct isa_bitset bitset_sel_f32_gen_0;
-extern const struct isa_bitset bitset_sad_s16_gen_0;
-extern const struct isa_bitset bitset_sad_s32_gen_0;
-extern const struct isa_bitset bitset_shrm_gen_0;
-extern const struct isa_bitset bitset_shlm_gen_0;
-extern const struct isa_bitset bitset_shrg_gen_0;
-extern const struct isa_bitset bitset_shlg_gen_0;
-extern const struct isa_bitset bitset_andg_gen_0;
-extern const struct isa_bitset bitset___instruction_cat3_dp_gen_600;
-extern const struct isa_bitset bitset_dp2acc_gen_0;
-extern const struct isa_bitset bitset_dp4acc_gen_0;
-extern const struct isa_bitset bitset___instruction_cat3_wmm_gen_600;
-extern const struct isa_bitset bitset_wmm_gen_0;
-extern const struct isa_bitset bitset_wmm_accu_gen_0;
-extern const struct isa_bitset bitset___instruction_cat4_gen_0;
-extern const struct isa_bitset bitset_rcp_gen_0;
-extern const struct isa_bitset bitset_rsq_gen_0;
-extern const struct isa_bitset bitset_log2_gen_0;
-extern const struct isa_bitset bitset_exp2_gen_0;
-extern const struct isa_bitset bitset_sin_gen_0;
-extern const struct isa_bitset bitset_cos_gen_0;
-extern const struct isa_bitset bitset_sqrt_gen_0;
-extern const struct isa_bitset bitset_hrsq_gen_0;
-extern const struct isa_bitset bitset_hlog2_gen_0;
-extern const struct isa_bitset bitset_hexp2_gen_0;
-extern const struct isa_bitset bitset___cat5_s2en_bindless_base_gen_0;
-extern const struct isa_bitset bitset___instruction_cat5_gen_0;
-extern const struct isa_bitset bitset___instruction_cat5_tex_base_gen_0;
-extern const struct isa_bitset bitset___instruction_cat5_tex_gen_0;
-extern const struct isa_bitset bitset_isam_gen_0;
-extern const struct isa_bitset bitset_isaml_gen_0;
-extern const struct isa_bitset bitset_isamm_gen_0;
-extern const struct isa_bitset bitset_sam_gen_0;
-extern const struct isa_bitset bitset_samb_gen_0;
-extern const struct isa_bitset bitset_saml_gen_0;
-extern const struct isa_bitset bitset_samgq_gen_0;
-extern const struct isa_bitset bitset_getlod_gen_0;
-extern const struct isa_bitset bitset_conv_gen_0;
-extern const struct isa_bitset bitset_convm_gen_0;
-extern const struct isa_bitset bitset_getsize_gen_0;
-extern const struct isa_bitset bitset_getbuf_gen_0;
-extern const struct isa_bitset bitset_getpos_gen_0;
-extern const struct isa_bitset bitset_getinfo_gen_0;
-extern const struct isa_bitset bitset_dsx_gen_0;
-extern const struct isa_bitset bitset_dsy_gen_0;
-extern const struct isa_bitset bitset_gather4r_gen_0;
-extern const struct isa_bitset bitset_gather4g_gen_0;
-extern const struct isa_bitset bitset_gather4b_gen_0;
-extern const struct isa_bitset bitset_gather4a_gen_0;
-extern const struct isa_bitset bitset_samgp0_gen_0;
-extern const struct isa_bitset bitset_samgp1_gen_0;
-extern const struct isa_bitset bitset_samgp2_gen_0;
-extern const struct isa_bitset bitset_samgp3_gen_0;
-extern const struct isa_bitset bitset_dsxpp_1_gen_0;
-extern const struct isa_bitset bitset_dsypp_1_gen_0;
-extern const struct isa_bitset bitset_rgetpos_gen_0;
-extern const struct isa_bitset bitset_rgetinfo_gen_0;
-extern const struct isa_bitset bitset_tcinv_gen_0;
-extern const struct isa_bitset bitset___instruction_cat5_brcst_gen_0;
-extern const struct isa_bitset bitset_brcst_active_gen_600;
-extern const struct isa_bitset bitset___instruction_cat5_quad_shuffle_gen_600;
-extern const struct isa_bitset bitset_quad_shuffle_brcst_gen_0;
-extern const struct isa_bitset bitset_quad_shuffle_horiz_gen_0;
-extern const struct isa_bitset bitset_quad_shuffle_vert_gen_0;
-extern const struct isa_bitset bitset_quad_shuffle_diag_gen_0;
-extern const struct isa_bitset bitset___cat5_src1_gen_0;
-extern const struct isa_bitset bitset___cat5_src2_gen_0;
-extern const struct isa_bitset bitset___cat5_samp_gen_0;
-extern const struct isa_bitset bitset___cat5_samp_s2en_bindless_a1_gen_0;
-extern const struct isa_bitset bitset___cat5_tex_s2en_bindless_a1_gen_0;
-extern const struct isa_bitset bitset___cat5_tex_gen_0;
-extern const struct isa_bitset bitset___cat5_tex_s2en_bindless_gen_0;
-extern const struct isa_bitset bitset___cat5_type_gen_0;
-extern const struct isa_bitset bitset___cat5_src3_gen_0;
-extern const struct isa_bitset bitset___const_dst_imm_gen_0;
-extern const struct isa_bitset bitset___const_dst_a1_gen_0;
-extern const struct isa_bitset bitset___const_dst_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_ldg_gen_0;
-extern const struct isa_bitset bitset_ldg_gen_0;
-extern const struct isa_bitset bitset_ldg_k_gen_600;
-extern const struct isa_bitset bitset___instruction_cat6_stg_gen_0;
-extern const struct isa_bitset bitset_stg_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_ld_gen_0;
-extern const struct isa_bitset bitset_ldl_gen_0;
-extern const struct isa_bitset bitset_ldp_gen_0;
-extern const struct isa_bitset bitset_ldlw_gen_0;
-extern const struct isa_bitset bitset_ldlv_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_st_gen_0;
-extern const struct isa_bitset bitset_stl_gen_0;
-extern const struct isa_bitset bitset_stp_gen_0;
-extern const struct isa_bitset bitset_stlw_gen_0;
-extern const struct isa_bitset bitset_stc_gen_600;
-extern const struct isa_bitset bitset_stsc_gen_700;
-extern const struct isa_bitset bitset_resinfo_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_load_gen_0;
-extern const struct isa_bitset bitset_ldib_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_store_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_store_a4xx_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_store_a5xx_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_local_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_1src_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_2src_gen_0;
-extern const struct isa_bitset bitset_atomic_add_gen_0;
-extern const struct isa_bitset bitset_atomic_sub_gen_0;
-extern const struct isa_bitset bitset_atomic_xchg_gen_0;
-extern const struct isa_bitset bitset_atomic_inc_gen_0;
-extern const struct isa_bitset bitset_atomic_dec_gen_0;
-extern const struct isa_bitset bitset_atomic_cmpxchg_gen_0;
-extern const struct isa_bitset bitset_atomic_min_gen_0;
-extern const struct isa_bitset bitset_atomic_max_gen_0;
-extern const struct isa_bitset bitset_atomic_and_gen_0;
-extern const struct isa_bitset bitset_atomic_or_gen_0;
-extern const struct isa_bitset bitset_atomic_xor_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_global_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a6xx_atomic_global_gen_600;
-extern const struct isa_bitset bitset_atomic_g_add_gen_0;
-extern const struct isa_bitset bitset_atomic_g_sub_gen_0;
-extern const struct isa_bitset bitset_atomic_g_xchg_gen_0;
-extern const struct isa_bitset bitset_atomic_g_inc_gen_0;
-extern const struct isa_bitset bitset_atomic_g_dec_gen_0;
-extern const struct isa_bitset bitset_atomic_g_cmpxchg_gen_0;
-extern const struct isa_bitset bitset_atomic_g_min_gen_0;
-extern const struct isa_bitset bitset_atomic_g_max_gen_0;
-extern const struct isa_bitset bitset_atomic_g_and_gen_0;
-extern const struct isa_bitset bitset_atomic_g_or_gen_0;
-extern const struct isa_bitset bitset_atomic_g_xor_gen_0;
-extern const struct isa_bitset bitset_ray_intersection_gen_700;
-extern const struct isa_bitset bitset___instruction_cat6_a6xx_base_gen_600;
-extern const struct isa_bitset bitset___instruction_cat6_a6xx_gen_0;
-extern const struct isa_bitset bitset___cat6_ldc_common_gen_0;
-extern const struct isa_bitset bitset_ldc_k_gen_0;
-extern const struct isa_bitset bitset_ldc_gen_0;
-extern const struct isa_bitset bitset_getspid_gen_0;
-extern const struct isa_bitset bitset_getwid_gen_0;
-extern const struct isa_bitset bitset_getfiberid_gen_600;
-extern const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_1src_gen_0;
-extern const struct isa_bitset bitset_resinfo_b_gen_0;
-extern const struct isa_bitset bitset_resbase_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_base_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_load_store_gen_0;
-extern const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_atomic_gen_0;
-extern const struct isa_bitset bitset_stib_b_gen_0;
-extern const struct isa_bitset bitset_ldib_b_gen_0;
-extern const struct isa_bitset bitset_atomic_b_add_gen_0;
-extern const struct isa_bitset bitset_atomic_b_sub_gen_0;
-extern const struct isa_bitset bitset_atomic_b_xchg_gen_0;
-extern const struct isa_bitset bitset_atomic_b_cmpxchg_gen_0;
-extern const struct isa_bitset bitset_atomic_b_min_gen_0;
-extern const struct isa_bitset bitset_atomic_b_max_gen_0;
-extern const struct isa_bitset bitset_atomic_b_and_gen_0;
-extern const struct isa_bitset bitset_atomic_b_or_gen_0;
-extern const struct isa_bitset bitset_atomic_b_xor_gen_0;
-extern const struct isa_bitset bitset_shfl_gen_600;
-extern const struct isa_bitset bitset___cat6_typed_gen_0;
-extern const struct isa_bitset bitset___cat6_base_gen_0;
-extern const struct isa_bitset bitset___cat6_src_gen_0;
-extern const struct isa_bitset bitset___cat6_src_const_or_gpr_gen_0;
-extern const struct isa_bitset bitset___instruction_cat7_gen_0;
-extern const struct isa_bitset bitset___instruction_cat7_barrier_gen_0;
-extern const struct isa_bitset bitset_bar_gen_0;
-extern const struct isa_bitset bitset_fence_gen_0;
-extern const struct isa_bitset bitset___instruction_cat7_data_gen_0;
-extern const struct isa_bitset bitset_sleep_gen_0;
-extern const struct isa_bitset bitset_icinv_gen_0;
-extern const struct isa_bitset bitset_dccln_gen_0;
-extern const struct isa_bitset bitset_dcinv_gen_0;
-extern const struct isa_bitset bitset_dcflu_gen_0;
-extern const struct isa_bitset bitset_ccinv_gen_700;
-extern const struct isa_bitset bitset_lock_gen_700;
-extern const struct isa_bitset bitset_unlock_gen_700;
-extern const struct isa_bitset bitset___alias_immed_src_gen_0;
-extern const struct isa_bitset bitset___alias_const_src_gen_0;
-extern const struct isa_bitset bitset___alias_gpr_src_gen_0;
-extern const struct isa_bitset bitset___dst_rt_gen_0;
-extern const struct isa_bitset bitset_alias_gen_700;
-extern const struct isa_bitset bitset___instruction_gen_300;
-extern const struct isa_bitset bitset_ldg_a_gen_600;
-extern const struct isa_bitset bitset_ldg_a_gen_700;
-extern const struct isa_bitset bitset_stg_a_gen_600;
-extern const struct isa_bitset bitset_stg_a_gen_700;
-extern const struct isa_bitset bitset_ldgb_gen_0;
-extern const struct isa_bitset bitset_ldgb_gen_500;
-extern const struct isa_bitset bitset_stgb_gen_500;
-extern const struct isa_bitset bitset_stgb_gen_0;
-extern const struct isa_bitset bitset_stib_gen_500;
-extern const struct isa_bitset bitset_stib_gen_0;
-extern const struct isa_bitset bitset_atomic_s_add_gen_0;
-extern const struct isa_bitset bitset_atomic_s_add_gen_500;
-extern const struct isa_bitset bitset_atomic_s_sub_gen_0;
-extern const struct isa_bitset bitset_atomic_s_sub_gen_500;
-extern const struct isa_bitset bitset_atomic_s_xchg_gen_0;
-extern const struct isa_bitset bitset_atomic_s_xchg_gen_500;
-extern const struct isa_bitset bitset_atomic_s_inc_gen_0;
-extern const struct isa_bitset bitset_atomic_s_inc_gen_500;
-extern const struct isa_bitset bitset_atomic_s_dec_gen_0;
-extern const struct isa_bitset bitset_atomic_s_dec_gen_500;
-extern const struct isa_bitset bitset_atomic_s_cmpxchg_gen_0;
-extern const struct isa_bitset bitset_atomic_s_cmpxchg_gen_500;
-extern const struct isa_bitset bitset_atomic_s_min_gen_0;
-extern const struct isa_bitset bitset_atomic_s_min_gen_500;
-extern const struct isa_bitset bitset_atomic_s_max_gen_0;
-extern const struct isa_bitset bitset_atomic_s_max_gen_500;
-extern const struct isa_bitset bitset_atomic_s_and_gen_0;
-extern const struct isa_bitset bitset_atomic_s_and_gen_500;
-extern const struct isa_bitset bitset_atomic_s_or_gen_0;
-extern const struct isa_bitset bitset_atomic_s_or_gen_500;
-extern const struct isa_bitset bitset_atomic_s_xor_gen_0;
-extern const struct isa_bitset bitset_atomic_s_xor_gen_500;
+static const struct isa_bitset bitset___reg_gpr_gen_0;
+static const struct isa_bitset bitset___reg_const_gen_0;
+static const struct isa_bitset bitset___reg_relative_gpr_gen_0;
+static const struct isa_bitset bitset___reg_relative_const_gen_0;
+static const struct isa_bitset bitset___multisrc_gen_0;
+static const struct isa_bitset bitset___mulitsrc_immed_gen_0;
+static const struct isa_bitset bitset___mulitsrc_immed_flut_gen_0;
+static const struct isa_bitset bitset___multisrc_immed_flut_full_gen_0;
+static const struct isa_bitset bitset___multisrc_immed_flut_half_gen_0;
+static const struct isa_bitset bitset___multisrc_gpr_gen_0;
+static const struct isa_bitset bitset___multisrc_const_gen_0;
+static const struct isa_bitset bitset___multisrc_relative_gen_0;
+static const struct isa_bitset bitset___multisrc_relative_gpr_gen_0;
+static const struct isa_bitset bitset___multisrc_relative_const_gen_0;
+static const struct isa_bitset bitset___instruction_cat0_gen_0;
+static const struct isa_bitset bitset___instruction_cat0_0src_gen_0;
+static const struct isa_bitset bitset_nop_gen_0;
+static const struct isa_bitset bitset_end_gen_0;
+static const struct isa_bitset bitset_ret_gen_0;
+static const struct isa_bitset bitset_emit_gen_0;
+static const struct isa_bitset bitset_cut_gen_0;
+static const struct isa_bitset bitset_chmask_gen_0;
+static const struct isa_bitset bitset_chsh_gen_0;
+static const struct isa_bitset bitset_flow_rev_gen_0;
+static const struct isa_bitset bitset_shpe_gen_0;
+static const struct isa_bitset bitset_predt_gen_0;
+static const struct isa_bitset bitset_predf_gen_0;
+static const struct isa_bitset bitset_prede_gen_0;
+static const struct isa_bitset bitset___instruction_cat0_1src_gen_0;
+static const struct isa_bitset bitset_kill_gen_0;
+static const struct isa_bitset bitset___instruction_cat0_immed_gen_0;
+static const struct isa_bitset bitset_jump_gen_0;
+static const struct isa_bitset bitset_call_gen_0;
+static const struct isa_bitset bitset_bkt_gen_0;
+static const struct isa_bitset bitset_getlast_gen_600;
+static const struct isa_bitset bitset_getone_gen_0;
+static const struct isa_bitset bitset_shps_gen_0;
+static const struct isa_bitset bitset___instruction_cat0_branch_gen_0;
+static const struct isa_bitset bitset_brac_gen_0;
+static const struct isa_bitset bitset_brax_gen_0;
+static const struct isa_bitset bitset___instruction_cat0_branch_1src_gen_0;
+static const struct isa_bitset bitset_br_gen_0;
+static const struct isa_bitset bitset_bany_gen_0;
+static const struct isa_bitset bitset_ball_gen_0;
+static const struct isa_bitset bitset___instruction_cat0_branch_2src_gen_0;
+static const struct isa_bitset bitset_brao_gen_0;
+static const struct isa_bitset bitset_braa_gen_0;
+static const struct isa_bitset bitset___cat1_dst_gen_0;
+static const struct isa_bitset bitset___instruction_cat1_gen_0;
+static const struct isa_bitset bitset___instruction_cat1_typed_gen_0;
+static const struct isa_bitset bitset___instruction_cat1_mov_gen_0;
+static const struct isa_bitset bitset___cat1_immed_src_gen_0;
+static const struct isa_bitset bitset___cat1_const_src_gen_0;
+static const struct isa_bitset bitset___cat1_gpr_src_gen_0;
+static const struct isa_bitset bitset___cat1_relative_gpr_src_gen_0;
+static const struct isa_bitset bitset___cat1_relative_const_src_gen_0;
+static const struct isa_bitset bitset_mov_immed_gen_0;
+static const struct isa_bitset bitset_mov_const_gen_0;
+static const struct isa_bitset bitset___instruction_cat1_mov_gpr_gen_0;
+static const struct isa_bitset bitset_mov_gpr_gen_0;
+static const struct isa_bitset bitset___instruction_cat1_movs_gen_0;
+static const struct isa_bitset bitset_movs_immed_gen_0;
+static const struct isa_bitset bitset_movs_a0_gen_0;
+static const struct isa_bitset bitset___instruction_cat1_relative_gen_0;
+static const struct isa_bitset bitset_mov_relgpr_gen_0;
+static const struct isa_bitset bitset_mov_relconst_gen_0;
+static const struct isa_bitset bitset___cat1_multi_src_gen_0;
+static const struct isa_bitset bitset___cat1_multi_dst_gen_0;
+static const struct isa_bitset bitset___instruction_cat1_multi_gen_500;
+static const struct isa_bitset bitset_swz_gen_0;
+static const struct isa_bitset bitset_gat_gen_0;
+static const struct isa_bitset bitset_sct_gen_0;
+static const struct isa_bitset bitset_movmsk_gen_0;
+static const struct isa_bitset bitset___instruction_cat2_gen_0;
+static const struct isa_bitset bitset___instruction_cat2_1src_gen_0;
+static const struct isa_bitset bitset___instruction_cat2_2src_gen_0;
+static const struct isa_bitset bitset___instruction_cat2_2src_cond_gen_0;
+static const struct isa_bitset bitset___instruction_cat2_2src_input_gen_0;
+static const struct isa_bitset bitset_bary_f_gen_0;
+static const struct isa_bitset bitset_flat_b_gen_600;
+static const struct isa_bitset bitset_add_f_gen_0;
+static const struct isa_bitset bitset_min_f_gen_0;
+static const struct isa_bitset bitset_max_f_gen_0;
+static const struct isa_bitset bitset_mul_f_gen_0;
+static const struct isa_bitset bitset_sign_f_gen_0;
+static const struct isa_bitset bitset_cmps_f_gen_0;
+static const struct isa_bitset bitset_absneg_f_gen_0;
+static const struct isa_bitset bitset_cmpv_f_gen_0;
+static const struct isa_bitset bitset_floor_f_gen_0;
+static const struct isa_bitset bitset_ceil_f_gen_0;
+static const struct isa_bitset bitset_rndne_f_gen_0;
+static const struct isa_bitset bitset_rndaz_f_gen_0;
+static const struct isa_bitset bitset_trunc_f_gen_0;
+static const struct isa_bitset bitset_add_u_gen_0;
+static const struct isa_bitset bitset_add_s_gen_0;
+static const struct isa_bitset bitset_sub_u_gen_0;
+static const struct isa_bitset bitset_sub_s_gen_0;
+static const struct isa_bitset bitset_cmps_u_gen_0;
+static const struct isa_bitset bitset_cmps_s_gen_0;
+static const struct isa_bitset bitset_min_u_gen_0;
+static const struct isa_bitset bitset_min_s_gen_0;
+static const struct isa_bitset bitset_max_u_gen_0;
+static const struct isa_bitset bitset_max_s_gen_0;
+static const struct isa_bitset bitset_absneg_s_gen_0;
+static const struct isa_bitset bitset_and_b_gen_0;
+static const struct isa_bitset bitset_or_b_gen_0;
+static const struct isa_bitset bitset_not_b_gen_0;
+static const struct isa_bitset bitset_xor_b_gen_0;
+static const struct isa_bitset bitset_cmpv_u_gen_0;
+static const struct isa_bitset bitset_cmpv_s_gen_0;
+static const struct isa_bitset bitset_mul_u24_gen_0;
+static const struct isa_bitset bitset_mul_s24_gen_0;
+static const struct isa_bitset bitset_mull_u_gen_0;
+static const struct isa_bitset bitset_bfrev_b_gen_0;
+static const struct isa_bitset bitset_clz_s_gen_0;
+static const struct isa_bitset bitset_clz_b_gen_0;
+static const struct isa_bitset bitset_shl_b_gen_0;
+static const struct isa_bitset bitset_shr_b_gen_0;
+static const struct isa_bitset bitset_ashr_b_gen_0;
+static const struct isa_bitset bitset_mgen_b_gen_0;
+static const struct isa_bitset bitset_getbit_b_gen_0;
+static const struct isa_bitset bitset_setrm_gen_0;
+static const struct isa_bitset bitset_cbits_b_gen_0;
+static const struct isa_bitset bitset_shb_gen_0;
+static const struct isa_bitset bitset_msad_gen_0;
+static const struct isa_bitset bitset___cat3_src_gen_0;
+static const struct isa_bitset bitset___cat3_src_gpr_gen_0;
+static const struct isa_bitset bitset___cat3_src_const_or_immed_gen_0;
+static const struct isa_bitset bitset___cat3_src_relative_gen_0;
+static const struct isa_bitset bitset___cat3_src_relative_gpr_gen_0;
+static const struct isa_bitset bitset___cat3_src_relative_const_gen_0;
+static const struct isa_bitset bitset___instruction_cat3_base_gen_0;
+static const struct isa_bitset bitset___instruction_cat3_gen_0;
+static const struct isa_bitset bitset___instruction_cat3_alt_gen_600;
+static const struct isa_bitset bitset_mad_u16_gen_0;
+static const struct isa_bitset bitset_madsh_u16_gen_0;
+static const struct isa_bitset bitset_mad_s16_gen_0;
+static const struct isa_bitset bitset_madsh_m16_gen_0;
+static const struct isa_bitset bitset_mad_u24_gen_0;
+static const struct isa_bitset bitset_mad_s24_gen_0;
+static const struct isa_bitset bitset_mad_f16_gen_0;
+static const struct isa_bitset bitset_mad_f32_gen_0;
+static const struct isa_bitset bitset_sel_b16_gen_0;
+static const struct isa_bitset bitset_sel_b32_gen_0;
+static const struct isa_bitset bitset_sel_s16_gen_0;
+static const struct isa_bitset bitset_sel_s32_gen_0;
+static const struct isa_bitset bitset_sel_f16_gen_0;
+static const struct isa_bitset bitset_sel_f32_gen_0;
+static const struct isa_bitset bitset_sad_s16_gen_0;
+static const struct isa_bitset bitset_sad_s32_gen_0;
+static const struct isa_bitset bitset_shrm_gen_0;
+static const struct isa_bitset bitset_shlm_gen_0;
+static const struct isa_bitset bitset_shrg_gen_0;
+static const struct isa_bitset bitset_shlg_gen_0;
+static const struct isa_bitset bitset_andg_gen_0;
+static const struct isa_bitset bitset___instruction_cat3_dp_gen_600;
+static const struct isa_bitset bitset_dp2acc_gen_0;
+static const struct isa_bitset bitset_dp4acc_gen_0;
+static const struct isa_bitset bitset___instruction_cat3_wmm_gen_600;
+static const struct isa_bitset bitset_wmm_gen_0;
+static const struct isa_bitset bitset_wmm_accu_gen_0;
+static const struct isa_bitset bitset___instruction_cat4_gen_0;
+static const struct isa_bitset bitset_rcp_gen_0;
+static const struct isa_bitset bitset_rsq_gen_0;
+static const struct isa_bitset bitset_log2_gen_0;
+static const struct isa_bitset bitset_exp2_gen_0;
+static const struct isa_bitset bitset_sin_gen_0;
+static const struct isa_bitset bitset_cos_gen_0;
+static const struct isa_bitset bitset_sqrt_gen_0;
+static const struct isa_bitset bitset_hrsq_gen_0;
+static const struct isa_bitset bitset_hlog2_gen_0;
+static const struct isa_bitset bitset_hexp2_gen_0;
+static const struct isa_bitset bitset___cat5_s2en_bindless_base_gen_0;
+static const struct isa_bitset bitset___instruction_cat5_gen_0;
+static const struct isa_bitset bitset___instruction_cat5_tex_base_gen_0;
+static const struct isa_bitset bitset___instruction_cat5_tex_gen_0;
+static const struct isa_bitset bitset_isam_gen_0;
+static const struct isa_bitset bitset_isaml_gen_0;
+static const struct isa_bitset bitset_isamm_gen_0;
+static const struct isa_bitset bitset_sam_gen_0;
+static const struct isa_bitset bitset_samb_gen_0;
+static const struct isa_bitset bitset_saml_gen_0;
+static const struct isa_bitset bitset_samgq_gen_0;
+static const struct isa_bitset bitset_getlod_gen_0;
+static const struct isa_bitset bitset_conv_gen_0;
+static const struct isa_bitset bitset_convm_gen_0;
+static const struct isa_bitset bitset_getsize_gen_0;
+static const struct isa_bitset bitset_getbuf_gen_0;
+static const struct isa_bitset bitset_getpos_gen_0;
+static const struct isa_bitset bitset_getinfo_gen_0;
+static const struct isa_bitset bitset_dsx_gen_0;
+static const struct isa_bitset bitset_dsy_gen_0;
+static const struct isa_bitset bitset_gather4r_gen_0;
+static const struct isa_bitset bitset_gather4g_gen_0;
+static const struct isa_bitset bitset_gather4b_gen_0;
+static const struct isa_bitset bitset_gather4a_gen_0;
+static const struct isa_bitset bitset_samgp0_gen_0;
+static const struct isa_bitset bitset_samgp1_gen_0;
+static const struct isa_bitset bitset_samgp2_gen_0;
+static const struct isa_bitset bitset_samgp3_gen_0;
+static const struct isa_bitset bitset_dsxpp_1_gen_0;
+static const struct isa_bitset bitset_dsypp_1_gen_0;
+static const struct isa_bitset bitset_rgetpos_gen_0;
+static const struct isa_bitset bitset_rgetinfo_gen_0;
+static const struct isa_bitset bitset_tcinv_gen_0;
+static const struct isa_bitset bitset___instruction_cat5_brcst_gen_0;
+static const struct isa_bitset bitset_brcst_active_gen_600;
+static const struct isa_bitset bitset___instruction_cat5_quad_shuffle_gen_600;
+static const struct isa_bitset bitset_quad_shuffle_brcst_gen_0;
+static const struct isa_bitset bitset_quad_shuffle_horiz_gen_0;
+static const struct isa_bitset bitset_quad_shuffle_vert_gen_0;
+static const struct isa_bitset bitset_quad_shuffle_diag_gen_0;
+static const struct isa_bitset bitset___cat5_src1_gen_0;
+static const struct isa_bitset bitset___cat5_src2_gen_0;
+static const struct isa_bitset bitset___cat5_samp_gen_0;
+static const struct isa_bitset bitset___cat5_samp_s2en_bindless_a1_gen_0;
+static const struct isa_bitset bitset___cat5_tex_s2en_bindless_a1_gen_0;
+static const struct isa_bitset bitset___cat5_tex_gen_0;
+static const struct isa_bitset bitset___cat5_tex_s2en_bindless_gen_0;
+static const struct isa_bitset bitset___cat5_type_gen_0;
+static const struct isa_bitset bitset___cat5_src3_gen_0;
+static const struct isa_bitset bitset___const_dst_imm_gen_0;
+static const struct isa_bitset bitset___const_dst_a1_gen_0;
+static const struct isa_bitset bitset___const_dst_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_ldg_gen_0;
+static const struct isa_bitset bitset_ldg_gen_0;
+static const struct isa_bitset bitset_ldg_k_gen_600;
+static const struct isa_bitset bitset___instruction_cat6_stg_gen_0;
+static const struct isa_bitset bitset_stg_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_ld_gen_0;
+static const struct isa_bitset bitset_ldl_gen_0;
+static const struct isa_bitset bitset_ldp_gen_0;
+static const struct isa_bitset bitset_ldlw_gen_0;
+static const struct isa_bitset bitset_ldlv_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_st_gen_0;
+static const struct isa_bitset bitset_stl_gen_0;
+static const struct isa_bitset bitset_stp_gen_0;
+static const struct isa_bitset bitset_stlw_gen_0;
+static const struct isa_bitset bitset_stc_gen_600;
+static const struct isa_bitset bitset_stsc_gen_700;
+static const struct isa_bitset bitset_resinfo_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_load_gen_0;
+static const struct isa_bitset bitset_ldib_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_store_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_store_a4xx_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_store_a5xx_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_local_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_1src_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_2src_gen_0;
+static const struct isa_bitset bitset_atomic_add_gen_0;
+static const struct isa_bitset bitset_atomic_sub_gen_0;
+static const struct isa_bitset bitset_atomic_xchg_gen_0;
+static const struct isa_bitset bitset_atomic_inc_gen_0;
+static const struct isa_bitset bitset_atomic_dec_gen_0;
+static const struct isa_bitset bitset_atomic_cmpxchg_gen_0;
+static const struct isa_bitset bitset_atomic_min_gen_0;
+static const struct isa_bitset bitset_atomic_max_gen_0;
+static const struct isa_bitset bitset_atomic_and_gen_0;
+static const struct isa_bitset bitset_atomic_or_gen_0;
+static const struct isa_bitset bitset_atomic_xor_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_global_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a6xx_atomic_global_gen_600;
+static const struct isa_bitset bitset_atomic_g_add_gen_0;
+static const struct isa_bitset bitset_atomic_g_sub_gen_0;
+static const struct isa_bitset bitset_atomic_g_xchg_gen_0;
+static const struct isa_bitset bitset_atomic_g_inc_gen_0;
+static const struct isa_bitset bitset_atomic_g_dec_gen_0;
+static const struct isa_bitset bitset_atomic_g_cmpxchg_gen_0;
+static const struct isa_bitset bitset_atomic_g_min_gen_0;
+static const struct isa_bitset bitset_atomic_g_max_gen_0;
+static const struct isa_bitset bitset_atomic_g_and_gen_0;
+static const struct isa_bitset bitset_atomic_g_or_gen_0;
+static const struct isa_bitset bitset_atomic_g_xor_gen_0;
+static const struct isa_bitset bitset_ray_intersection_gen_700;
+static const struct isa_bitset bitset___instruction_cat6_a6xx_base_gen_600;
+static const struct isa_bitset bitset___instruction_cat6_a6xx_gen_0;
+static const struct isa_bitset bitset___cat6_ldc_common_gen_0;
+static const struct isa_bitset bitset_ldc_k_gen_0;
+static const struct isa_bitset bitset_ldc_gen_0;
+static const struct isa_bitset bitset_getspid_gen_0;
+static const struct isa_bitset bitset_getwid_gen_0;
+static const struct isa_bitset bitset_getfiberid_gen_600;
+static const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_1src_gen_0;
+static const struct isa_bitset bitset_resinfo_b_gen_0;
+static const struct isa_bitset bitset_resbase_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_base_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_load_store_gen_0;
+static const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_atomic_gen_0;
+static const struct isa_bitset bitset_stib_b_gen_0;
+static const struct isa_bitset bitset_ldib_b_gen_0;
+static const struct isa_bitset bitset_atomic_b_add_gen_0;
+static const struct isa_bitset bitset_atomic_b_sub_gen_0;
+static const struct isa_bitset bitset_atomic_b_xchg_gen_0;
+static const struct isa_bitset bitset_atomic_b_cmpxchg_gen_0;
+static const struct isa_bitset bitset_atomic_b_min_gen_0;
+static const struct isa_bitset bitset_atomic_b_max_gen_0;
+static const struct isa_bitset bitset_atomic_b_and_gen_0;
+static const struct isa_bitset bitset_atomic_b_or_gen_0;
+static const struct isa_bitset bitset_atomic_b_xor_gen_0;
+static const struct isa_bitset bitset_shfl_gen_600;
+static const struct isa_bitset bitset___cat6_typed_gen_0;
+static const struct isa_bitset bitset___cat6_base_gen_0;
+static const struct isa_bitset bitset___cat6_src_gen_0;
+static const struct isa_bitset bitset___cat6_src_const_or_gpr_gen_0;
+static const struct isa_bitset bitset___instruction_cat7_gen_0;
+static const struct isa_bitset bitset___instruction_cat7_barrier_gen_0;
+static const struct isa_bitset bitset_bar_gen_0;
+static const struct isa_bitset bitset_fence_gen_0;
+static const struct isa_bitset bitset___instruction_cat7_data_gen_0;
+static const struct isa_bitset bitset_sleep_gen_0;
+static const struct isa_bitset bitset_icinv_gen_0;
+static const struct isa_bitset bitset_dccln_gen_0;
+static const struct isa_bitset bitset_dcinv_gen_0;
+static const struct isa_bitset bitset_dcflu_gen_0;
+static const struct isa_bitset bitset_ccinv_gen_700;
+static const struct isa_bitset bitset_lock_gen_700;
+static const struct isa_bitset bitset_unlock_gen_700;
+static const struct isa_bitset bitset___alias_immed_src_gen_0;
+static const struct isa_bitset bitset___alias_const_src_gen_0;
+static const struct isa_bitset bitset___alias_gpr_src_gen_0;
+static const struct isa_bitset bitset___dst_rt_gen_0;
+static const struct isa_bitset bitset_alias_gen_700;
+static const struct isa_bitset bitset___instruction_gen_300;
+static const struct isa_bitset bitset_ldg_a_gen_600;
+static const struct isa_bitset bitset_ldg_a_gen_700;
+static const struct isa_bitset bitset_stg_a_gen_600;
+static const struct isa_bitset bitset_stg_a_gen_700;
+static const struct isa_bitset bitset_ldgb_gen_0;
+static const struct isa_bitset bitset_ldgb_gen_500;
+static const struct isa_bitset bitset_stgb_gen_500;
+static const struct isa_bitset bitset_stgb_gen_0;
+static const struct isa_bitset bitset_stib_gen_500;
+static const struct isa_bitset bitset_stib_gen_0;
+static const struct isa_bitset bitset_atomic_s_add_gen_0;
+static const struct isa_bitset bitset_atomic_s_add_gen_500;
+static const struct isa_bitset bitset_atomic_s_sub_gen_0;
+static const struct isa_bitset bitset_atomic_s_sub_gen_500;
+static const struct isa_bitset bitset_atomic_s_xchg_gen_0;
+static const struct isa_bitset bitset_atomic_s_xchg_gen_500;
+static const struct isa_bitset bitset_atomic_s_inc_gen_0;
+static const struct isa_bitset bitset_atomic_s_inc_gen_500;
+static const struct isa_bitset bitset_atomic_s_dec_gen_0;
+static const struct isa_bitset bitset_atomic_s_dec_gen_500;
+static const struct isa_bitset bitset_atomic_s_cmpxchg_gen_0;
+static const struct isa_bitset bitset_atomic_s_cmpxchg_gen_500;
+static const struct isa_bitset bitset_atomic_s_min_gen_0;
+static const struct isa_bitset bitset_atomic_s_min_gen_500;
+static const struct isa_bitset bitset_atomic_s_max_gen_0;
+static const struct isa_bitset bitset_atomic_s_max_gen_500;
+static const struct isa_bitset bitset_atomic_s_and_gen_0;
+static const struct isa_bitset bitset_atomic_s_and_gen_500;
+static const struct isa_bitset bitset_atomic_s_or_gen_0;
+static const struct isa_bitset bitset_atomic_s_or_gen_500;
+static const struct isa_bitset bitset_atomic_s_xor_gen_0;
+static const struct isa_bitset bitset_atomic_s_xor_gen_500;
 
-extern const struct isa_bitset *__reg_gpr[];
-extern const struct isa_bitset *__reg_const[];
-extern const struct isa_bitset *__reg_relative_gpr[];
-extern const struct isa_bitset *__reg_relative_const[];
-extern const struct isa_bitset *__multisrc[];
-extern const struct isa_bitset *__cat1_dst[];
-extern const struct isa_bitset *__cat1_immed_src[];
-extern const struct isa_bitset *__cat1_const_src[];
-extern const struct isa_bitset *__cat1_gpr_src[];
-extern const struct isa_bitset *__cat1_relative_gpr_src[];
-extern const struct isa_bitset *__cat1_relative_const_src[];
-extern const struct isa_bitset *__cat1_multi_src[];
-extern const struct isa_bitset *__cat1_multi_dst[];
-extern const struct isa_bitset *__cat3_src[];
-extern const struct isa_bitset *__cat5_s2en_bindless_base[];
-extern const struct isa_bitset *__cat5_src1[];
-extern const struct isa_bitset *__cat5_src2[];
-extern const struct isa_bitset *__cat5_samp[];
-extern const struct isa_bitset *__cat5_samp_s2en_bindless_a1[];
-extern const struct isa_bitset *__cat5_tex_s2en_bindless_a1[];
-extern const struct isa_bitset *__cat5_tex[];
-extern const struct isa_bitset *__cat5_tex_s2en_bindless[];
-extern const struct isa_bitset *__cat5_type[];
-extern const struct isa_bitset *__cat5_src3[];
-extern const struct isa_bitset *__const_dst[];
-extern const struct isa_bitset *__cat6_typed[];
-extern const struct isa_bitset *__cat6_base[];
-extern const struct isa_bitset *__cat6_src[];
-extern const struct isa_bitset *__cat6_src_const_or_gpr[];
-extern const struct isa_bitset *__alias_immed_src[];
-extern const struct isa_bitset *__alias_const_src[];
-extern const struct isa_bitset *__alias_gpr_src[];
-extern const struct isa_bitset *__dst_rt[];
-extern const struct isa_bitset *__instruction[];
+static const struct isa_bitset *__reg_gpr[];
+static const struct isa_bitset *__reg_const[];
+static const struct isa_bitset *__reg_relative_gpr[];
+static const struct isa_bitset *__reg_relative_const[];
+static const struct isa_bitset *__multisrc[];
+static const struct isa_bitset *__cat1_dst[];
+static const struct isa_bitset *__cat1_immed_src[];
+static const struct isa_bitset *__cat1_const_src[];
+static const struct isa_bitset *__cat1_gpr_src[];
+static const struct isa_bitset *__cat1_relative_gpr_src[];
+static const struct isa_bitset *__cat1_relative_const_src[];
+static const struct isa_bitset *__cat1_multi_src[];
+static const struct isa_bitset *__cat1_multi_dst[];
+static const struct isa_bitset *__cat3_src[];
+static const struct isa_bitset *__cat5_s2en_bindless_base[];
+static const struct isa_bitset *__cat5_src1[];
+static const struct isa_bitset *__cat5_src2[];
+static const struct isa_bitset *__cat5_samp[];
+static const struct isa_bitset *__cat5_samp_s2en_bindless_a1[];
+static const struct isa_bitset *__cat5_tex_s2en_bindless_a1[];
+static const struct isa_bitset *__cat5_tex[];
+static const struct isa_bitset *__cat5_tex_s2en_bindless[];
+static const struct isa_bitset *__cat5_type[];
+static const struct isa_bitset *__cat5_src3[];
+static const struct isa_bitset *__const_dst[];
+static const struct isa_bitset *__cat6_typed[];
+static const struct isa_bitset *__cat6_base[];
+static const struct isa_bitset *__cat6_src[];
+static const struct isa_bitset *__cat6_src_const_or_gpr[];
+static const struct isa_bitset *__alias_immed_src[];
+static const struct isa_bitset *__alias_const_src[];
+static const struct isa_bitset *__alias_gpr_src[];
+static const struct isa_bitset *__dst_rt[];
+static const struct isa_bitset *__instruction[];
 
 /*
  * bitset tables:
@@ -2314,7 +2314,7 @@ static const struct isa_case __reg_gpr__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "#reg-gpr#assert0", .low = 2, .high = 7,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x3d, 0x0 },
           },
        },
@@ -2325,7 +2325,7 @@ static const struct isa_case __reg_gpr__case1_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "#reg-gpr#assert0", .low = 2, .high = 7,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x3e, 0x0 },
           },
        },
@@ -2335,15 +2335,15 @@ static const struct isa_case __reg_gpr__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SWIZ", .low = 0, .high = 1,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___swiz,
           },
           { .name = "GPR", .low = 2, .high = 7,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset___reg_gpr_gen_0 = {
+static const struct isa_bitset bitset___reg_gpr_gen_0 = {
 
        .name     = "#reg-gpr",
        .gen      = {
@@ -2368,15 +2368,15 @@ static const struct isa_case __reg_const__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SWIZ", .low = 0, .high = 1,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___swiz,
           },
           { .name = "CONST", .low = 2, .high = 10,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset___reg_const_gen_0 = {
+static const struct isa_bitset bitset___reg_const_gen_0 = {
 
        .name     = "#reg-const",
        .gen      = {
@@ -2406,11 +2406,11 @@ static const struct isa_case __reg_relative_gpr__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "OFFSET", .low = 0, .high = 9,
-            .type = isa_field::TYPE_INT,
+            .type = TYPE_INT,
           },
        },
 };
-const struct isa_bitset bitset___reg_relative_gpr_gen_0 = {
+static const struct isa_bitset bitset___reg_relative_gpr_gen_0 = {
 
        .name     = "#reg-relative-gpr",
        .gen      = {
@@ -2441,11 +2441,11 @@ static const struct isa_case __reg_relative_const__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "OFFSET", .low = 0, .high = 9,
-            .type = isa_field::TYPE_INT,
+            .type = TYPE_INT,
           },
        },
 };
-const struct isa_bitset bitset___reg_relative_const_gen_0 = {
+static const struct isa_bitset bitset___reg_relative_const_gen_0 = {
 
        .name     = "#reg-relative-const",
        .gen      = {
@@ -2469,7 +2469,7 @@ static const struct isa_case __multisrc__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___multisrc_gen_0 = {
+static const struct isa_bitset bitset___multisrc_gen_0 = {
 
        .name     = "#multisrc",
        .gen      = {
@@ -2499,15 +2499,15 @@ static const struct isa_case __mulitsrc_immed__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 10,
-            .type = isa_field::TYPE_INT,
+            .type = TYPE_INT,
           },
           { .name = "ABSNEG", .low = 14, .high = 15,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___absneg,
           },
        },
 };
-const struct isa_bitset bitset___mulitsrc_immed_gen_0 = {
+static const struct isa_bitset bitset___mulitsrc_immed_gen_0 = {
 
        .parent   = &bitset___multisrc_gen_0,
        .name     = "#mulitsrc-immed",
@@ -2531,16 +2531,16 @@ static const struct isa_case __mulitsrc_immed_flut__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 9,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___flut,
           },
           { .name = "ABSNEG", .low = 14, .high = 15,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___absneg,
           },
        },
 };
-const struct isa_bitset bitset___mulitsrc_immed_flut_gen_0 = {
+static const struct isa_bitset bitset___mulitsrc_immed_flut_gen_0 = {
 
        .parent   = &bitset___multisrc_gen_0,
        .name     = "#mulitsrc-immed-flut",
@@ -2565,7 +2565,7 @@ static const struct isa_case __multisrc_immed_flut_full__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___multisrc_immed_flut_full_gen_0 = {
+static const struct isa_bitset bitset___multisrc_immed_flut_full_gen_0 = {
 
        .parent   = &bitset___mulitsrc_immed_flut_gen_0,
        .name     = "#multisrc-immed-flut-full",
@@ -2590,7 +2590,7 @@ static const struct isa_case __multisrc_immed_flut_half__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___multisrc_immed_flut_half_gen_0 = {
+static const struct isa_bitset bitset___multisrc_immed_flut_half_gen_0 = {
 
        .parent   = &bitset___mulitsrc_immed_flut_gen_0,
        .name     = "#multisrc-immed-flut-half",
@@ -2616,23 +2616,23 @@ static const struct isa_case __multisrc_gpr__default_gen_0 = {
           { .name = "HALF", .low = 0, .high = 0,
             .expr = &expr___multisrc_half,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "LAST", .low = 10, .high = 10,
             .display = "(last)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "ABSNEG", .low = 14, .high = 15,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___absneg,
           },
        },
 };
-const struct isa_bitset bitset___multisrc_gpr_gen_0 = {
+static const struct isa_bitset bitset___multisrc_gpr_gen_0 = {
 
        .parent   = &bitset___multisrc_gen_0,
        .name     = "#multisrc-gpr",
@@ -2658,19 +2658,19 @@ static const struct isa_case __multisrc_const__default_gen_0 = {
           { .name = "HALF", .low = 0, .high = 0,
             .expr = &expr___multisrc_half,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC", .low = 0, .high = 10,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_const,
           },
           { .name = "ABSNEG", .low = 14, .high = 15,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___absneg,
           },
        },
 };
-const struct isa_bitset bitset___multisrc_const_gen_0 = {
+static const struct isa_bitset bitset___multisrc_const_gen_0 = {
 
        .parent   = &bitset___multisrc_gen_0,
        .name     = "#multisrc-const",
@@ -2693,12 +2693,12 @@ static const struct isa_case __multisrc_relative__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "ABSNEG", .low = 14, .high = 15,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___absneg,
           },
        },
 };
-const struct isa_bitset bitset___multisrc_relative_gen_0 = {
+static const struct isa_bitset bitset___multisrc_relative_gen_0 = {
 
        .parent   = &bitset___multisrc_gen_0,
        .name     = "#multisrc-relative",
@@ -2724,15 +2724,15 @@ static const struct isa_case __multisrc_relative_gpr__default_gen_0 = {
           { .name = "HALF", .low = 0, .high = 0,
             .expr = &expr___multisrc_half,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC", .low = 0, .high = 9,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_relative_gpr,
           },
        },
 };
-const struct isa_bitset bitset___multisrc_relative_gpr_gen_0 = {
+static const struct isa_bitset bitset___multisrc_relative_gpr_gen_0 = {
 
        .parent   = &bitset___multisrc_relative_gen_0,
        .name     = "#multisrc-relative-gpr",
@@ -2758,15 +2758,15 @@ static const struct isa_case __multisrc_relative_const__default_gen_0 = {
           { .name = "HALF", .low = 0, .high = 0,
             .expr = &expr___multisrc_half,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC", .low = 0, .high = 9,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_relative_const,
           },
        },
 };
-const struct isa_bitset bitset___multisrc_relative_const_gen_0 = {
+static const struct isa_bitset bitset___multisrc_relative_const_gen_0 = {
 
        .parent   = &bitset___multisrc_relative_gen_0,
        .name     = "#multisrc-relative-const",
@@ -2789,32 +2789,32 @@ static const struct isa_case __instruction_cat0__default_gen_0 = {
        .num_fields = 6,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 31,
-            .type = isa_field::TYPE_BRANCH,
+            .type = TYPE_BRANCH,
             .call = false,
           },
           { .name = "REPEAT", .low = 40, .high = 42,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___rptn,
           },
           { .name = "SS", .low = 44, .high = 44,
             .display = "(ss)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "EQ", .low = 48, .high = 48,
             .display = "(eq)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "JP", .low = 59, .high = 59,
             .display = "(jp)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SY", .low = 60, .high = 60,
             .display = "(sy)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat0_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat0_gen_0 = {
 
        .parent   = &bitset___instruction_gen_300,
        .name     = "#instruction-cat0",
@@ -2839,7 +2839,7 @@ static const struct isa_case __instruction_cat0_0src__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat0_0src_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat0_0src_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_gen_0,
        .name     = "#instruction-cat0-0src",
@@ -2863,7 +2863,7 @@ static const struct isa_case nop__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_nop_gen_0 = {
+static const struct isa_bitset bitset_nop_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_0src_gen_0,
        .name     = "nop",
@@ -2887,7 +2887,7 @@ static const struct isa_case end__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_end_gen_0 = {
+static const struct isa_bitset bitset_end_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_0src_gen_0,
        .name     = "end",
@@ -2911,7 +2911,7 @@ static const struct isa_case ret__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_ret_gen_0 = {
+static const struct isa_bitset bitset_ret_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_0src_gen_0,
        .name     = "ret",
@@ -2935,7 +2935,7 @@ static const struct isa_case emit__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_emit_gen_0 = {
+static const struct isa_bitset bitset_emit_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_0src_gen_0,
        .name     = "emit",
@@ -2959,7 +2959,7 @@ static const struct isa_case cut__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_cut_gen_0 = {
+static const struct isa_bitset bitset_cut_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_0src_gen_0,
        .name     = "cut",
@@ -2983,7 +2983,7 @@ static const struct isa_case chmask__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_chmask_gen_0 = {
+static const struct isa_bitset bitset_chmask_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_0src_gen_0,
        .name     = "chmask",
@@ -3007,7 +3007,7 @@ static const struct isa_case chsh__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_chsh_gen_0 = {
+static const struct isa_bitset bitset_chsh_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_0src_gen_0,
        .name     = "chsh",
@@ -3031,7 +3031,7 @@ static const struct isa_case flow_rev__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_flow_rev_gen_0 = {
+static const struct isa_bitset bitset_flow_rev_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_0src_gen_0,
        .name     = "flow_rev",
@@ -3055,7 +3055,7 @@ static const struct isa_case shpe__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_shpe_gen_0 = {
+static const struct isa_bitset bitset_shpe_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_0src_gen_0,
        .name     = "shpe",
@@ -3079,7 +3079,7 @@ static const struct isa_case predt__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_predt_gen_0 = {
+static const struct isa_bitset bitset_predt_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_0src_gen_0,
        .name     = "predt",
@@ -3103,7 +3103,7 @@ static const struct isa_case predf__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_predf_gen_0 = {
+static const struct isa_bitset bitset_predf_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_0src_gen_0,
        .name     = "predf",
@@ -3127,7 +3127,7 @@ static const struct isa_case prede__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_prede_gen_0 = {
+static const struct isa_bitset bitset_prede_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_0src_gen_0,
        .name     = "prede",
@@ -3152,15 +3152,15 @@ static const struct isa_case __instruction_cat0_1src__default_gen_0 = {
        .fields   = {
           { .name = "INV1", .low = 52, .high = 52,
             .display = "!",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "COMP1", .low = 53, .high = 54,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___swiz,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat0_1src_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat0_1src_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_gen_0,
        .name     = "#instruction-cat0-1src",
@@ -3184,7 +3184,7 @@ static const struct isa_case kill__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_kill_gen_0 = {
+static const struct isa_bitset bitset_kill_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_1src_gen_0,
        .name     = "kill",
@@ -3209,7 +3209,7 @@ static const struct isa_case __instruction_cat0_immed__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat0_immed_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat0_immed_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_gen_0,
        .name     = "#instruction-cat0-immed",
@@ -3233,7 +3233,7 @@ static const struct isa_case jump__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_jump_gen_0 = {
+static const struct isa_bitset bitset_jump_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_immed_gen_0,
        .name     = "jump",
@@ -3257,7 +3257,7 @@ static const struct isa_case call__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_call_gen_0 = {
+static const struct isa_bitset bitset_call_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_immed_gen_0,
        .name     = "call",
@@ -3281,7 +3281,7 @@ static const struct isa_case bkt__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_bkt_gen_0 = {
+static const struct isa_bitset bitset_bkt_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_immed_gen_0,
        .name     = "bkt",
@@ -3306,14 +3306,14 @@ static const struct isa_case getlast__default_gen_600 = {
        .fields   = {
           { .name = "CLUSTER_SIZE", .low = 0, .high = 0,
             .expr = &expr_anon_0,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "W", .low = 52, .high = 54,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_getlast_gen_600 = {
+static const struct isa_bitset bitset_getlast_gen_600 = {
 
        .parent   = &bitset___instruction_cat0_gen_0,
        .name     = "getlast",
@@ -3337,7 +3337,7 @@ static const struct isa_case getone__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_getone_gen_0 = {
+static const struct isa_bitset bitset_getone_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_immed_gen_0,
        .name     = "getone",
@@ -3361,7 +3361,7 @@ static const struct isa_case shps__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_shps_gen_0 = {
+static const struct isa_bitset bitset_shps_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_immed_gen_0,
        .name     = "shps",
@@ -3385,7 +3385,7 @@ static const struct isa_case __instruction_cat0_branch__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat0_branch_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat0_branch_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_gen_0,
        .name     = "#instruction-cat0-branch",
@@ -3409,11 +3409,11 @@ static const struct isa_case brac__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "INDEX", .low = 32, .high = 36,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_brac_gen_0 = {
+static const struct isa_bitset bitset_brac_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_branch_gen_0,
        .name     = "brac",
@@ -3437,7 +3437,7 @@ static const struct isa_case brax__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_brax_gen_0 = {
+static const struct isa_bitset bitset_brax_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_branch_gen_0,
        .name     = "brax",
@@ -3462,15 +3462,15 @@ static const struct isa_case __instruction_cat0_branch_1src__default_gen_0 = {
        .fields   = {
           { .name = "INV1", .low = 52, .high = 52,
             .display = "!",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "COMP1", .low = 53, .high = 54,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___swiz,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat0_branch_1src_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat0_branch_1src_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_branch_gen_0,
        .name     = "#instruction-cat0-branch-1src",
@@ -3494,7 +3494,7 @@ static const struct isa_case br__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_br_gen_0 = {
+static const struct isa_bitset bitset_br_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_branch_1src_gen_0,
        .name     = "br",
@@ -3518,7 +3518,7 @@ static const struct isa_case bany__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_bany_gen_0 = {
+static const struct isa_bitset bitset_bany_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_branch_1src_gen_0,
        .name     = "bany",
@@ -3542,7 +3542,7 @@ static const struct isa_case ball__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_ball_gen_0 = {
+static const struct isa_bitset bitset_ball_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_branch_1src_gen_0,
        .name     = "ball",
@@ -3567,23 +3567,23 @@ static const struct isa_case __instruction_cat0_branch_2src__default_gen_0 = {
        .fields   = {
           { .name = "INV2", .low = 45, .high = 45,
             .display = "!",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "COMP2", .low = 46, .high = 47,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___swiz,
           },
           { .name = "INV1", .low = 52, .high = 52,
             .display = "!",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "COMP1", .low = 53, .high = 54,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___swiz,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat0_branch_2src_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat0_branch_2src_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_branch_gen_0,
        .name     = "#instruction-cat0-branch-2src",
@@ -3607,7 +3607,7 @@ static const struct isa_case brao__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_brao_gen_0 = {
+static const struct isa_bitset bitset_brao_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_branch_2src_gen_0,
        .name     = "brao",
@@ -3631,7 +3631,7 @@ static const struct isa_case braa__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_braa_gen_0 = {
+static const struct isa_bitset bitset_braa_gen_0 = {
 
        .parent   = &bitset___instruction_cat0_branch_2src_gen_0,
        .name     = "braa",
@@ -3656,7 +3656,7 @@ static const struct isa_case __cat1_dst__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "OFFSET", .low = 0, .high = 7,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
@@ -3666,7 +3666,7 @@ static const struct isa_case __cat1_dst__case1_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "OFFSET", .low = 0, .high = 7,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
@@ -3675,12 +3675,12 @@ static const struct isa_case __cat1_dst__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "DST", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset___cat1_dst_gen_0 = {
+static const struct isa_bitset bitset___cat1_dst_gen_0 = {
 
        .name     = "#cat1-dst",
        .gen      = {
@@ -3705,27 +3705,27 @@ static const struct isa_case __instruction_cat1__default_gen_0 = {
        .fields   = {
           { .name = "SS", .low = 44, .high = 44,
             .display = "(ss)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "UL", .low = 45, .high = 45,
             .display = "(ul)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "ROUND", .low = 55, .high = 56,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___round,
           },
           { .name = "JP", .low = 59, .high = 59,
             .display = "(jp)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SY", .low = 60, .high = 60,
             .display = "(sy)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat1_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat1_gen_0 = {
 
        .parent   = &bitset___instruction_gen_300,
        .name     = "#instruction-cat1",
@@ -3750,24 +3750,24 @@ static const struct isa_case __instruction_cat1_typed__default_gen_0 = {
           { .name = "HALF", .low = 0, .high = 0,
             .expr = &expr_anon_3,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST_HALF", .low = 0, .high = 0,
             .expr = &expr_anon_4,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST_TYPE", .low = 46, .high = 48,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type,
           },
           { .name = "SRC_TYPE", .low = 50, .high = 52,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat1_typed_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat1_typed_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_gen_0,
        .name     = "#instruction-cat1-typed",
@@ -3792,15 +3792,15 @@ static const struct isa_case __instruction_cat1_mov__case0_gen_0 = {
        .num_fields = 3,
        .fields   = {
           { .name = "#instruction-cat1-mov#assert0", .low = 32, .high = 39,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0xf4, 0x0 },
           },
           { .name = "#instruction-cat1-mov#assert1", .low = 46, .high = 48,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x4, 0x0 },
           },
           { .name = "#instruction-cat1-mov#assert2", .low = 50, .high = 52,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x4, 0x0 },
           },
        },
@@ -3811,15 +3811,15 @@ static const struct isa_case __instruction_cat1_mov__case1_gen_0 = {
        .num_fields = 3,
        .fields   = {
           { .name = "#instruction-cat1-mov#assert0", .low = 32, .high = 39,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0xf5, 0x0 },
           },
           { .name = "#instruction-cat1-mov#assert1", .low = 46, .high = 48,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x2, 0x0 },
           },
           { .name = "#instruction-cat1-mov#assert2", .low = 50, .high = 52,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x2, 0x0 },
           },
        },
@@ -3843,20 +3843,20 @@ static const struct isa_case __instruction_cat1_mov__default_gen_0 = {
        .num_fields = 3,
        .fields   = {
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_dst,
             .params = &__instruction_cat1_mov__default_gen_0_dst,
           },
           { .name = "REPEAT", .low = 40, .high = 41,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___rptn,
           },
           { .name = "DST_REL", .low = 49, .high = 49,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat1_mov_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat1_mov_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_typed_gen_0,
        .name     = "#instruction-cat1-mov",
@@ -3884,7 +3884,7 @@ static const struct isa_case __cat1_immed_src__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 15,
-            .type = isa_field::TYPE_FLOAT,
+            .type = TYPE_FLOAT,
           },
        },
 };
@@ -3894,7 +3894,7 @@ static const struct isa_case __cat1_immed_src__case1_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 31,
-            .type = isa_field::TYPE_FLOAT,
+            .type = TYPE_FLOAT,
           },
        },
 };
@@ -3904,7 +3904,7 @@ static const struct isa_case __cat1_immed_src__case2_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 31,
-            .type = isa_field::TYPE_HEX,
+            .type = TYPE_HEX,
           },
        },
 };
@@ -3913,7 +3913,7 @@ static const struct isa_case __cat1_immed_src__case3_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 15,
-            .type = isa_field::TYPE_INT,
+            .type = TYPE_INT,
           },
        },
 };
@@ -3922,7 +3922,7 @@ static const struct isa_case __cat1_immed_src__case4_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 31,
-            .type = isa_field::TYPE_INT,
+            .type = TYPE_INT,
           },
        },
 };
@@ -3931,11 +3931,11 @@ static const struct isa_case __cat1_immed_src__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 31,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset___cat1_immed_src_gen_0 = {
+static const struct isa_bitset bitset___cat1_immed_src_gen_0 = {
 
        .name     = "#cat1-immed-src",
        .gen      = {
@@ -3963,12 +3963,12 @@ static const struct isa_case __cat1_const_src__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "CONST", .low = 0, .high = 10,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_const,
           },
        },
 };
-const struct isa_bitset bitset___cat1_const_src_gen_0 = {
+static const struct isa_bitset bitset___cat1_const_src_gen_0 = {
 
        .name     = "#cat1-const-src",
        .gen      = {
@@ -3991,12 +3991,12 @@ static const struct isa_case __cat1_gpr_src__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset___cat1_gpr_src_gen_0 = {
+static const struct isa_bitset bitset___cat1_gpr_src_gen_0 = {
 
        .name     = "#cat1-gpr-src",
        .gen      = {
@@ -4019,12 +4019,12 @@ static const struct isa_case __cat1_relative_gpr_src__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 9,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_relative_gpr,
           },
        },
 };
-const struct isa_bitset bitset___cat1_relative_gpr_src_gen_0 = {
+static const struct isa_bitset bitset___cat1_relative_gpr_src_gen_0 = {
 
        .name     = "#cat1-relative-gpr-src",
        .gen      = {
@@ -4047,12 +4047,12 @@ static const struct isa_case __cat1_relative_const_src__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 9,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_relative_const,
           },
        },
 };
-const struct isa_bitset bitset___cat1_relative_const_src_gen_0 = {
+static const struct isa_bitset bitset___cat1_relative_const_src_gen_0 = {
 
        .name     = "#cat1-relative-const-src",
        .gen      = {
@@ -4081,17 +4081,17 @@ static const struct isa_case mov_immed__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_immed_src,
             .params = &mov_immed__default_gen_0_src,
           },
           { .name = "SRC_R", .low = 43, .high = 43,
             .display = "(r)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_mov_immed_gen_0 = {
+static const struct isa_bitset bitset_mov_immed_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_mov_gen_0,
        .name     = "mov-immed",
@@ -4122,17 +4122,17 @@ static const struct isa_case mov_const__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 10,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_const_src,
             .params = &mov_const__default_gen_0_src,
           },
           { .name = "SRC_R", .low = 43, .high = 43,
             .display = "(r)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_mov_const_gen_0 = {
+static const struct isa_bitset bitset_mov_const_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_mov_gen_0,
        .name     = "mov-const",
@@ -4164,21 +4164,21 @@ static const struct isa_case __instruction_cat1_mov_gpr__default_gen_0 = {
        .num_fields = 3,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_gpr_src,
             .params = &__instruction_cat1_mov_gpr__default_gen_0_src,
           },
           { .name = "LAST", .low = 10, .high = 10,
             .display = "(last)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC_R", .low = 43, .high = 43,
             .display = "(r)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat1_mov_gpr_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat1_mov_gpr_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_mov_gen_0,
        .name     = "#instruction-cat1-mov-gpr",
@@ -4202,7 +4202,7 @@ static const struct isa_case mov_gpr__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_mov_gpr_gen_0 = {
+static const struct isa_bitset bitset_mov_gpr_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_mov_gpr_gen_0,
        .name     = "mov-gpr",
@@ -4226,7 +4226,7 @@ static const struct isa_case __instruction_cat1_movs__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat1_movs_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat1_movs_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_mov_gpr_gen_0,
        .name     = "#instruction-cat1-movs",
@@ -4250,11 +4250,11 @@ static const struct isa_case movs_immed__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "INVOCATION", .low = 23, .high = 29,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_movs_immed_gen_0 = {
+static const struct isa_bitset bitset_movs_immed_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_movs_gen_0,
        .name     = "movs-immed",
@@ -4279,7 +4279,7 @@ static const struct isa_case movs_a0__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_movs_a0_gen_0 = {
+static const struct isa_bitset bitset_movs_a0_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_movs_gen_0,
        .name     = "movs-a0",
@@ -4303,11 +4303,11 @@ static const struct isa_case __instruction_cat1_relative__default_gen_0 = {
        .fields   = {
           { .name = "SRC_R", .low = 43, .high = 43,
             .display = "(r)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat1_relative_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat1_relative_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_mov_gen_0,
        .name     = "#instruction-cat1-relative",
@@ -4338,13 +4338,13 @@ static const struct isa_case mov_relgpr__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 9,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_relative_gpr_src,
             .params = &mov_relgpr__default_gen_0_src,
           },
        },
 };
-const struct isa_bitset bitset_mov_relgpr_gen_0 = {
+static const struct isa_bitset bitset_mov_relgpr_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_relative_gen_0,
        .name     = "mov-relgpr",
@@ -4375,13 +4375,13 @@ static const struct isa_case mov_relconst__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 9,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_relative_const_src,
             .params = &mov_relconst__default_gen_0_src,
           },
        },
 };
-const struct isa_bitset bitset_mov_relconst_gen_0 = {
+static const struct isa_bitset bitset_mov_relconst_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_relative_gen_0,
        .name     = "mov-relconst",
@@ -4405,12 +4405,12 @@ static const struct isa_case __cat1_multi_src__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "REG", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset___cat1_multi_src_gen_0 = {
+static const struct isa_bitset bitset___cat1_multi_src_gen_0 = {
 
        .name     = "#cat1-multi-src",
        .gen      = {
@@ -4433,12 +4433,12 @@ static const struct isa_case __cat1_multi_dst__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "REG", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset___cat1_multi_dst_gen_0 = {
+static const struct isa_bitset bitset___cat1_multi_dst_gen_0 = {
 
        .name     = "#cat1-multi-dst",
        .gen      = {
@@ -4474,18 +4474,18 @@ static const struct isa_case __instruction_cat1_multi__default_gen_500 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SRC0", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_multi_src,
             .params = &__instruction_cat1_multi__default_gen_500_src0,
           },
           { .name = "DST0", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_multi_dst,
             .params = &__instruction_cat1_multi__default_gen_500_dst0,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat1_multi_gen_500 = {
+static const struct isa_bitset bitset___instruction_cat1_multi_gen_500 = {
 
        .parent   = &bitset___instruction_cat1_typed_gen_0,
        .name     = "#instruction-cat1-multi",
@@ -4523,18 +4523,18 @@ static const struct isa_case swz__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SRC1", .low = 8, .high = 15,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_multi_src,
             .params = &swz__default_gen_0_src1,
           },
           { .name = "DST1", .low = 16, .high = 23,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_multi_dst,
             .params = &swz__default_gen_0_dst1,
           },
        },
 };
-const struct isa_bitset bitset_swz_gen_0 = {
+static const struct isa_bitset bitset_swz_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_multi_gen_500,
        .name     = "swz",
@@ -4579,23 +4579,23 @@ static const struct isa_case gat__default_gen_0 = {
        .num_fields = 3,
        .fields   = {
           { .name = "SRC1", .low = 8, .high = 15,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_multi_src,
             .params = &gat__default_gen_0_src1,
           },
           { .name = "SRC2", .low = 16, .high = 23,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_multi_src,
             .params = &gat__default_gen_0_src2,
           },
           { .name = "SRC3", .low = 24, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_multi_src,
             .params = &gat__default_gen_0_src3,
           },
        },
 };
-const struct isa_bitset bitset_gat_gen_0 = {
+static const struct isa_bitset bitset_gat_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_multi_gen_500,
        .name     = "gat",
@@ -4640,23 +4640,23 @@ static const struct isa_case sct__default_gen_0 = {
        .num_fields = 3,
        .fields   = {
           { .name = "DST1", .low = 8, .high = 15,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_multi_dst,
             .params = &sct__default_gen_0_dst1,
           },
           { .name = "DST2", .low = 16, .high = 23,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_multi_dst,
             .params = &sct__default_gen_0_dst2,
           },
           { .name = "DST3", .low = 24, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_multi_dst,
             .params = &sct__default_gen_0_dst3,
           },
        },
 };
-const struct isa_bitset bitset_sct_gen_0 = {
+static const struct isa_bitset bitset_sct_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_multi_gen_500,
        .name     = "sct",
@@ -4688,23 +4688,23 @@ static const struct isa_case movmsk__default_gen_0 = {
        .fields   = {
           { .name = "W", .low = 0, .high = 0,
             .expr = &expr_anon_13,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat1_dst,
             .params = &movmsk__default_gen_0_dst,
           },
           { .name = "REPEAT", .low = 40, .high = 41,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___rptn,
           },
           { .name = "DST_REL", .low = 49, .high = 49,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_movmsk_gen_0 = {
+static const struct isa_bitset bitset_movmsk_gen_0 = {
 
        .parent   = &bitset___instruction_cat1_gen_0,
        .name     = "movmsk",
@@ -4729,62 +4729,62 @@ static const struct isa_case __instruction_cat2__default_gen_0 = {
           { .name = "DST_HALF", .low = 0, .high = 0,
             .expr = &expr___dest_half,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "ZERO", .low = 0, .high = 0,
             .expr = &expr___zero,
             .display = "",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "REPEAT", .low = 40, .high = 41,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___rptn,
           },
           { .name = "SAT", .low = 42, .high = 42,
             .display = "(sat)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SS", .low = 44, .high = 44,
             .display = "(ss)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "UL", .low = 45, .high = 45,
             .display = "(ul)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST_CONV", .low = 46, .high = 46,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "EI", .low = 47, .high = 47,
             .display = "(ei)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "FULL", .low = 52, .high = 52,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "JP", .low = 59, .high = 59,
             .display = "(jp)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SY", .low = 60, .high = 60,
             .display = "(sy)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC1_R", .low = 43, .high = 43,
             .display = "(r)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC2_R", .low = 51, .high = 51,
             .display = "(r)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat2_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat2_gen_0 = {
 
        .parent   = &bitset___instruction_gen_300,
        .name     = "#instruction-cat2",
@@ -4818,10 +4818,10 @@ static const struct isa_case __instruction_cat2_1src__case0_gen_0 = {
        .fields   = {
           { .name = "NOP", .low = 0, .high = 0,
             .expr = &expr___cat2_cat3_nop_value,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "SRC1", .low = 0, .high = 15,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_1src__case0_gen_0_src1,
           },
@@ -4840,13 +4840,13 @@ static const struct isa_case __instruction_cat2_1src__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SRC1", .low = 0, .high = 15,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_1src__default_gen_0_src1,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat2_1src_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat2_1src_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_gen_0,
        .name     = "#instruction-cat2-1src",
@@ -4889,15 +4889,15 @@ static const struct isa_case __instruction_cat2_2src__case0_gen_0 = {
        .fields   = {
           { .name = "NOP", .low = 0, .high = 0,
             .expr = &expr___cat2_cat3_nop_value,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "SRC1", .low = 0, .high = 15,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_2src__case0_gen_0_src1,
           },
           { .name = "SRC2", .low = 16, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_2src__case0_gen_0_src2,
           },
@@ -4924,18 +4924,18 @@ static const struct isa_case __instruction_cat2_2src__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SRC1", .low = 0, .high = 15,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_2src__default_gen_0_src1,
           },
           { .name = "SRC2", .low = 16, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_2src__default_gen_0_src2,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat2_2src_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat2_2src_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_gen_0,
        .name     = "#instruction-cat2-2src",
@@ -4978,15 +4978,15 @@ static const struct isa_case __instruction_cat2_2src_cond__case0_gen_0 = {
        .fields   = {
           { .name = "NOP", .low = 0, .high = 0,
             .expr = &expr___cat2_cat3_nop_value,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "SRC1", .low = 0, .high = 15,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_2src_cond__case0_gen_0_src1,
           },
           { .name = "SRC2", .low = 16, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_2src_cond__case0_gen_0_src2,
           },
@@ -5013,22 +5013,22 @@ static const struct isa_case __instruction_cat2_2src_cond__default_gen_0 = {
        .num_fields = 3,
        .fields   = {
           { .name = "SRC1", .low = 0, .high = 15,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_2src_cond__default_gen_0_src1,
           },
           { .name = "SRC2", .low = 16, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_2src_cond__default_gen_0_src2,
           },
           { .name = "COND", .low = 48, .high = 50,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___cond,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat2_2src_cond_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat2_2src_cond_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_gen_0,
        .name     = "#instruction-cat2-2src-cond",
@@ -5071,15 +5071,15 @@ static const struct isa_case __instruction_cat2_2src_input__case0_gen_0 = {
        .fields   = {
           { .name = "NOP", .low = 0, .high = 0,
             .expr = &expr___cat2_cat3_nop_value,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "SRC1", .low = 0, .high = 15,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_2src_input__case0_gen_0_src1,
           },
           { .name = "SRC2", .low = 16, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_2src_input__case0_gen_0_src2,
           },
@@ -5106,18 +5106,18 @@ static const struct isa_case __instruction_cat2_2src_input__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SRC1", .low = 0, .high = 15,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_2src_input__default_gen_0_src1,
           },
           { .name = "SRC2", .low = 16, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat2_2src_input__default_gen_0_src2,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat2_2src_input_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat2_2src_input_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_gen_0,
        .name     = "#instruction-cat2-2src-input",
@@ -5142,7 +5142,7 @@ static const struct isa_case bary_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_bary_f_gen_0 = {
+static const struct isa_bitset bitset_bary_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_input_gen_0,
        .name     = "bary.f",
@@ -5166,7 +5166,7 @@ static const struct isa_case flat_b__default_gen_600 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_flat_b_gen_600 = {
+static const struct isa_bitset bitset_flat_b_gen_600 = {
 
        .parent   = &bitset___instruction_cat2_2src_input_gen_0,
        .name     = "flat.b",
@@ -5190,7 +5190,7 @@ static const struct isa_case add_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_add_f_gen_0 = {
+static const struct isa_bitset bitset_add_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "add.f",
@@ -5214,7 +5214,7 @@ static const struct isa_case min_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_min_f_gen_0 = {
+static const struct isa_bitset bitset_min_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "min.f",
@@ -5238,7 +5238,7 @@ static const struct isa_case max_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_max_f_gen_0 = {
+static const struct isa_bitset bitset_max_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "max.f",
@@ -5262,7 +5262,7 @@ static const struct isa_case mul_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_mul_f_gen_0 = {
+static const struct isa_bitset bitset_mul_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "mul.f",
@@ -5286,7 +5286,7 @@ static const struct isa_case sign_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_sign_f_gen_0 = {
+static const struct isa_bitset bitset_sign_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "sign.f",
@@ -5310,7 +5310,7 @@ static const struct isa_case cmps_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_cmps_f_gen_0 = {
+static const struct isa_bitset bitset_cmps_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_cond_gen_0,
        .name     = "cmps.f",
@@ -5334,7 +5334,7 @@ static const struct isa_case absneg_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_absneg_f_gen_0 = {
+static const struct isa_bitset bitset_absneg_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "absneg.f",
@@ -5358,7 +5358,7 @@ static const struct isa_case cmpv_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_cmpv_f_gen_0 = {
+static const struct isa_bitset bitset_cmpv_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_cond_gen_0,
        .name     = "cmpv.f",
@@ -5382,7 +5382,7 @@ static const struct isa_case floor_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_floor_f_gen_0 = {
+static const struct isa_bitset bitset_floor_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "floor.f",
@@ -5406,7 +5406,7 @@ static const struct isa_case ceil_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_ceil_f_gen_0 = {
+static const struct isa_bitset bitset_ceil_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "ceil.f",
@@ -5430,7 +5430,7 @@ static const struct isa_case rndne_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_rndne_f_gen_0 = {
+static const struct isa_bitset bitset_rndne_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "rndne.f",
@@ -5454,7 +5454,7 @@ static const struct isa_case rndaz_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_rndaz_f_gen_0 = {
+static const struct isa_bitset bitset_rndaz_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "rndaz.f",
@@ -5478,7 +5478,7 @@ static const struct isa_case trunc_f__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_trunc_f_gen_0 = {
+static const struct isa_bitset bitset_trunc_f_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "trunc.f",
@@ -5502,7 +5502,7 @@ static const struct isa_case add_u__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_add_u_gen_0 = {
+static const struct isa_bitset bitset_add_u_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "add.u",
@@ -5526,7 +5526,7 @@ static const struct isa_case add_s__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_add_s_gen_0 = {
+static const struct isa_bitset bitset_add_s_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "add.s",
@@ -5550,7 +5550,7 @@ static const struct isa_case sub_u__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_sub_u_gen_0 = {
+static const struct isa_bitset bitset_sub_u_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "sub.u",
@@ -5574,7 +5574,7 @@ static const struct isa_case sub_s__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_sub_s_gen_0 = {
+static const struct isa_bitset bitset_sub_s_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "sub.s",
@@ -5598,7 +5598,7 @@ static const struct isa_case cmps_u__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_cmps_u_gen_0 = {
+static const struct isa_bitset bitset_cmps_u_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_cond_gen_0,
        .name     = "cmps.u",
@@ -5622,7 +5622,7 @@ static const struct isa_case cmps_s__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_cmps_s_gen_0 = {
+static const struct isa_bitset bitset_cmps_s_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_cond_gen_0,
        .name     = "cmps.s",
@@ -5646,7 +5646,7 @@ static const struct isa_case min_u__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_min_u_gen_0 = {
+static const struct isa_bitset bitset_min_u_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "min.u",
@@ -5670,7 +5670,7 @@ static const struct isa_case min_s__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_min_s_gen_0 = {
+static const struct isa_bitset bitset_min_s_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "min.s",
@@ -5694,7 +5694,7 @@ static const struct isa_case max_u__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_max_u_gen_0 = {
+static const struct isa_bitset bitset_max_u_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "max.u",
@@ -5718,7 +5718,7 @@ static const struct isa_case max_s__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_max_s_gen_0 = {
+static const struct isa_bitset bitset_max_s_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "max.s",
@@ -5742,7 +5742,7 @@ static const struct isa_case absneg_s__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_absneg_s_gen_0 = {
+static const struct isa_bitset bitset_absneg_s_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "absneg.s",
@@ -5766,7 +5766,7 @@ static const struct isa_case and_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_and_b_gen_0 = {
+static const struct isa_bitset bitset_and_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "and.b",
@@ -5790,7 +5790,7 @@ static const struct isa_case or_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_or_b_gen_0 = {
+static const struct isa_bitset bitset_or_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "or.b",
@@ -5814,7 +5814,7 @@ static const struct isa_case not_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_not_b_gen_0 = {
+static const struct isa_bitset bitset_not_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "not.b",
@@ -5838,7 +5838,7 @@ static const struct isa_case xor_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_xor_b_gen_0 = {
+static const struct isa_bitset bitset_xor_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "xor.b",
@@ -5862,7 +5862,7 @@ static const struct isa_case cmpv_u__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_cmpv_u_gen_0 = {
+static const struct isa_bitset bitset_cmpv_u_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_cond_gen_0,
        .name     = "cmpv.u",
@@ -5886,7 +5886,7 @@ static const struct isa_case cmpv_s__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_cmpv_s_gen_0 = {
+static const struct isa_bitset bitset_cmpv_s_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_cond_gen_0,
        .name     = "cmpv.s",
@@ -5910,7 +5910,7 @@ static const struct isa_case mul_u24__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_mul_u24_gen_0 = {
+static const struct isa_bitset bitset_mul_u24_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "mul.u24",
@@ -5934,7 +5934,7 @@ static const struct isa_case mul_s24__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_mul_s24_gen_0 = {
+static const struct isa_bitset bitset_mul_s24_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "mul.s24",
@@ -5958,7 +5958,7 @@ static const struct isa_case mull_u__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_mull_u_gen_0 = {
+static const struct isa_bitset bitset_mull_u_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "mull.u",
@@ -5982,7 +5982,7 @@ static const struct isa_case bfrev_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_bfrev_b_gen_0 = {
+static const struct isa_bitset bitset_bfrev_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "bfrev.b",
@@ -6006,7 +6006,7 @@ static const struct isa_case clz_s__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_clz_s_gen_0 = {
+static const struct isa_bitset bitset_clz_s_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "clz.s",
@@ -6030,7 +6030,7 @@ static const struct isa_case clz_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_clz_b_gen_0 = {
+static const struct isa_bitset bitset_clz_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "clz.b",
@@ -6054,7 +6054,7 @@ static const struct isa_case shl_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_shl_b_gen_0 = {
+static const struct isa_bitset bitset_shl_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "shl.b",
@@ -6078,7 +6078,7 @@ static const struct isa_case shr_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_shr_b_gen_0 = {
+static const struct isa_bitset bitset_shr_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "shr.b",
@@ -6102,7 +6102,7 @@ static const struct isa_case ashr_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_ashr_b_gen_0 = {
+static const struct isa_bitset bitset_ashr_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "ashr.b",
@@ -6126,7 +6126,7 @@ static const struct isa_case mgen_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_mgen_b_gen_0 = {
+static const struct isa_bitset bitset_mgen_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "mgen.b",
@@ -6150,7 +6150,7 @@ static const struct isa_case getbit_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_getbit_b_gen_0 = {
+static const struct isa_bitset bitset_getbit_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "getbit.b",
@@ -6174,7 +6174,7 @@ static const struct isa_case setrm__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_setrm_gen_0 = {
+static const struct isa_bitset bitset_setrm_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "setrm",
@@ -6198,7 +6198,7 @@ static const struct isa_case cbits_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_cbits_b_gen_0 = {
+static const struct isa_bitset bitset_cbits_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_1src_gen_0,
        .name     = "cbits.b",
@@ -6222,7 +6222,7 @@ static const struct isa_case shb__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_shb_gen_0 = {
+static const struct isa_bitset bitset_shb_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "shb",
@@ -6246,7 +6246,7 @@ static const struct isa_case msad__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_msad_gen_0 = {
+static const struct isa_bitset bitset_msad_gen_0 = {
 
        .parent   = &bitset___instruction_cat2_2src_gen_0,
        .name     = "msad",
@@ -6270,7 +6270,7 @@ static const struct isa_case __cat3_src__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___cat3_src_gen_0 = {
+static const struct isa_bitset bitset___cat3_src_gen_0 = {
 
        .name     = "#cat3-src",
        .gen      = {
@@ -6293,16 +6293,16 @@ static const struct isa_case __cat3_src_gpr__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "LAST", .low = 10, .high = 10,
             .display = "(last)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___cat3_src_gpr_gen_0 = {
+static const struct isa_bitset bitset___cat3_src_gpr_gen_0 = {
 
        .parent   = &bitset___cat3_src_gen_0,
        .name     = "#cat3-src-gpr",
@@ -6327,7 +6327,7 @@ static const struct isa_case __cat3_src_const_or_immed__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 11,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
@@ -6336,19 +6336,19 @@ static const struct isa_case __cat3_src_const_or_immed__default_gen_0 = {
        .num_fields = 3,
        .fields   = {
           { .name = "#cat3-src-const-or-immed#assert0", .low = 11, .high = 11,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
           { .name = "SWIZ", .low = 0, .high = 1,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___swiz,
           },
           { .name = "CONST", .low = 2, .high = 10,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset___cat3_src_const_or_immed_gen_0 = {
+static const struct isa_bitset bitset___cat3_src_const_or_immed_gen_0 = {
 
        .parent   = &bitset___cat3_src_gen_0,
        .name     = "#cat3-src-const-or-immed",
@@ -6373,7 +6373,7 @@ static const struct isa_case __cat3_src_relative__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___cat3_src_relative_gen_0 = {
+static const struct isa_bitset bitset___cat3_src_relative_gen_0 = {
 
        .parent   = &bitset___cat3_src_gen_0,
        .name     = "#cat3-src-relative",
@@ -6397,11 +6397,11 @@ static const struct isa_case __cat3_src_relative_gpr__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "OFFSET", .low = 0, .high = 9,
-            .type = isa_field::TYPE_INT,
+            .type = TYPE_INT,
           },
        },
 };
-const struct isa_bitset bitset___cat3_src_relative_gpr_gen_0 = {
+static const struct isa_bitset bitset___cat3_src_relative_gpr_gen_0 = {
 
        .parent   = &bitset___cat3_src_relative_gen_0,
        .name     = "#cat3-src-relative-gpr",
@@ -6425,11 +6425,11 @@ static const struct isa_case __cat3_src_relative_const__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "OFFSET", .low = 0, .high = 9,
-            .type = isa_field::TYPE_INT,
+            .type = TYPE_INT,
           },
        },
 };
-const struct isa_bitset bitset___cat3_src_relative_const_gen_0 = {
+static const struct isa_bitset bitset___cat3_src_relative_const_gen_0 = {
 
        .parent   = &bitset___cat3_src_relative_gen_0,
        .name     = "#cat3-src-relative-const",
@@ -6455,7 +6455,7 @@ static const struct isa_case __instruction_cat3_base__case0_gen_0 = {
        .fields   = {
           { .name = "NOP", .low = 0, .high = 0,
             .expr = &expr___cat2_cat3_nop_value,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
@@ -6466,56 +6466,56 @@ static const struct isa_case __instruction_cat3_base__default_gen_0 = {
           { .name = "HALF", .low = 0, .high = 0,
             .expr = &expr___multisrc_half,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST_HALF", .low = 0, .high = 0,
             .expr = &expr___dest_half,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC2_R", .low = 15, .high = 15,
             .display = "(r)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC3_R", .low = 29, .high = 29,
             .display = "(r)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "REPEAT", .low = 40, .high = 41,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___rptn,
           },
           { .name = "SRC1_R", .low = 43, .high = 43,
             .display = "(r)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SS", .low = 44, .high = 44,
             .display = "(ss)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "UL", .low = 45, .high = 45,
             .display = "(ul)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC2", .low = 47, .high = 54,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "JP", .low = 59, .high = 59,
             .display = "(jp)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SY", .low = 60, .high = 60,
             .display = "(sy)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat3_base_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat3_base_gen_0 = {
 
        .parent   = &bitset___instruction_gen_300,
        .name     = "#instruction-cat3-base",
@@ -6557,40 +6557,40 @@ static const struct isa_case __instruction_cat3__default_gen_0 = {
           { .name = "IMMED_ENCODING", .low = 0, .high = 0,
             .expr = &expr___false,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC1", .low = 0, .high = 12,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat3_src,
             .params = &__instruction_cat3__default_gen_0_src1,
           },
           { .name = "SRC1_NEG", .low = 14, .high = 14,
             .display = "(neg)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC3", .low = 16, .high = 28,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat3_src,
             .params = &__instruction_cat3__default_gen_0_src3,
           },
           { .name = "SRC2_NEG", .low = 30, .high = 30,
             .display = "(neg)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC3_NEG", .low = 31, .high = 31,
             .display = "(neg)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SAT", .low = 42, .high = 42,
             .display = "(sat)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST_CONV", .low = 46, .high = 46,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat3_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat3_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_base_gen_0,
        .name     = "#instruction-cat3",
@@ -6631,44 +6631,44 @@ static const struct isa_case __instruction_cat3_alt__default_gen_600 = {
           { .name = "IMMED_ENCODING", .low = 0, .high = 0,
             .expr = &expr___true,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SAT", .low = 0, .high = 0,
             .expr = &expr___false,
             .display = "",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC1", .low = 0, .high = 12,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat3_src,
             .params = &__instruction_cat3_alt__default_gen_600_src1,
           },
           { .name = "SRC1_NEG", .low = 14, .high = 14,
             .display = "(neg)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC3", .low = 16, .high = 28,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat3_src,
             .params = &__instruction_cat3_alt__default_gen_600_src3,
           },
           { .name = "SRC2_NEG", .low = 30, .high = 30,
             .display = "(neg)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC3_NEG", .low = 31, .high = 31,
             .display = "(neg)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "FULL", .low = 42, .high = 42,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST_CONV", .low = 46, .high = 46,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat3_alt_gen_600 = {
+static const struct isa_bitset bitset___instruction_cat3_alt_gen_600 = {
 
        .parent   = &bitset___instruction_cat3_base_gen_0,
        .name     = "#instruction-cat3-alt",
@@ -6692,11 +6692,11 @@ static const struct isa_case mad_u16__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_mad_u16_gen_0 = {
+static const struct isa_bitset bitset_mad_u16_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "mad.u16",
@@ -6720,11 +6720,11 @@ static const struct isa_case madsh_u16__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_madsh_u16_gen_0 = {
+static const struct isa_bitset bitset_madsh_u16_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "madsh.u16",
@@ -6748,11 +6748,11 @@ static const struct isa_case mad_s16__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_mad_s16_gen_0 = {
+static const struct isa_bitset bitset_mad_s16_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "mad.s16",
@@ -6776,11 +6776,11 @@ static const struct isa_case madsh_m16__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_madsh_m16_gen_0 = {
+static const struct isa_bitset bitset_madsh_m16_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "madsh.m16",
@@ -6804,11 +6804,11 @@ static const struct isa_case mad_u24__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_mad_u24_gen_0 = {
+static const struct isa_bitset bitset_mad_u24_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "mad.u24",
@@ -6832,11 +6832,11 @@ static const struct isa_case mad_s24__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_mad_s24_gen_0 = {
+static const struct isa_bitset bitset_mad_s24_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "mad.s24",
@@ -6860,11 +6860,11 @@ static const struct isa_case mad_f16__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_mad_f16_gen_0 = {
+static const struct isa_bitset bitset_mad_f16_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "mad.f16",
@@ -6888,11 +6888,11 @@ static const struct isa_case mad_f32__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_mad_f32_gen_0 = {
+static const struct isa_bitset bitset_mad_f32_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "mad.f32",
@@ -6916,11 +6916,11 @@ static const struct isa_case sel_b16__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_sel_b16_gen_0 = {
+static const struct isa_bitset bitset_sel_b16_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "sel.b16",
@@ -6944,11 +6944,11 @@ static const struct isa_case sel_b32__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_sel_b32_gen_0 = {
+static const struct isa_bitset bitset_sel_b32_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "sel.b32",
@@ -6972,11 +6972,11 @@ static const struct isa_case sel_s16__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_sel_s16_gen_0 = {
+static const struct isa_bitset bitset_sel_s16_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "sel.s16",
@@ -7000,11 +7000,11 @@ static const struct isa_case sel_s32__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_sel_s32_gen_0 = {
+static const struct isa_bitset bitset_sel_s32_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "sel.s32",
@@ -7028,11 +7028,11 @@ static const struct isa_case sel_f16__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_sel_f16_gen_0 = {
+static const struct isa_bitset bitset_sel_f16_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "sel.f16",
@@ -7056,11 +7056,11 @@ static const struct isa_case sel_f32__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_sel_f32_gen_0 = {
+static const struct isa_bitset bitset_sel_f32_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "sel.f32",
@@ -7084,11 +7084,11 @@ static const struct isa_case sad_s16__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_sad_s16_gen_0 = {
+static const struct isa_bitset bitset_sad_s16_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "sad.s16",
@@ -7112,11 +7112,11 @@ static const struct isa_case sad_s32__default_gen_0 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_sad_s32_gen_0 = {
+static const struct isa_bitset bitset_sad_s32_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_gen_0,
        .name     = "sad.s32",
@@ -7140,7 +7140,7 @@ static const struct isa_case shrm__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_shrm_gen_0 = {
+static const struct isa_bitset bitset_shrm_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_alt_gen_600,
        .name     = "shrm",
@@ -7164,7 +7164,7 @@ static const struct isa_case shlm__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_shlm_gen_0 = {
+static const struct isa_bitset bitset_shlm_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_alt_gen_600,
        .name     = "shlm",
@@ -7188,7 +7188,7 @@ static const struct isa_case shrg__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_shrg_gen_0 = {
+static const struct isa_bitset bitset_shrg_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_alt_gen_600,
        .name     = "shrg",
@@ -7212,7 +7212,7 @@ static const struct isa_case shlg__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_shlg_gen_0 = {
+static const struct isa_bitset bitset_shlg_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_alt_gen_600,
        .name     = "shlg",
@@ -7236,7 +7236,7 @@ static const struct isa_case andg__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_andg_gen_0 = {
+static const struct isa_bitset bitset_andg_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_alt_gen_600,
        .name     = "andg",
@@ -7262,7 +7262,7 @@ static const struct isa_case __instruction_cat3_dp__case0_gen_600 = {
        .fields   = {
           { .name = "NOP", .low = 0, .high = 0,
             .expr = &expr___cat2_cat3_nop_value,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
@@ -7286,37 +7286,37 @@ static const struct isa_case __instruction_cat3_dp__default_gen_600 = {
        .fields   = {
           { .name = "FULL", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC1", .low = 0, .high = 12,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat3_src,
             .params = &__instruction_cat3_dp__default_gen_600_src1,
           },
           { .name = "SRC_SIGN", .low = 14, .high = 14,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___signedness,
           },
           { .name = "SRC3", .low = 16, .high = 28,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat3_src,
             .params = &__instruction_cat3_dp__default_gen_600_src3,
           },
           { .name = "SRC_PACK", .low = 30, .high = 30,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___8bitvec2pack,
           },
           { .name = "SRC3_NEG", .low = 31, .high = 31,
             .display = "(neg)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SAT", .low = 42, .high = 42,
             .display = "(sat)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat3_dp_gen_600 = {
+static const struct isa_bitset bitset___instruction_cat3_dp_gen_600 = {
 
        .parent   = &bitset___instruction_cat3_base_gen_0,
        .name     = "#instruction-cat3-dp",
@@ -7341,7 +7341,7 @@ static const struct isa_case dp2acc__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_dp2acc_gen_0 = {
+static const struct isa_bitset bitset_dp2acc_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_dp_gen_600,
        .name     = "dp2acc",
@@ -7365,7 +7365,7 @@ static const struct isa_case dp4acc__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_dp4acc_gen_0 = {
+static const struct isa_bitset bitset_dp4acc_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_dp_gen_600,
        .name     = "dp4acc",
@@ -7405,51 +7405,51 @@ static const struct isa_case __instruction_cat3_wmm__default_gen_600 = {
           { .name = "IMMED_ENCODING", .low = 0, .high = 0,
             .expr = &expr___true,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SAT", .low = 0, .high = 0,
             .expr = &expr___false,
             .display = "",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC3_NEG", .low = 0, .high = 0,
             .expr = &expr___false,
             .display = "",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST_HALF", .low = 0, .high = 0,
             .expr = &expr___wmm_dest_half,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC1", .low = 0, .high = 12,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat3_src,
             .params = &__instruction_cat3_wmm__default_gen_600_src1,
           },
           { .name = "SRC1_NEG", .low = 14, .high = 14,
             .display = "(neg)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC3", .low = 16, .high = 28,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat3_src,
             .params = &__instruction_cat3_wmm__default_gen_600_src3,
           },
           { .name = "SRC2_NEG", .low = 30, .high = 30,
             .display = "(neg)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "FULL", .low = 31, .high = 31,
             .display = "",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST_FULL", .low = 46, .high = 46,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat3_wmm_gen_600 = {
+static const struct isa_bitset bitset___instruction_cat3_wmm_gen_600 = {
 
        .parent   = &bitset___instruction_cat3_base_gen_0,
        .name     = "#instruction-cat3-wmm",
@@ -7473,7 +7473,7 @@ static const struct isa_case wmm__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_wmm_gen_0 = {
+static const struct isa_bitset bitset_wmm_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_wmm_gen_600,
        .name     = "wmm",
@@ -7497,7 +7497,7 @@ static const struct isa_case wmm_accu__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_wmm_accu_gen_0 = {
+static const struct isa_bitset bitset_wmm_accu_gen_0 = {
 
        .parent   = &bitset___instruction_cat3_wmm_gen_600,
        .name     = "wmm.accu",
@@ -7531,54 +7531,54 @@ static const struct isa_case __instruction_cat4__default_gen_0 = {
           { .name = "DST_HALF", .low = 0, .high = 0,
             .expr = &expr___dest_half,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC", .low = 0, .high = 15,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __multisrc,
             .params = &__instruction_cat4__default_gen_0_src,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "REPEAT", .low = 40, .high = 41,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___rptn,
           },
           { .name = "SAT", .low = 42, .high = 42,
             .display = "(sat)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC_R", .low = 43, .high = 43,
             .display = "(r)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SS", .low = 44, .high = 44,
             .display = "(ss)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "UL", .low = 45, .high = 45,
             .display = "(ul)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST_CONV", .low = 46, .high = 46,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "FULL", .low = 52, .high = 52,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "JP", .low = 59, .high = 59,
             .display = "(jp)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SY", .low = 60, .high = 60,
             .display = "(sy)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat4_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat4_gen_0 = {
 
        .parent   = &bitset___instruction_gen_300,
        .name     = "#instruction-cat4",
@@ -7602,7 +7602,7 @@ static const struct isa_case rcp__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_rcp_gen_0 = {
+static const struct isa_bitset bitset_rcp_gen_0 = {
 
        .parent   = &bitset___instruction_cat4_gen_0,
        .name     = "rcp",
@@ -7626,7 +7626,7 @@ static const struct isa_case rsq__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_rsq_gen_0 = {
+static const struct isa_bitset bitset_rsq_gen_0 = {
 
        .parent   = &bitset___instruction_cat4_gen_0,
        .name     = "rsq",
@@ -7650,7 +7650,7 @@ static const struct isa_case log2__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_log2_gen_0 = {
+static const struct isa_bitset bitset_log2_gen_0 = {
 
        .parent   = &bitset___instruction_cat4_gen_0,
        .name     = "log2",
@@ -7674,7 +7674,7 @@ static const struct isa_case exp2__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_exp2_gen_0 = {
+static const struct isa_bitset bitset_exp2_gen_0 = {
 
        .parent   = &bitset___instruction_cat4_gen_0,
        .name     = "exp2",
@@ -7698,7 +7698,7 @@ static const struct isa_case sin__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_sin_gen_0 = {
+static const struct isa_bitset bitset_sin_gen_0 = {
 
        .parent   = &bitset___instruction_cat4_gen_0,
        .name     = "sin",
@@ -7722,7 +7722,7 @@ static const struct isa_case cos__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_cos_gen_0 = {
+static const struct isa_bitset bitset_cos_gen_0 = {
 
        .parent   = &bitset___instruction_cat4_gen_0,
        .name     = "cos",
@@ -7746,7 +7746,7 @@ static const struct isa_case sqrt__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_sqrt_gen_0 = {
+static const struct isa_bitset bitset_sqrt_gen_0 = {
 
        .parent   = &bitset___instruction_cat4_gen_0,
        .name     = "sqrt",
@@ -7770,7 +7770,7 @@ static const struct isa_case hrsq__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_hrsq_gen_0 = {
+static const struct isa_bitset bitset_hrsq_gen_0 = {
 
        .parent   = &bitset___instruction_cat4_gen_0,
        .name     = "hrsq",
@@ -7794,7 +7794,7 @@ static const struct isa_case hlog2__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_hlog2_gen_0 = {
+static const struct isa_bitset bitset_hlog2_gen_0 = {
 
        .parent   = &bitset___instruction_cat4_gen_0,
        .name     = "hlog2",
@@ -7818,7 +7818,7 @@ static const struct isa_case hexp2__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_hexp2_gen_0 = {
+static const struct isa_bitset bitset_hexp2_gen_0 = {
 
        .parent   = &bitset___instruction_cat4_gen_0,
        .name     = "hexp2",
@@ -7850,14 +7850,14 @@ static const struct isa_case __cat5_s2en_bindless_base__default_gen_0 = {
        .fields   = {
           { .name = "BASE", .low = 0, .high = 0,
             .expr = &expr_anon_15,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "BASE_LO", .low = 0, .high = 0,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset___cat5_s2en_bindless_base_gen_0 = {
+static const struct isa_bitset bitset___cat5_s2en_bindless_base_gen_0 = {
 
        .name     = "#cat5-s2en-bindless-base",
        .gen      = {
@@ -7922,93 +7922,93 @@ static const struct isa_case __instruction_cat5__default_gen_0 = {
           { .name = "DST_HALF", .low = 0, .high = 0,
             .expr = &expr___type_half,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HALF", .low = 0, .high = 0,
             .expr = &expr___multisrc_half,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC2_IMM_OFFSET", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "P", .low = 0, .high = 0,
             .expr = &expr___false,
             .display = "",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "1D", .low = 0, .high = 0,
             .expr = &expr___false,
             .display = "",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "#instruction-cat5#assert5", .low = 47, .high = 47,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
           { .name = "FULL", .low = 0, .high = 0,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC1", .low = 1, .high = 8,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat5_src1,
             .params = &__instruction_cat5__default_gen_0_src1,
           },
           { .name = "SRC2", .low = 9, .high = 16,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat5_src2,
             .params = &__instruction_cat5__default_gen_0_src2,
           },
           { .name = "SAMP", .low = 21, .high = 24,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat5_samp,
             .params = &__instruction_cat5__default_gen_0_samp,
           },
           { .name = "TEX", .low = 25, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat5_tex,
             .params = &__instruction_cat5__default_gen_0_tex,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "WRMASK", .low = 40, .high = 43,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___wrmask,
           },
           { .name = "TYPE", .low = 44, .high = 46,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat5_type,
             .params = &__instruction_cat5__default_gen_0_type,
           },
           { .name = "3D", .low = 48, .high = 48,
             .display = ".3d",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "A", .low = 49, .high = 49,
             .display = ".a",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "S2EN_BINDLESS", .low = 51, .high = 51,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "O", .low = 52, .high = 52,
             .display = ".o",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "JP", .low = 59, .high = 59,
             .display = "(jp)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SY", .low = 60, .high = 60,
             .display = "(sy)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat5_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat5_gen_0 = {
 
        .parent   = &bitset___instruction_gen_300,
        .name     = "#instruction-cat5",
@@ -8052,42 +8052,42 @@ static const struct isa_case __instruction_cat5_tex_base__case0_gen_0 = {
        .fields   = {
           { .name = "BINDLESS", .low = 0, .high = 0,
             .expr = &expr___cat5_s2enb_is_bindless,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "S2EN", .low = 0, .high = 0,
             .expr = &expr___cat5_s2enb_is_indirect,
             .display = ".s2en",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "UNIFORM", .low = 0, .high = 0,
             .expr = &expr___cat5_s2enb_is_uniform,
             .display = ".uniform",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "NONUNIFORM", .low = 0, .high = 0,
             .expr = &expr___cat5_s2enb_is_nonuniform,
             .display = ".nonuniform",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "A1", .low = 0, .high = 0,
             .expr = &expr___cat5_s2enb_uses_a1,
             .display = ", a1.x",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "BASE_HI", .low = 19, .high = 20,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "SRC3", .low = 21, .high = 28,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat5_src3,
             .params = &__instruction_cat5_tex_base__case0_gen_0_src3,
           },
           { .name = "DESC_MODE", .low = 29, .high = 31,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___cat5_s2en_bindless_desc_mode,
           },
           { .name = "BASE", .low = 47, .high = 47,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat5_s2en_bindless_base,
             .params = &__instruction_cat5_tex_base__case0_gen_0_base,
           },
@@ -8097,12 +8097,12 @@ static const struct isa_case __instruction_cat5_tex_base__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "#instruction-cat5-tex-base#assert0", .low = 19, .high = 20,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat5_tex_base_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat5_tex_base_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_gen_0,
        .name     = "#instruction-cat5-tex-base",
@@ -8127,15 +8127,15 @@ static const struct isa_case __instruction_cat5_tex__default_gen_0 = {
        .fields   = {
           { .name = "SV", .low = 50, .high = 50,
             .display = ".s",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "P", .low = 53, .high = 53,
             .display = ".p",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat5_tex_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat5_tex_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_base_gen_0,
        .name     = "#instruction-cat5-tex",
@@ -8159,34 +8159,34 @@ static const struct isa_case isam__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "1D", .low = 18, .high = 18,
             .display = ".1d",
-            .type = isa_field::TYPE_BOOL_INV,
+            .type = TYPE_BOOL_INV,
           },
           { .name = "SV", .low = 50, .high = 50,
             .display = ".v",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC2_IMM_OFFSET", .low = 53, .high = 53,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_isam_gen_0 = {
+static const struct isa_bitset bitset_isam_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_base_gen_0,
        .name     = "isam",
@@ -8210,23 +8210,23 @@ static const struct isa_case isaml__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___two,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_isaml_gen_0 = {
+static const struct isa_bitset bitset_isaml_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "isaml",
@@ -8250,23 +8250,23 @@ static const struct isa_case isamm__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_isamm_gen_0 = {
+static const struct isa_bitset bitset_isamm_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "isamm",
@@ -8290,23 +8290,23 @@ static const struct isa_case sam__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_sam_gen_0 = {
+static const struct isa_bitset bitset_sam_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "sam",
@@ -8330,23 +8330,23 @@ static const struct isa_case samb__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___two,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_samb_gen_0 = {
+static const struct isa_bitset bitset_samb_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "samb",
@@ -8370,23 +8370,23 @@ static const struct isa_case saml__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___two,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_saml_gen_0 = {
+static const struct isa_bitset bitset_saml_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "saml",
@@ -8410,23 +8410,23 @@ static const struct isa_case samgq__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_samgq_gen_0 = {
+static const struct isa_bitset bitset_samgq_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "samgq",
@@ -8450,23 +8450,23 @@ static const struct isa_case getlod__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_getlod_gen_0 = {
+static const struct isa_bitset bitset_getlod_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "getlod",
@@ -8490,23 +8490,23 @@ static const struct isa_case conv__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___two,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_conv_gen_0 = {
+static const struct isa_bitset bitset_conv_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "conv",
@@ -8530,23 +8530,23 @@ static const struct isa_case convm__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___two,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_convm_gen_0 = {
+static const struct isa_bitset bitset_convm_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "convm",
@@ -8570,23 +8570,23 @@ static const struct isa_case getsize__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_getsize_gen_0 = {
+static const struct isa_bitset bitset_getsize_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "getsize",
@@ -8610,23 +8610,23 @@ static const struct isa_case getbuf__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___zero,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_getbuf_gen_0 = {
+static const struct isa_bitset bitset_getbuf_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "getbuf",
@@ -8650,23 +8650,23 @@ static const struct isa_case getpos__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_getpos_gen_0 = {
+static const struct isa_bitset bitset_getpos_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "getpos",
@@ -8690,23 +8690,23 @@ static const struct isa_case getinfo__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___zero,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_getinfo_gen_0 = {
+static const struct isa_bitset bitset_getinfo_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "getinfo",
@@ -8730,23 +8730,23 @@ static const struct isa_case dsx__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_dsx_gen_0 = {
+static const struct isa_bitset bitset_dsx_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "dsx",
@@ -8770,23 +8770,23 @@ static const struct isa_case dsy__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_dsy_gen_0 = {
+static const struct isa_bitset bitset_dsy_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "dsy",
@@ -8810,23 +8810,23 @@ static const struct isa_case gather4r__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_gather4r_gen_0 = {
+static const struct isa_bitset bitset_gather4r_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "gather4r",
@@ -8850,23 +8850,23 @@ static const struct isa_case gather4g__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_gather4g_gen_0 = {
+static const struct isa_bitset bitset_gather4g_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "gather4g",
@@ -8890,23 +8890,23 @@ static const struct isa_case gather4b__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_gather4b_gen_0 = {
+static const struct isa_bitset bitset_gather4b_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "gather4b",
@@ -8930,23 +8930,23 @@ static const struct isa_case gather4a__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_gather4a_gen_0 = {
+static const struct isa_bitset bitset_gather4a_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "gather4a",
@@ -8970,23 +8970,23 @@ static const struct isa_case samgp0__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_samgp0_gen_0 = {
+static const struct isa_bitset bitset_samgp0_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "samgp0",
@@ -9010,23 +9010,23 @@ static const struct isa_case samgp1__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_samgp1_gen_0 = {
+static const struct isa_bitset bitset_samgp1_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "samgp1",
@@ -9050,23 +9050,23 @@ static const struct isa_case samgp2__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_samgp2_gen_0 = {
+static const struct isa_bitset bitset_samgp2_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "samgp2",
@@ -9090,23 +9090,23 @@ static const struct isa_case samgp3__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_samgp3_gen_0 = {
+static const struct isa_bitset bitset_samgp3_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "samgp3",
@@ -9130,23 +9130,23 @@ static const struct isa_case dsxpp_1__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_dsxpp_1_gen_0 = {
+static const struct isa_bitset bitset_dsxpp_1_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "dsxpp.1",
@@ -9170,23 +9170,23 @@ static const struct isa_case dsypp_1__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_dsypp_1_gen_0 = {
+static const struct isa_bitset bitset_dsypp_1_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "dsypp.1",
@@ -9210,23 +9210,23 @@ static const struct isa_case rgetpos__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_rgetpos_gen_0 = {
+static const struct isa_bitset bitset_rgetpos_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "rgetpos",
@@ -9250,23 +9250,23 @@ static const struct isa_case rgetinfo__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___zero,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_rgetinfo_gen_0 = {
+static const struct isa_bitset bitset_rgetinfo_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_tex_gen_0,
        .name     = "rgetinfo",
@@ -9291,15 +9291,15 @@ static const struct isa_case tcinv__default_gen_0 = {
        .fields   = {
           { .name = "JP", .low = 59, .high = 59,
             .display = "(jp)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SY", .low = 60, .high = 60,
             .display = "(sy)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_tcinv_gen_0 = {
+static const struct isa_bitset bitset_tcinv_gen_0 = {
 
        .parent   = &bitset___instruction_gen_300,
        .name     = "tcinv",
@@ -9323,7 +9323,7 @@ static const struct isa_case __instruction_cat5_brcst__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat5_brcst_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat5_brcst_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_gen_0,
        .name     = "#instruction-cat5-brcst",
@@ -9348,30 +9348,30 @@ static const struct isa_case brcst_active__default_gen_600 = {
        .fields   = {
           { .name = "CLUSTER_SIZE", .low = 0, .high = 0,
             .expr = &expr_anon_18,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "W", .low = 19, .high = 20,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_brcst_active_gen_600 = {
+static const struct isa_bitset bitset_brcst_active_gen_600 = {
 
        .parent   = &bitset___instruction_cat5_brcst_gen_0,
        .name     = "brcst.active",
@@ -9396,19 +9396,19 @@ static const struct isa_case __instruction_cat5_quad_shuffle__default_gen_600 = 
        .fields   = {
           { .name = "HAS_SAMP", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TEX", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "HAS_TYPE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat5_quad_shuffle_gen_600 = {
+static const struct isa_bitset bitset___instruction_cat5_quad_shuffle_gen_600 = {
 
        .parent   = &bitset___instruction_cat5_brcst_gen_0,
        .name     = "#instruction-cat5-quad-shuffle",
@@ -9432,11 +9432,11 @@ static const struct isa_case quad_shuffle_brcst__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___two,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_quad_shuffle_brcst_gen_0 = {
+static const struct isa_bitset bitset_quad_shuffle_brcst_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_quad_shuffle_gen_600,
        .name     = "quad_shuffle.brcst",
@@ -9460,11 +9460,11 @@ static const struct isa_case quad_shuffle_horiz__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_quad_shuffle_horiz_gen_0 = {
+static const struct isa_bitset bitset_quad_shuffle_horiz_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_quad_shuffle_gen_600,
        .name     = "quad_shuffle.horiz",
@@ -9488,11 +9488,11 @@ static const struct isa_case quad_shuffle_vert__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_quad_shuffle_vert_gen_0 = {
+static const struct isa_bitset bitset_quad_shuffle_vert_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_quad_shuffle_gen_600,
        .name     = "quad_shuffle.vert",
@@ -9516,11 +9516,11 @@ static const struct isa_case quad_shuffle_diag__default_gen_0 = {
        .fields   = {
           { .name = "NUM_SRC", .low = 0, .high = 0,
             .expr = &expr___one,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_quad_shuffle_diag_gen_0 = {
+static const struct isa_bitset bitset_quad_shuffle_diag_gen_0 = {
 
        .parent   = &bitset___instruction_cat5_quad_shuffle_gen_600,
        .name     = "quad_shuffle.diag",
@@ -9545,7 +9545,7 @@ static const struct isa_case __cat5_src1__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
@@ -9555,12 +9555,12 @@ static const struct isa_case __cat5_src1__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "#cat5-src1#assert0", .low = 0, .high = 7,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
        },
 };
-const struct isa_bitset bitset___cat5_src1_gen_0 = {
+static const struct isa_bitset bitset___cat5_src1_gen_0 = {
 
        .name     = "#cat5-src1",
        .gen      = {
@@ -9585,7 +9585,7 @@ static const struct isa_case __cat5_src2__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
@@ -9596,7 +9596,7 @@ static const struct isa_case __cat5_src2__case1_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "OFF", .low = 0, .high = 7,
-            .type = isa_field::TYPE_UOFFSET,
+            .type = TYPE_UOFFSET,
           },
        },
 };
@@ -9605,12 +9605,12 @@ static const struct isa_case __cat5_src2__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "#cat5-src2#assert0", .low = 0, .high = 7,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
        },
 };
-const struct isa_bitset bitset___cat5_src2_gen_0 = {
+static const struct isa_bitset bitset___cat5_src2_gen_0 = {
 
        .name     = "#cat5-src2",
        .gen      = {
@@ -9636,7 +9636,7 @@ static const struct isa_case __cat5_samp__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SAMP", .low = 0, .high = 3,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
@@ -9645,12 +9645,12 @@ static const struct isa_case __cat5_samp__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "#cat5-samp#assert0", .low = 0, .high = 3,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
        },
 };
-const struct isa_bitset bitset___cat5_samp_gen_0 = {
+static const struct isa_bitset bitset___cat5_samp_gen_0 = {
 
        .name     = "#cat5-samp",
        .gen      = {
@@ -9675,7 +9675,7 @@ static const struct isa_case __cat5_samp_s2en_bindless_a1__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SAMP", .low = 0, .high = 7,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
@@ -9684,12 +9684,12 @@ static const struct isa_case __cat5_samp_s2en_bindless_a1__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "#cat5-samp-s2en-bindless-a1#assert0", .low = 0, .high = 7,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
        },
 };
-const struct isa_bitset bitset___cat5_samp_s2en_bindless_a1_gen_0 = {
+static const struct isa_bitset bitset___cat5_samp_s2en_bindless_a1_gen_0 = {
 
        .name     = "#cat5-samp-s2en-bindless-a1",
        .gen      = {
@@ -9714,7 +9714,7 @@ static const struct isa_case __cat5_tex_s2en_bindless_a1__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "TEX", .low = 0, .high = 7,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
@@ -9723,12 +9723,12 @@ static const struct isa_case __cat5_tex_s2en_bindless_a1__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "#cat5-tex-s2en-bindless-a1#assert0", .low = 0, .high = 7,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
        },
 };
-const struct isa_bitset bitset___cat5_tex_s2en_bindless_a1_gen_0 = {
+static const struct isa_bitset bitset___cat5_tex_s2en_bindless_a1_gen_0 = {
 
        .name     = "#cat5-tex-s2en-bindless-a1",
        .gen      = {
@@ -9753,7 +9753,7 @@ static const struct isa_case __cat5_tex__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "TEX", .low = 0, .high = 6,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
@@ -9762,12 +9762,12 @@ static const struct isa_case __cat5_tex__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "#cat5-tex#assert0", .low = 0, .high = 6,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
        },
 };
-const struct isa_bitset bitset___cat5_tex_gen_0 = {
+static const struct isa_bitset bitset___cat5_tex_gen_0 = {
 
        .name     = "#cat5-tex",
        .gen      = {
@@ -9792,7 +9792,7 @@ static const struct isa_case __cat5_tex_s2en_bindless__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "TEX", .low = 0, .high = 3,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
@@ -9801,12 +9801,12 @@ static const struct isa_case __cat5_tex_s2en_bindless__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "#cat5-tex-s2en-bindless#assert0", .low = 0, .high = 3,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
        },
 };
-const struct isa_bitset bitset___cat5_tex_s2en_bindless_gen_0 = {
+static const struct isa_bitset bitset___cat5_tex_s2en_bindless_gen_0 = {
 
        .name     = "#cat5-tex-s2en-bindless",
        .gen      = {
@@ -9837,12 +9837,12 @@ static const struct isa_case __cat5_type__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "TYPE", .low = 0, .high = 2,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type,
           },
        },
 };
-const struct isa_bitset bitset___cat5_type_gen_0 = {
+static const struct isa_bitset bitset___cat5_type_gen_0 = {
 
        .name     = "#cat5-type",
        .gen      = {
@@ -9869,10 +9869,10 @@ static const struct isa_case __cat5_src3__case0_gen_0 = {
           { .name = "SRC_HALF", .low = 0, .high = 0,
             .expr = &expr_anon_28,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
@@ -9890,7 +9890,7 @@ static const struct isa_case __cat5_src3__case1_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SAMP", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat5_samp_s2en_bindless_a1,
             .params = &__cat5_src3__case1_gen_0_samp,
           },
@@ -9909,7 +9909,7 @@ static const struct isa_case __cat5_src3__case2_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "TEX", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat5_tex_s2en_bindless_a1,
             .params = &__cat5_src3__case2_gen_0_tex,
           },
@@ -9934,18 +9934,18 @@ static const struct isa_case __cat5_src3__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SAMP", .low = 0, .high = 3,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat5_samp,
             .params = &__cat5_src3__default_gen_0_samp,
           },
           { .name = "TEX", .low = 4, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat5_tex_s2en_bindless,
             .params = &__cat5_src3__default_gen_0_tex,
           },
        },
 };
-const struct isa_bitset bitset___cat5_src3_gen_0 = {
+static const struct isa_bitset bitset___cat5_src3_gen_0 = {
 
        .name     = "#cat5-src3",
        .gen      = {
@@ -9971,11 +9971,11 @@ static const struct isa_case __const_dst_imm__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "OFFSET", .low = 0, .high = 7,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset___const_dst_imm_gen_0 = {
+static const struct isa_bitset bitset___const_dst_imm_gen_0 = {
 
        .parent   = &bitset___const_dst_gen_0,
        .name     = "#const-dst-imm",
@@ -9999,11 +9999,11 @@ static const struct isa_case __const_dst_a1__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "OFFSET", .low = 0, .high = 7,
-            .type = isa_field::TYPE_UOFFSET,
+            .type = TYPE_UOFFSET,
           },
        },
 };
-const struct isa_bitset bitset___const_dst_a1_gen_0 = {
+static const struct isa_bitset bitset___const_dst_a1_gen_0 = {
 
        .parent   = &bitset___const_dst_gen_0,
        .name     = "#const-dst-a1",
@@ -10027,7 +10027,7 @@ static const struct isa_case __const_dst__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___const_dst_gen_0 = {
+static const struct isa_bitset bitset___const_dst_gen_0 = {
 
        .name     = "#const-dst",
        .gen      = {
@@ -10051,19 +10051,19 @@ static const struct isa_case __instruction_cat6__default_gen_0 = {
           { .name = "TYPE_HALF", .low = 0, .high = 0,
             .expr = &expr___type_half,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "JP", .low = 59, .high = 59,
             .display = "(jp)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SY", .low = 60, .high = 60,
             .display = "(sy)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_gen_0 = {
 
        .parent   = &bitset___instruction_gen_300,
        .name     = "#instruction-cat6",
@@ -10086,12 +10086,12 @@ static const struct isa_case __instruction_cat6_a3xx__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "TYPE", .low = 49, .high = 51,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_gen_0,
        .name     = "#instruction-cat6-a3xx",
@@ -10122,23 +10122,23 @@ static const struct isa_case __instruction_cat6_ldg__default_gen_0 = {
        .fields   = {
           { .name = "SRC1_CONST", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC1", .low = 14, .high = 21,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src_const_or_gpr,
             .params = &__instruction_cat6_ldg__default_gen_0_src1,
           },
           { .name = "SIZE", .low = 24, .high = 26,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_ldg_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_ldg_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_gen_0,
        .name     = "#instruction-cat6-ldg",
@@ -10162,11 +10162,11 @@ static const struct isa_case ldg__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "OFF", .low = 1, .high = 13,
-            .type = isa_field::TYPE_OFFSET,
+            .type = TYPE_OFFSET,
           },
        },
 };
-const struct isa_bitset bitset_ldg_gen_0 = {
+static const struct isa_bitset bitset_ldg_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_ldg_gen_0,
        .name     = "ldg",
@@ -10198,26 +10198,26 @@ static const struct isa_case ldg_k__default_gen_600 = {
        .fields   = {
           { .name = "SRC1_CONST", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "OFF", .low = 1, .high = 13,
-            .type = isa_field::TYPE_OFFSET,
+            .type = TYPE_OFFSET,
           },
           { .name = "SRC1", .low = 14, .high = 21,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src_const_or_gpr,
             .params = &ldg_k__default_gen_600_src1,
           },
           { .name = "SIZE", .low = 23, .high = 26,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "DST", .low = 32, .high = 40,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __const_dst,
           },
        },
 };
-const struct isa_bitset bitset_ldg_k_gen_600 = {
+static const struct isa_bitset bitset_ldg_k_gen_600 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_gen_0,
        .name     = "ldg.k",
@@ -10248,26 +10248,26 @@ static const struct isa_case __instruction_cat6_stg__default_gen_0 = {
        .fields   = {
           { .name = "SRC1_CONST", .low = 0, .high = 0,
             .expr = &expr___false,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC3", .low = 1, .high = 8,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SIZE", .low = 24, .high = 26,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "DST_OFF", .low = 40, .high = 40,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC1", .low = 41, .high = 48,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src_const_or_gpr,
             .params = &__instruction_cat6_stg__default_gen_0_src1,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_stg_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_stg_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_gen_0,
        .name     = "#instruction-cat6-stg",
@@ -10292,17 +10292,17 @@ static const struct isa_case stg__default_gen_0 = {
        .fields   = {
           { .name = "OFF", .low = 0, .high = 12,
             .expr = &expr_anon_32,
-            .type = isa_field::TYPE_OFFSET,
+            .type = TYPE_OFFSET,
           },
           { .name = "OFF_HI", .low = 9, .high = 13,
-            .type = isa_field::TYPE_INT,
+            .type = TYPE_INT,
           },
           { .name = "OFF_LO", .low = 32, .high = 39,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_stg_gen_0 = {
+static const struct isa_bitset bitset_stg_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_stg_gen_0,
        .name     = "stg",
@@ -10325,22 +10325,22 @@ static const struct isa_case __instruction_cat6_a3xx_ld__default_gen_0 = {
        .num_fields = 4,
        .fields   = {
           { .name = "OFF", .low = 1, .high = 13,
-            .type = isa_field::TYPE_OFFSET,
+            .type = TYPE_OFFSET,
           },
           { .name = "SRC", .low = 14, .high = 21,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SIZE", .low = 24, .high = 31,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_ld_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_ld_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_gen_0,
        .name     = "#instruction-cat6-a3xx-ld",
@@ -10365,7 +10365,7 @@ static const struct isa_case ldl__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_ldl_gen_0 = {
+static const struct isa_bitset bitset_ldl_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ld_gen_0,
        .name     = "ldl",
@@ -10390,7 +10390,7 @@ static const struct isa_case ldp__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_ldp_gen_0 = {
+static const struct isa_bitset bitset_ldp_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ld_gen_0,
        .name     = "ldp",
@@ -10415,7 +10415,7 @@ static const struct isa_case ldlw__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_ldlw_gen_0 = {
+static const struct isa_bitset bitset_ldlw_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ld_gen_0,
        .name     = "ldlw",
@@ -10439,18 +10439,18 @@ static const struct isa_case ldlv__default_gen_0 = {
        .num_fields = 3,
        .fields   = {
           { .name = "OFF", .low = 1, .high = 13,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "SIZE", .low = 24, .high = 31,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset_ldlv_gen_0 = {
+static const struct isa_bitset bitset_ldlv_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_gen_0,
        .name     = "ldlv",
@@ -10474,28 +10474,28 @@ static const struct isa_case __instruction_cat6_a3xx_st__default_gen_0 = {
        .fields   = {
           { .name = "OFF", .low = 0, .high = 12,
             .expr = &expr_anon_36,
-            .type = isa_field::TYPE_OFFSET,
+            .type = TYPE_OFFSET,
           },
           { .name = "SRC", .low = 1, .high = 8,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "OFF_HI", .low = 9, .high = 13,
-            .type = isa_field::TYPE_INT,
+            .type = TYPE_INT,
           },
           { .name = "SIZE", .low = 24, .high = 31,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "OFF_LO", .low = 32, .high = 39,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "DST", .low = 41, .high = 48,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_st_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_st_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_gen_0,
        .name     = "#instruction-cat6-a3xx-st",
@@ -10520,7 +10520,7 @@ static const struct isa_case stl__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_stl_gen_0 = {
+static const struct isa_bitset bitset_stl_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_st_gen_0,
        .name     = "stl",
@@ -10545,7 +10545,7 @@ static const struct isa_case stp__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_stp_gen_0 = {
+static const struct isa_bitset bitset_stp_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_st_gen_0,
        .name     = "stp",
@@ -10570,7 +10570,7 @@ static const struct isa_case stlw__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_stlw_gen_0 = {
+static const struct isa_bitset bitset_stlw_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_st_gen_0,
        .name     = "stlw",
@@ -10594,19 +10594,19 @@ static const struct isa_case stc__default_gen_600 = {
        .num_fields = 3,
        .fields   = {
           { .name = "SRC", .low = 1, .high = 8,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SIZE", .low = 24, .high = 26,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "DST", .low = 32, .high = 40,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __const_dst,
           },
        },
 };
-const struct isa_bitset bitset_stc_gen_600 = {
+static const struct isa_bitset bitset_stc_gen_600 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_gen_0,
        .name     = "stc",
@@ -10638,33 +10638,33 @@ static const struct isa_case stsc__default_gen_700 = {
        .fields   = {
           { .name = "SRC_IM", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST", .low = 0, .high = 12,
             .expr = &expr_anon_37,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "stsc#assert2", .low = 40, .high = 40,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
           { .name = "SRC", .low = 1, .high = 8,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &stsc__default_gen_700_src,
           },
           { .name = "DST_HI", .low = 9, .high = 13,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "SIZE", .low = 24, .high = 31,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "DST_LO", .low = 32, .high = 39,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_stsc_gen_700 = {
+static const struct isa_bitset bitset_stsc_gen_700 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_gen_0,
        .name     = "stsc",
@@ -10696,26 +10696,26 @@ static const struct isa_case resinfo__default_gen_0 = {
        .fields   = {
           { .name = "D", .low = 0, .high = 0,
             .expr = &expr___cat6_d,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "D_MINUS_ONE", .low = 9, .high = 10,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SSBO", .low = 41, .high = 48,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &resinfo__default_gen_0_ssbo,
           },
           { .name = "SSBO_IM", .low = 53, .high = 53,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_resinfo_gen_0 = {
+static const struct isa_bitset bitset_resinfo_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_gen_0,
        .name     = "resinfo",
@@ -10746,33 +10746,33 @@ static const struct isa_case __instruction_cat6_a3xx_ibo__default_gen_0 = {
        .fields   = {
           { .name = "D", .low = 0, .high = 0,
             .expr = &expr___cat6_d,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "TYPE_SIZE", .low = 0, .high = 0,
             .expr = &expr___cat6_type_size,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "D_MINUS_ONE", .low = 9, .high = 10,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "TYPED", .low = 11, .high = 11,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_typed,
           },
           { .name = "TYPE_SIZE_MINUS_ONE", .low = 12, .high = 13,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "SSBO", .low = 41, .high = 48,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &__instruction_cat6_a3xx_ibo__default_gen_0_ssbo,
           },
           { .name = "SSBO_IM", .low = 53, .high = 53,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_gen_0,
        .name     = "#instruction-cat6-a3xx-ibo",
@@ -10810,28 +10810,28 @@ static const struct isa_case __instruction_cat6_a3xx_ibo_load__default_gen_0 = {
        .num_fields = 5,
        .fields   = {
           { .name = "SRC1", .low = 14, .high = 21,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &__instruction_cat6_a3xx_ibo_load__default_gen_0_src1,
           },
           { .name = "SRC1_IM", .low = 22, .high = 22,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC2_IM", .low = 23, .high = 23,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC2", .low = 24, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &__instruction_cat6_a3xx_ibo_load__default_gen_0_src2,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_load_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_load_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ibo_gen_0,
        .name     = "#instruction-cat6-a3xx-ibo-load",
@@ -10855,7 +10855,7 @@ static const struct isa_case ldib__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_ldib_gen_0 = {
+static const struct isa_bitset bitset_ldib_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ibo_load_gen_0,
        .name     = "ldib",
@@ -10893,28 +10893,28 @@ static const struct isa_case __instruction_cat6_a3xx_ibo_store__default_gen_0 = 
        .num_fields = 5,
        .fields   = {
           { .name = "SRC1", .low = 1, .high = 8,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SRC2_IM", .low = 23, .high = 23,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC2", .low = 24, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &__instruction_cat6_a3xx_ibo_store__default_gen_0_src2,
           },
           { .name = "SRC3", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &__instruction_cat6_a3xx_ibo_store__default_gen_0_src3,
           },
           { .name = "SRC3_IM", .low = 40, .high = 40,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_store_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_store_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ibo_gen_0,
        .name     = "#instruction-cat6-a3xx-ibo-store",
@@ -10938,7 +10938,7 @@ static const struct isa_case __instruction_cat6_a3xx_ibo_store_a4xx__default_gen
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_store_a4xx_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_store_a4xx_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ibo_store_gen_0,
        .name     = "#instruction-cat6-a3xx-ibo-store-a4xx",
@@ -10962,7 +10962,7 @@ static const struct isa_case __instruction_cat6_a3xx_ibo_store_a5xx__default_gen
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_store_a5xx_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_ibo_store_a5xx_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ibo_store_gen_0,
        .name     = "#instruction-cat6-a3xx-ibo-store-a5xx",
@@ -11001,45 +11001,45 @@ static const struct isa_case __instruction_cat6_a3xx_atomic__default_gen_0 = {
        .fields   = {
           { .name = "D", .low = 0, .high = 0,
             .expr = &expr___cat6_d,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "TYPE_SIZE", .low = 0, .high = 0,
             .expr = &expr___cat6_type_size,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "D_MINUS_ONE", .low = 9, .high = 10,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "TYPED", .low = 11, .high = 11,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_typed,
           },
           { .name = "TYPE_SIZE_MINUS_ONE", .low = 12, .high = 13,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "SRC1", .low = 14, .high = 21,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &__instruction_cat6_a3xx_atomic__default_gen_0_src1,
           },
           { .name = "SRC1_IM", .low = 22, .high = 22,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC2_IM", .low = 23, .high = 23,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC2", .low = 24, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &__instruction_cat6_a3xx_atomic__default_gen_0_src2,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_gen_0,
        .name     = "#instruction-cat6-a3xx-atomic",
@@ -11062,12 +11062,12 @@ static const struct isa_case __instruction_cat6_a3xx_atomic_local__default_gen_0
        .num_fields = 1,
        .fields   = {
           { .name = "TYPE", .low = 49, .high = 51,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_local_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_local_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_gen_0,
        .name     = "#instruction-cat6-a3xx-atomic-local",
@@ -11091,7 +11091,7 @@ static const struct isa_case __instruction_cat6_a3xx_atomic_1src__default_gen_0 
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_1src_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_1src_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_local_gen_0,
        .name     = "#instruction-cat6-a3xx-atomic-1src",
@@ -11115,7 +11115,7 @@ static const struct isa_case __instruction_cat6_a3xx_atomic_2src__default_gen_0 
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_2src_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_2src_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_local_gen_0,
        .name     = "#instruction-cat6-a3xx-atomic-2src",
@@ -11139,7 +11139,7 @@ static const struct isa_case atomic_add__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_add_gen_0 = {
+static const struct isa_bitset bitset_atomic_add_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_2src_gen_0,
        .name     = "atomic.add",
@@ -11163,7 +11163,7 @@ static const struct isa_case atomic_sub__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_sub_gen_0 = {
+static const struct isa_bitset bitset_atomic_sub_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_2src_gen_0,
        .name     = "atomic.sub",
@@ -11187,7 +11187,7 @@ static const struct isa_case atomic_xchg__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_xchg_gen_0 = {
+static const struct isa_bitset bitset_atomic_xchg_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_2src_gen_0,
        .name     = "atomic.xchg",
@@ -11211,7 +11211,7 @@ static const struct isa_case atomic_inc__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_inc_gen_0 = {
+static const struct isa_bitset bitset_atomic_inc_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_1src_gen_0,
        .name     = "atomic.inc",
@@ -11235,7 +11235,7 @@ static const struct isa_case atomic_dec__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_dec_gen_0 = {
+static const struct isa_bitset bitset_atomic_dec_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_1src_gen_0,
        .name     = "atomic.dec",
@@ -11259,7 +11259,7 @@ static const struct isa_case atomic_cmpxchg__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_cmpxchg_gen_0 = {
+static const struct isa_bitset bitset_atomic_cmpxchg_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_2src_gen_0,
        .name     = "atomic.cmpxchg",
@@ -11283,7 +11283,7 @@ static const struct isa_case atomic_min__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_min_gen_0 = {
+static const struct isa_bitset bitset_atomic_min_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_2src_gen_0,
        .name     = "atomic.min",
@@ -11307,7 +11307,7 @@ static const struct isa_case atomic_max__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_max_gen_0 = {
+static const struct isa_bitset bitset_atomic_max_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_2src_gen_0,
        .name     = "atomic.max",
@@ -11331,7 +11331,7 @@ static const struct isa_case atomic_and__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_and_gen_0 = {
+static const struct isa_bitset bitset_atomic_and_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_2src_gen_0,
        .name     = "atomic.and",
@@ -11355,7 +11355,7 @@ static const struct isa_case atomic_or__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_or_gen_0 = {
+static const struct isa_bitset bitset_atomic_or_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_2src_gen_0,
        .name     = "atomic.or",
@@ -11379,7 +11379,7 @@ static const struct isa_case atomic_xor__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_xor_gen_0 = {
+static const struct isa_bitset bitset_atomic_xor_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_2src_gen_0,
        .name     = "atomic.xor",
@@ -11410,24 +11410,24 @@ static const struct isa_case __instruction_cat6_a3xx_atomic_global__default_gen_
        .num_fields = 4,
        .fields   = {
           { .name = "SRC3", .low = 1, .high = 8,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SSBO", .low = 41, .high = 48,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &__instruction_cat6_a3xx_atomic_global__default_gen_0_ssbo,
           },
           { .name = "TYPE", .low = 49, .high = 51,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type_atomic,
           },
           { .name = "SSBO_IM", .low = 53, .high = 53,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_global_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_global_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_gen_0,
        .name     = "#instruction-cat6-a3xx-atomic-global",
@@ -11451,7 +11451,7 @@ static const struct isa_case __instruction_cat6_a3xx_atomic_global_a4xx__default
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_gen_0,
        .name     = "#instruction-cat6-a3xx-atomic-global-a4xx",
@@ -11475,7 +11475,7 @@ static const struct isa_case __instruction_cat6_a3xx_atomic_global_a5xx__default
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_gen_0,
        .name     = "#instruction-cat6-a3xx-atomic-global-a5xx",
@@ -11499,12 +11499,12 @@ static const struct isa_case __instruction_cat6_a6xx_atomic_global__default_gen_
        .num_fields = 1,
        .fields   = {
           { .name = "TYPE", .low = 49, .high = 51,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type_atomic,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a6xx_atomic_global_gen_600 = {
+static const struct isa_bitset bitset___instruction_cat6_a6xx_atomic_global_gen_600 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_gen_0,
        .name     = "#instruction-cat6-a6xx-atomic-global",
@@ -11528,7 +11528,7 @@ static const struct isa_case atomic_g_add__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_g_add_gen_0 = {
+static const struct isa_bitset bitset_atomic_g_add_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_atomic_global_gen_600,
        .name     = "atomic.g.add",
@@ -11552,7 +11552,7 @@ static const struct isa_case atomic_g_sub__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_g_sub_gen_0 = {
+static const struct isa_bitset bitset_atomic_g_sub_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_atomic_global_gen_600,
        .name     = "atomic.g.sub",
@@ -11576,7 +11576,7 @@ static const struct isa_case atomic_g_xchg__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_g_xchg_gen_0 = {
+static const struct isa_bitset bitset_atomic_g_xchg_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_atomic_global_gen_600,
        .name     = "atomic.g.xchg",
@@ -11600,7 +11600,7 @@ static const struct isa_case atomic_g_inc__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_g_inc_gen_0 = {
+static const struct isa_bitset bitset_atomic_g_inc_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_atomic_global_gen_600,
        .name     = "atomic.g.inc",
@@ -11624,7 +11624,7 @@ static const struct isa_case atomic_g_dec__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_g_dec_gen_0 = {
+static const struct isa_bitset bitset_atomic_g_dec_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_atomic_global_gen_600,
        .name     = "atomic.g.dec",
@@ -11648,7 +11648,7 @@ static const struct isa_case atomic_g_cmpxchg__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_g_cmpxchg_gen_0 = {
+static const struct isa_bitset bitset_atomic_g_cmpxchg_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_atomic_global_gen_600,
        .name     = "atomic.g.cmpxchg",
@@ -11672,7 +11672,7 @@ static const struct isa_case atomic_g_min__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_g_min_gen_0 = {
+static const struct isa_bitset bitset_atomic_g_min_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_atomic_global_gen_600,
        .name     = "atomic.g.min",
@@ -11696,7 +11696,7 @@ static const struct isa_case atomic_g_max__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_g_max_gen_0 = {
+static const struct isa_bitset bitset_atomic_g_max_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_atomic_global_gen_600,
        .name     = "atomic.g.max",
@@ -11720,7 +11720,7 @@ static const struct isa_case atomic_g_and__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_g_and_gen_0 = {
+static const struct isa_bitset bitset_atomic_g_and_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_atomic_global_gen_600,
        .name     = "atomic.g.and",
@@ -11744,7 +11744,7 @@ static const struct isa_case atomic_g_or__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_g_or_gen_0 = {
+static const struct isa_bitset bitset_atomic_g_or_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_atomic_global_gen_600,
        .name     = "atomic.g.or",
@@ -11768,7 +11768,7 @@ static const struct isa_case atomic_g_xor__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_g_xor_gen_0 = {
+static const struct isa_bitset bitset_atomic_g_xor_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_atomic_global_gen_600,
        .name     = "atomic.g.xor",
@@ -11799,32 +11799,32 @@ static const struct isa_case ray_intersection__default_gen_700 = {
        .num_fields = 6,
        .fields   = {
           { .name = "SRC2", .low = 1, .high = 8,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SRC1_CONST", .low = 13, .high = 13,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC1", .low = 14, .high = 21,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src_const_or_gpr,
             .params = &ray_intersection__default_gen_700_src1,
           },
           { .name = "SRC3", .low = 24, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SRC4", .low = 41, .high = 48,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset_ray_intersection_gen_700 = {
+static const struct isa_bitset bitset_ray_intersection_gen_700 = {
 
        .parent   = &bitset___instruction_cat6_gen_0,
        .name     = "ray_intersection",
@@ -11855,26 +11855,26 @@ static const struct isa_case __instruction_cat6_a6xx_base__default_gen_600 = {
        .fields   = {
           { .name = "TYPE_SIZE", .low = 0, .high = 0,
             .expr = &expr___cat6_type_size,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "BASE", .low = 1, .high = 3,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_base,
             .params = &__instruction_cat6_a6xx_base__default_gen_600_base,
           },
           { .name = "MODE", .low = 6, .high = 7,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___cat6_src_mode,
           },
           { .name = "BINDLESS", .low = 8, .high = 8,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "TYPE_SIZE_MINUS_ONE", .low = 12, .high = 13,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a6xx_base_gen_600 = {
+static const struct isa_bitset bitset___instruction_cat6_a6xx_base_gen_600 = {
 
        .parent   = &bitset___instruction_cat6_gen_0,
        .name     = "#instruction-cat6-a6xx-base",
@@ -11898,7 +11898,7 @@ static const struct isa_case __instruction_cat6_a6xx__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a6xx_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a6xx_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_base_gen_600,
        .name     = "#instruction-cat6-a6xx",
@@ -11936,24 +11936,24 @@ static const struct isa_case __cat6_ldc_common__default_gen_0 = {
        .fields   = {
           { .name = "SRC2_IM", .low = 0, .high = 0,
             .expr = &expr___cat6_direct,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC1_IM", .low = 23, .high = 23,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC2", .low = 41, .high = 48,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &__cat6_ldc_common__default_gen_0_src2,
           },
           { .name = "SRC1", .low = 24, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &__cat6_ldc_common__default_gen_0_src1,
           },
        },
 };
-const struct isa_bitset bitset___cat6_ldc_common_gen_0 = {
+static const struct isa_bitset bitset___cat6_ldc_common_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_gen_0,
        .name     = "#cat6-ldc-common",
@@ -11978,14 +11978,14 @@ static const struct isa_case ldc_k__default_gen_0 = {
        .fields   = {
           { .name = "LOAD_SIZE", .low = 0, .high = 0,
             .expr = &expr___cat6_load_size,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "LOAD_SIZE_MINUS_ONE", .low = 32, .high = 39,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_ldc_k_gen_0 = {
+static const struct isa_bitset bitset_ldc_k_gen_0 = {
 
        .parent   = &bitset___cat6_ldc_common_gen_0,
        .name     = "ldc.k",
@@ -12010,18 +12010,18 @@ static const struct isa_case ldc__default_gen_0 = {
        .fields   = {
           { .name = "U", .low = 11, .high = 11,
             .display = ".u",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "OFFSET", .low = 9, .high = 10,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset_ldc_gen_0 = {
+static const struct isa_bitset bitset_ldc_gen_0 = {
 
        .parent   = &bitset___cat6_ldc_common_gen_0,
        .name     = "ldc",
@@ -12045,16 +12045,16 @@ static const struct isa_case getspid__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "TYPE", .low = 49, .high = 51,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type,
           },
        },
 };
-const struct isa_bitset bitset_getspid_gen_0 = {
+static const struct isa_bitset bitset_getspid_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_gen_0,
        .name     = "getspid",
@@ -12078,16 +12078,16 @@ static const struct isa_case getwid__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "TYPE", .low = 49, .high = 51,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type,
           },
        },
 };
-const struct isa_bitset bitset_getwid_gen_0 = {
+static const struct isa_bitset bitset_getwid_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_gen_0,
        .name     = "getwid",
@@ -12111,16 +12111,16 @@ static const struct isa_case getfiberid__default_gen_600 = {
        .num_fields = 2,
        .fields   = {
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "TYPE", .low = 49, .high = 51,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type,
           },
        },
 };
-const struct isa_bitset bitset_getfiberid_gen_600 = {
+static const struct isa_bitset bitset_getfiberid_gen_600 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_gen_0,
        .name     = "getfiberid",
@@ -12152,39 +12152,39 @@ static const struct isa_case __instruction_cat6_a6xx_ibo_1src__default_gen_0 = {
        .fields   = {
           { .name = "D", .low = 0, .high = 0,
             .expr = &expr___cat6_d,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "TRUE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SSBO_IM", .low = 0, .high = 0,
             .expr = &expr___cat6_direct,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "D_MINUS_ONE", .low = 9, .high = 10,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "TYPED", .low = 11, .high = 11,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_typed,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SSBO", .low = 41, .high = 48,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &__instruction_cat6_a6xx_ibo_1src__default_gen_0_ssbo,
           },
           { .name = "TYPE", .low = 49, .high = 51,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_1src_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_1src_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_gen_0,
        .name     = "#instruction-cat6-a6xx-ibo-1src",
@@ -12208,7 +12208,7 @@ static const struct isa_case resinfo_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_resinfo_b_gen_0 = {
+static const struct isa_bitset bitset_resinfo_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_1src_gen_0,
        .name     = "resinfo.b",
@@ -12232,7 +12232,7 @@ static const struct isa_case resbase__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_resbase_gen_0 = {
+static const struct isa_bitset bitset_resbase_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_1src_gen_0,
        .name     = "resbase",
@@ -12264,44 +12264,44 @@ static const struct isa_case __instruction_cat6_a6xx_ibo_base__default_gen_0 = {
        .fields   = {
           { .name = "D", .low = 0, .high = 0,
             .expr = &expr___cat6_d,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "TRUE", .low = 0, .high = 0,
             .expr = &expr___true,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "OFFSET", .low = 0, .high = 0,
             .expr = &expr___zero,
             .display = "",
-            .type = isa_field::TYPE_UOFFSET,
+            .type = TYPE_UOFFSET,
           },
           { .name = "SSBO_IM", .low = 0, .high = 0,
             .expr = &expr___cat6_direct,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "D_MINUS_ONE", .low = 9, .high = 10,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "TYPED", .low = 11, .high = 11,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_typed,
           },
           { .name = "SRC2", .low = 24, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SRC1", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SSBO", .low = 41, .high = 48,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &__instruction_cat6_a6xx_ibo_base__default_gen_0_ssbo,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_base_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_base_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_base_gen_600,
        .name     = "#instruction-cat6-a6xx-ibo-base",
@@ -12325,7 +12325,7 @@ static const struct isa_case __instruction_cat6_a6xx_ibo__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_base_gen_0,
        .name     = "#instruction-cat6-a6xx-ibo",
@@ -12349,11 +12349,11 @@ static const struct isa_case __instruction_cat6_a6xx_ibo_load_store__case0_gen_0
        .num_fields = 2,
        .fields   = {
           { .name = "#instruction-cat6-a6xx-ibo-load-store#assert0", .low = 4, .high = 5,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
           { .name = "#instruction-cat6-a6xx-ibo-load-store#assert1", .low = 54, .high = 58,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
        },
@@ -12363,24 +12363,24 @@ static const struct isa_case __instruction_cat6_a6xx_ibo_load_store__default_gen
        .fields   = {
           { .name = "OFFSET", .low = 0, .high = 0,
             .expr = &expr_anon_38,
-            .type = isa_field::TYPE_UOFFSET,
+            .type = TYPE_UOFFSET,
           },
           { .name = "HAS_OFFSET", .low = 23, .high = 23,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "OFFSET_HI", .low = 4, .high = 5,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "TYPE", .low = 49, .high = 51,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type,
           },
           { .name = "OFFSET_LO", .low = 54, .high = 58,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_load_store_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_load_store_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_base_gen_0,
        .name     = "#instruction-cat6-a6xx-ibo-load-store",
@@ -12405,12 +12405,12 @@ static const struct isa_case __instruction_cat6_a6xx_ibo_atomic__default_gen_0 =
        .num_fields = 1,
        .fields   = {
           { .name = "TYPE", .low = 49, .high = 51,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___type_atomic,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_atomic_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat6_a6xx_ibo_atomic_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_gen_0,
        .name     = "#instruction-cat6-a6xx-ibo-atomic",
@@ -12434,7 +12434,7 @@ static const struct isa_case stib_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_stib_b_gen_0 = {
+static const struct isa_bitset bitset_stib_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_load_store_gen_0,
        .name     = "stib.b",
@@ -12458,7 +12458,7 @@ static const struct isa_case ldib_b__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_ldib_b_gen_0 = {
+static const struct isa_bitset bitset_ldib_b_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_load_store_gen_0,
        .name     = "ldib.b",
@@ -12482,7 +12482,7 @@ static const struct isa_case atomic_b_add__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_b_add_gen_0 = {
+static const struct isa_bitset bitset_atomic_b_add_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_atomic_gen_0,
        .name     = "atomic.b.add",
@@ -12506,7 +12506,7 @@ static const struct isa_case atomic_b_sub__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_b_sub_gen_0 = {
+static const struct isa_bitset bitset_atomic_b_sub_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_atomic_gen_0,
        .name     = "atomic.b.sub",
@@ -12530,7 +12530,7 @@ static const struct isa_case atomic_b_xchg__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_b_xchg_gen_0 = {
+static const struct isa_bitset bitset_atomic_b_xchg_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_atomic_gen_0,
        .name     = "atomic.b.xchg",
@@ -12554,7 +12554,7 @@ static const struct isa_case atomic_b_cmpxchg__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_b_cmpxchg_gen_0 = {
+static const struct isa_bitset bitset_atomic_b_cmpxchg_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_atomic_gen_0,
        .name     = "atomic.b.cmpxchg",
@@ -12578,7 +12578,7 @@ static const struct isa_case atomic_b_min__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_b_min_gen_0 = {
+static const struct isa_bitset bitset_atomic_b_min_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_atomic_gen_0,
        .name     = "atomic.b.min",
@@ -12602,7 +12602,7 @@ static const struct isa_case atomic_b_max__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_b_max_gen_0 = {
+static const struct isa_bitset bitset_atomic_b_max_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_atomic_gen_0,
        .name     = "atomic.b.max",
@@ -12626,7 +12626,7 @@ static const struct isa_case atomic_b_and__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_b_and_gen_0 = {
+static const struct isa_bitset bitset_atomic_b_and_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_atomic_gen_0,
        .name     = "atomic.b.and",
@@ -12650,7 +12650,7 @@ static const struct isa_case atomic_b_or__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_b_or_gen_0 = {
+static const struct isa_bitset bitset_atomic_b_or_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_atomic_gen_0,
        .name     = "atomic.b.or",
@@ -12674,7 +12674,7 @@ static const struct isa_case atomic_b_xor__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_b_xor_gen_0 = {
+static const struct isa_bitset bitset_atomic_b_xor_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a6xx_ibo_atomic_gen_0,
        .name     = "atomic.b.xor",
@@ -12705,28 +12705,28 @@ static const struct isa_case shfl__default_gen_600 = {
        .num_fields = 5,
        .fields   = {
           { .name = "SRC1", .low = 1, .high = 8,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SRC2_IM", .low = 23, .high = 23,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC2", .low = 24, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __cat6_src,
             .params = &shfl__default_gen_600_src2,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "MODE", .low = 45, .high = 47,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___cat6_shfl_mode,
           },
        },
 };
-const struct isa_bitset bitset_shfl_gen_600 = {
+static const struct isa_bitset bitset_shfl_gen_600 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_gen_0,
        .name     = "shfl",
@@ -12757,11 +12757,11 @@ static const struct isa_case __cat6_typed__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "TYPED", .low = 0, .high = 0,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___cat6_typed_gen_0 = {
+static const struct isa_bitset bitset___cat6_typed_gen_0 = {
 
        .name     = "#cat6-typed",
        .gen      = {
@@ -12792,11 +12792,11 @@ static const struct isa_case __cat6_base__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "BASE", .low = 0, .high = 2,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset___cat6_base_gen_0 = {
+static const struct isa_bitset bitset___cat6_base_gen_0 = {
 
        .name     = "#cat6-base",
        .gen      = {
@@ -12821,7 +12821,7 @@ static const struct isa_case __cat6_src__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 7,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
@@ -12830,15 +12830,15 @@ static const struct isa_case __cat6_src__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SWIZ", .low = 0, .high = 1,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___swiz,
           },
           { .name = "GPR", .low = 2, .high = 7,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset___cat6_src_gen_0 = {
+static const struct isa_bitset bitset___cat6_src_gen_0 = {
 
        .name     = "#cat6-src",
        .gen      = {
@@ -12869,15 +12869,15 @@ static const struct isa_case __cat6_src_const_or_gpr__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SWIZ", .low = 0, .high = 1,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___swiz,
           },
           { .name = "GPR", .low = 2, .high = 7,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset___cat6_src_const_or_gpr_gen_0 = {
+static const struct isa_bitset bitset___cat6_src_const_or_gpr_gen_0 = {
 
        .name     = "#cat6-src-const-or-gpr",
        .gen      = {
@@ -12901,19 +12901,19 @@ static const struct isa_case __instruction_cat7__default_gen_0 = {
        .fields   = {
           { .name = "SS", .low = 44, .high = 44,
             .display = "(ss)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "JP", .low = 59, .high = 59,
             .display = "(jp)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SY", .low = 60, .high = 60,
             .display = "(sy)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat7_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat7_gen_0 = {
 
        .parent   = &bitset___instruction_gen_300,
        .name     = "#instruction-cat7",
@@ -12938,23 +12938,23 @@ static const struct isa_case __instruction_cat7_barrier__default_gen_0 = {
        .fields   = {
           { .name = "W", .low = 51, .high = 51,
             .display = ".w",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "R", .low = 52, .high = 52,
             .display = ".r",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "L", .low = 53, .high = 53,
             .display = ".l",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "G", .low = 54, .high = 54,
             .display = ".g",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat7_barrier_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat7_barrier_gen_0 = {
 
        .parent   = &bitset___instruction_cat7_gen_0,
        .name     = "#instruction-cat7-barrier",
@@ -12978,7 +12978,7 @@ static const struct isa_case bar__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_bar_gen_0 = {
+static const struct isa_bitset bitset_bar_gen_0 = {
 
        .parent   = &bitset___instruction_cat7_barrier_gen_0,
        .name     = "bar",
@@ -13002,7 +13002,7 @@ static const struct isa_case fence__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_fence_gen_0 = {
+static const struct isa_bitset bitset_fence_gen_0 = {
 
        .parent   = &bitset___instruction_cat7_barrier_gen_0,
        .name     = "fence",
@@ -13026,12 +13026,12 @@ static const struct isa_case __instruction_cat7_data__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "TYPE", .low = 51, .high = 51,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___dccln_type,
           },
        },
 };
-const struct isa_bitset bitset___instruction_cat7_data_gen_0 = {
+static const struct isa_bitset bitset___instruction_cat7_data_gen_0 = {
 
        .parent   = &bitset___instruction_cat7_gen_0,
        .name     = "#instruction-cat7-data",
@@ -13055,12 +13055,12 @@ static const struct isa_case sleep__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "DURATION", .low = 51, .high = 51,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___sleep_duration,
           },
        },
 };
-const struct isa_bitset bitset_sleep_gen_0 = {
+static const struct isa_bitset bitset_sleep_gen_0 = {
 
        .parent   = &bitset___instruction_cat7_gen_0,
        .name     = "sleep",
@@ -13085,7 +13085,7 @@ static const struct isa_case icinv__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_icinv_gen_0 = {
+static const struct isa_bitset bitset_icinv_gen_0 = {
 
        .parent   = &bitset___instruction_cat7_gen_0,
        .name     = "icinv",
@@ -13109,7 +13109,7 @@ static const struct isa_case dccln__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_dccln_gen_0 = {
+static const struct isa_bitset bitset_dccln_gen_0 = {
 
        .parent   = &bitset___instruction_cat7_data_gen_0,
        .name     = "dccln",
@@ -13133,7 +13133,7 @@ static const struct isa_case dcinv__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_dcinv_gen_0 = {
+static const struct isa_bitset bitset_dcinv_gen_0 = {
 
        .parent   = &bitset___instruction_cat7_data_gen_0,
        .name     = "dcinv",
@@ -13157,7 +13157,7 @@ static const struct isa_case dcflu__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_dcflu_gen_0 = {
+static const struct isa_bitset bitset_dcflu_gen_0 = {
 
        .parent   = &bitset___instruction_cat7_data_gen_0,
        .name     = "dcflu",
@@ -13182,7 +13182,7 @@ static const struct isa_case ccinv__default_gen_700 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_ccinv_gen_700 = {
+static const struct isa_bitset bitset_ccinv_gen_700 = {
 
        .parent   = &bitset___instruction_cat7_gen_0,
        .name     = "ccinv",
@@ -13207,7 +13207,7 @@ static const struct isa_case lock__default_gen_700 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_lock_gen_700 = {
+static const struct isa_bitset bitset_lock_gen_700 = {
 
        .parent   = &bitset___instruction_cat7_gen_0,
        .name     = "lock",
@@ -13232,7 +13232,7 @@ static const struct isa_case unlock__default_gen_700 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_unlock_gen_700 = {
+static const struct isa_bitset bitset_unlock_gen_700 = {
 
        .parent   = &bitset___instruction_cat7_gen_0,
        .name     = "unlock",
@@ -13257,7 +13257,7 @@ static const struct isa_case __alias_immed_src__case0_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 15,
-            .type = isa_field::TYPE_FLOAT,
+            .type = TYPE_FLOAT,
           },
        },
 };
@@ -13267,7 +13267,7 @@ static const struct isa_case __alias_immed_src__case1_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 31,
-            .type = isa_field::TYPE_FLOAT,
+            .type = TYPE_FLOAT,
           },
        },
 };
@@ -13277,7 +13277,7 @@ static const struct isa_case __alias_immed_src__case2_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 15,
-            .type = isa_field::TYPE_HEX,
+            .type = TYPE_HEX,
           },
        },
 };
@@ -13286,11 +13286,11 @@ static const struct isa_case __alias_immed_src__default_gen_0 = {
        .num_fields = 1,
        .fields   = {
           { .name = "IMMED", .low = 0, .high = 31,
-            .type = isa_field::TYPE_HEX,
+            .type = TYPE_HEX,
           },
        },
 };
-const struct isa_bitset bitset___alias_immed_src_gen_0 = {
+static const struct isa_bitset bitset___alias_immed_src_gen_0 = {
 
        .name     = "#alias-immed-src",
        .gen      = {
@@ -13318,15 +13318,15 @@ static const struct isa_case __alias_const_src__default_gen_0 = {
           { .name = "HALF", .low = 0, .high = 0,
             .expr = &expr_anon_47,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "CONST", .low = 0, .high = 10,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_const,
           },
        },
 };
-const struct isa_bitset bitset___alias_const_src_gen_0 = {
+static const struct isa_bitset bitset___alias_const_src_gen_0 = {
 
        .name     = "#alias-const-src",
        .gen      = {
@@ -13351,15 +13351,15 @@ static const struct isa_case __alias_gpr_src__default_gen_0 = {
           { .name = "HALF", .low = 0, .high = 0,
             .expr = &expr_anon_48,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset___alias_gpr_src_gen_0 = {
+static const struct isa_bitset bitset___alias_gpr_src_gen_0 = {
 
        .name     = "#alias-gpr-src",
        .gen      = {
@@ -13382,15 +13382,15 @@ static const struct isa_case __dst_rt__default_gen_0 = {
        .num_fields = 2,
        .fields   = {
           { .name = "SWIZ", .low = 0, .high = 1,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___swiz,
           },
           { .name = "RT", .low = 2, .high = 4,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset___dst_rt_gen_0 = {
+static const struct isa_bitset bitset___dst_rt_gen_0 = {
 
        .name     = "#dst-rt",
        .gen      = {
@@ -13420,7 +13420,7 @@ static const struct isa_case alias__case0_gen_700 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 7,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __alias_gpr_src,
             .params = &alias__case0_gen_700_src,
           },
@@ -13438,7 +13438,7 @@ static const struct isa_case alias__case1_gen_700 = {
        .num_fields = 1,
        .fields   = {
           { .name = "SRC", .low = 0, .high = 10,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __alias_const_src,
             .params = &alias__case1_gen_700_src,
           },
@@ -13451,10 +13451,10 @@ static const struct isa_case alias__case2_gen_700 = {
           { .name = "DST_HALF", .low = 0, .high = 0,
             .expr = &expr___false,
             .display = "",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "DST", .low = 32, .high = 36,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __dst_rt,
           },
        },
@@ -13473,59 +13473,59 @@ static const struct isa_case alias__default_gen_700 = {
        .fields   = {
           { .name = "SCOPE", .low = 0, .high = 0,
             .expr = &expr_anon_49,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___alias_scope,
           },
           { .name = "DST_HALF", .low = 0, .high = 0,
             .expr = &expr_anon_50,
             .display = "h",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SRC", .low = 0, .high = 31,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __alias_immed_src,
             .params = &alias__default_gen_700_src,
           },
           { .name = "DST", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "TABLE_SIZE_MINUS_ONE", .low = 40, .high = 43,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "SS", .low = 44, .high = 44,
             .display = "(ss)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SCOPE_LO", .low = 47, .high = 47,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "TYPE", .low = 48, .high = 48,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___alias_type,
           },
           { .name = "SCOPE_HI", .low = 49, .high = 49,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "TYPE_SIZE", .low = 50, .high = 50,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___alias_type_size,
           },
           { .name = "SRC_REG_TYPE", .low = 51, .high = 52,
-            .type = isa_field::TYPE_ENUM,
+            .type = TYPE_ENUM,
             .enums = &enum___alias_src_reg_type,
           },
           { .name = "JP", .low = 59, .high = 59,
             .display = "(jp)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "SY", .low = 60, .high = 60,
             .display = "(sy)",
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
        },
 };
-const struct isa_bitset bitset_alias_gen_700 = {
+static const struct isa_bitset bitset_alias_gen_700 = {
 
        .parent   = &bitset___instruction_gen_300,
        .name     = "alias",
@@ -13552,7 +13552,7 @@ static const struct isa_case __instruction__default_gen_300 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset___instruction_gen_300 = {
+static const struct isa_bitset bitset___instruction_gen_300 = {
 
        .name     = "#instruction",
        .gen      = {
@@ -13597,29 +13597,29 @@ static const struct isa_case ldg_a__default_gen_600 = {
        .fields   = {
           { .name = "TYPE_SHIFT", .low = 0, .high = 0,
             .expr = &expr___cat6_type_shift,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "FULL_SHIFT", .low = 0, .high = 0,
             .expr = &expr___cat6_full_shift,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "ldg.a#assert2", .low = 11, .high = 11,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
           { .name = "SRC2", .low = 1, .high = 8,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "OFF", .low = 9, .high = 10,
-            .type = isa_field::TYPE_UOFFSET,
+            .type = TYPE_UOFFSET,
           },
           { .name = "SRC2_SHIFT", .low = 12, .high = 13,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_ldg_a_gen_600 = {
+static const struct isa_bitset bitset_ldg_a_gen_600 = {
 
        .parent   = &bitset___instruction_cat6_ldg_gen_0,
        .name     = "ldg.a",
@@ -13646,18 +13646,18 @@ static const struct isa_case ldg_a__default_gen_700 = {
        .num_fields = 3,
        .fields   = {
           { .name = "SRC2", .low = 1, .high = 8,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
           { .name = "SRC1_CONST", .low = 13, .high = 13,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "OFF", .low = 41, .high = 48,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
        },
 };
-const struct isa_bitset bitset_ldg_a_gen_700 = {
+static const struct isa_bitset bitset_ldg_a_gen_700 = {
 
        .parent   = &bitset___instruction_cat6_ldg_gen_0,
        .name     = "ldg.a",
@@ -13703,29 +13703,29 @@ static const struct isa_case stg_a__default_gen_600 = {
        .fields   = {
           { .name = "TYPE_SHIFT", .low = 0, .high = 0,
             .expr = &expr___cat6_type_shift,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "FULL_SHIFT", .low = 0, .high = 0,
             .expr = &expr___cat6_full_shift,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "stg.a#assert2", .low = 11, .high = 11,
-            .type = isa_field::TYPE_ASSERT,
+            .type = TYPE_ASSERT,
             .val.bitset = { 0x0, 0x0 },
           },
           { .name = "OFF", .low = 9, .high = 10,
-            .type = isa_field::TYPE_UOFFSET,
+            .type = TYPE_UOFFSET,
           },
           { .name = "SRC2_SHIFT", .low = 12, .high = 13,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "SRC2", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset_stg_a_gen_600 = {
+static const struct isa_bitset bitset_stg_a_gen_600 = {
 
        .parent   = &bitset___instruction_cat6_stg_gen_0,
        .name     = "stg.a",
@@ -13752,18 +13752,18 @@ static const struct isa_case stg_a__default_gen_700 = {
        .num_fields = 3,
        .fields   = {
           { .name = "SRC1_CONST", .low = 13, .high = 13,
-            .type = isa_field::TYPE_BOOL,
+            .type = TYPE_BOOL,
           },
           { .name = "OFF", .low = 14, .high = 21,
-            .type = isa_field::TYPE_UINT,
+            .type = TYPE_UINT,
           },
           { .name = "SRC2", .low = 32, .high = 39,
-            .type = isa_field::TYPE_BITSET,
+            .type = TYPE_BITSET,
             .bitsets = __reg_gpr,
           },
        },
 };
-const struct isa_bitset bitset_stg_a_gen_700 = {
+static const struct isa_bitset bitset_stg_a_gen_700 = {
 
        .parent   = &bitset___instruction_cat6_stg_gen_0,
        .name     = "stg.a",
@@ -13787,7 +13787,7 @@ static const struct isa_case ldgb__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_ldgb_gen_0 = {
+static const struct isa_bitset bitset_ldgb_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ibo_load_gen_0,
        .name     = "ldgb",
@@ -13811,7 +13811,7 @@ static const struct isa_case ldgb__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_ldgb_gen_500 = {
+static const struct isa_bitset bitset_ldgb_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ibo_load_gen_0,
        .name     = "ldgb",
@@ -13835,7 +13835,7 @@ static const struct isa_case stgb__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_stgb_gen_500 = {
+static const struct isa_bitset bitset_stgb_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ibo_store_a5xx_gen_0,
        .name     = "stgb",
@@ -13859,7 +13859,7 @@ static const struct isa_case stgb__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_stgb_gen_0 = {
+static const struct isa_bitset bitset_stgb_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ibo_store_a4xx_gen_0,
        .name     = "stgb",
@@ -13883,7 +13883,7 @@ static const struct isa_case stib__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_stib_gen_500 = {
+static const struct isa_bitset bitset_stib_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ibo_store_a5xx_gen_0,
        .name     = "stib",
@@ -13907,7 +13907,7 @@ static const struct isa_case stib__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_stib_gen_0 = {
+static const struct isa_bitset bitset_stib_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_ibo_store_a4xx_gen_0,
        .name     = "stib",
@@ -13931,7 +13931,7 @@ static const struct isa_case atomic_s_add__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_add_gen_0 = {
+static const struct isa_bitset bitset_atomic_s_add_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0,
        .name     = "atomic.s.add",
@@ -13955,7 +13955,7 @@ static const struct isa_case atomic_s_add__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_add_gen_500 = {
+static const struct isa_bitset bitset_atomic_s_add_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0,
        .name     = "atomic.s.add",
@@ -13979,7 +13979,7 @@ static const struct isa_case atomic_s_sub__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_sub_gen_0 = {
+static const struct isa_bitset bitset_atomic_s_sub_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0,
        .name     = "atomic.s.sub",
@@ -14003,7 +14003,7 @@ static const struct isa_case atomic_s_sub__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_sub_gen_500 = {
+static const struct isa_bitset bitset_atomic_s_sub_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0,
        .name     = "atomic.s.sub",
@@ -14027,7 +14027,7 @@ static const struct isa_case atomic_s_xchg__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_xchg_gen_0 = {
+static const struct isa_bitset bitset_atomic_s_xchg_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0,
        .name     = "atomic.s.xchg",
@@ -14051,7 +14051,7 @@ static const struct isa_case atomic_s_xchg__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_xchg_gen_500 = {
+static const struct isa_bitset bitset_atomic_s_xchg_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0,
        .name     = "atomic.s.xchg",
@@ -14075,7 +14075,7 @@ static const struct isa_case atomic_s_inc__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_inc_gen_0 = {
+static const struct isa_bitset bitset_atomic_s_inc_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0,
        .name     = "atomic.s.inc",
@@ -14099,7 +14099,7 @@ static const struct isa_case atomic_s_inc__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_inc_gen_500 = {
+static const struct isa_bitset bitset_atomic_s_inc_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0,
        .name     = "atomic.s.inc",
@@ -14123,7 +14123,7 @@ static const struct isa_case atomic_s_dec__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_dec_gen_0 = {
+static const struct isa_bitset bitset_atomic_s_dec_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0,
        .name     = "atomic.s.dec",
@@ -14147,7 +14147,7 @@ static const struct isa_case atomic_s_dec__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_dec_gen_500 = {
+static const struct isa_bitset bitset_atomic_s_dec_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0,
        .name     = "atomic.s.dec",
@@ -14171,7 +14171,7 @@ static const struct isa_case atomic_s_cmpxchg__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_cmpxchg_gen_0 = {
+static const struct isa_bitset bitset_atomic_s_cmpxchg_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0,
        .name     = "atomic.s.cmpxchg",
@@ -14195,7 +14195,7 @@ static const struct isa_case atomic_s_cmpxchg__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_cmpxchg_gen_500 = {
+static const struct isa_bitset bitset_atomic_s_cmpxchg_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0,
        .name     = "atomic.s.cmpxchg",
@@ -14219,7 +14219,7 @@ static const struct isa_case atomic_s_min__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_min_gen_0 = {
+static const struct isa_bitset bitset_atomic_s_min_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0,
        .name     = "atomic.s.min",
@@ -14243,7 +14243,7 @@ static const struct isa_case atomic_s_min__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_min_gen_500 = {
+static const struct isa_bitset bitset_atomic_s_min_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0,
        .name     = "atomic.s.min",
@@ -14267,7 +14267,7 @@ static const struct isa_case atomic_s_max__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_max_gen_0 = {
+static const struct isa_bitset bitset_atomic_s_max_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0,
        .name     = "atomic.s.max",
@@ -14291,7 +14291,7 @@ static const struct isa_case atomic_s_max__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_max_gen_500 = {
+static const struct isa_bitset bitset_atomic_s_max_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0,
        .name     = "atomic.s.max",
@@ -14315,7 +14315,7 @@ static const struct isa_case atomic_s_and__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_and_gen_0 = {
+static const struct isa_bitset bitset_atomic_s_and_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0,
        .name     = "atomic.s.and",
@@ -14339,7 +14339,7 @@ static const struct isa_case atomic_s_and__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_and_gen_500 = {
+static const struct isa_bitset bitset_atomic_s_and_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0,
        .name     = "atomic.s.and",
@@ -14363,7 +14363,7 @@ static const struct isa_case atomic_s_or__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_or_gen_0 = {
+static const struct isa_bitset bitset_atomic_s_or_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0,
        .name     = "atomic.s.or",
@@ -14387,7 +14387,7 @@ static const struct isa_case atomic_s_or__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_or_gen_500 = {
+static const struct isa_bitset bitset_atomic_s_or_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0,
        .name     = "atomic.s.or",
@@ -14411,7 +14411,7 @@ static const struct isa_case atomic_s_xor__default_gen_0 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_xor_gen_0 = {
+static const struct isa_bitset bitset_atomic_s_xor_gen_0 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a4xx_gen_0,
        .name     = "atomic.s.xor",
@@ -14435,7 +14435,7 @@ static const struct isa_case atomic_s_xor__default_gen_500 = {
        .fields   = {
        },
 };
-const struct isa_bitset bitset_atomic_s_xor_gen_500 = {
+static const struct isa_bitset bitset_atomic_s_xor_gen_500 = {
 
        .parent   = &bitset___instruction_cat6_a3xx_atomic_global_a5xx_gen_0,
        .name     = "atomic.s.xor",
@@ -14459,23 +14459,23 @@ const struct isa_bitset bitset_atomic_s_xor_gen_500 = {
  * bitset hierarchy root tables (where decoding starts from):
  */
 
-const struct isa_bitset *__reg_gpr[] = {
+static const struct isa_bitset *__reg_gpr[] = {
              &bitset___reg_gpr_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__reg_const[] = {
+static const struct isa_bitset *__reg_const[] = {
              &bitset___reg_const_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__reg_relative_gpr[] = {
+static const struct isa_bitset *__reg_relative_gpr[] = {
              &bitset___reg_relative_gpr_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__reg_relative_const[] = {
+static const struct isa_bitset *__reg_relative_const[] = {
              &bitset___reg_relative_const_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__multisrc[] = {
+static const struct isa_bitset *__multisrc[] = {
              &bitset___mulitsrc_immed_gen_0,
              &bitset___multisrc_immed_flut_full_gen_0,
              &bitset___multisrc_immed_flut_half_gen_0,
@@ -14483,125 +14483,125 @@ const struct isa_bitset *__multisrc[] = {
              &bitset___multisrc_const_gen_0,
              &bitset___multisrc_relative_gpr_gen_0,
              &bitset___multisrc_relative_const_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat1_dst[] = {
+static const struct isa_bitset *__cat1_dst[] = {
              &bitset___cat1_dst_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat1_immed_src[] = {
+static const struct isa_bitset *__cat1_immed_src[] = {
              &bitset___cat1_immed_src_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat1_const_src[] = {
+static const struct isa_bitset *__cat1_const_src[] = {
              &bitset___cat1_const_src_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat1_gpr_src[] = {
+static const struct isa_bitset *__cat1_gpr_src[] = {
              &bitset___cat1_gpr_src_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat1_relative_gpr_src[] = {
+static const struct isa_bitset *__cat1_relative_gpr_src[] = {
              &bitset___cat1_relative_gpr_src_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat1_relative_const_src[] = {
+static const struct isa_bitset *__cat1_relative_const_src[] = {
              &bitset___cat1_relative_const_src_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat1_multi_src[] = {
+static const struct isa_bitset *__cat1_multi_src[] = {
              &bitset___cat1_multi_src_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat1_multi_dst[] = {
+static const struct isa_bitset *__cat1_multi_dst[] = {
              &bitset___cat1_multi_dst_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat3_src[] = {
+static const struct isa_bitset *__cat3_src[] = {
              &bitset___cat3_src_gpr_gen_0,
              &bitset___cat3_src_const_or_immed_gen_0,
              &bitset___cat3_src_relative_gpr_gen_0,
              &bitset___cat3_src_relative_const_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat5_s2en_bindless_base[] = {
+static const struct isa_bitset *__cat5_s2en_bindless_base[] = {
              &bitset___cat5_s2en_bindless_base_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat5_src1[] = {
+static const struct isa_bitset *__cat5_src1[] = {
              &bitset___cat5_src1_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat5_src2[] = {
+static const struct isa_bitset *__cat5_src2[] = {
              &bitset___cat5_src2_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat5_samp[] = {
+static const struct isa_bitset *__cat5_samp[] = {
              &bitset___cat5_samp_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat5_samp_s2en_bindless_a1[] = {
+static const struct isa_bitset *__cat5_samp_s2en_bindless_a1[] = {
              &bitset___cat5_samp_s2en_bindless_a1_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat5_tex_s2en_bindless_a1[] = {
+static const struct isa_bitset *__cat5_tex_s2en_bindless_a1[] = {
              &bitset___cat5_tex_s2en_bindless_a1_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat5_tex[] = {
+static const struct isa_bitset *__cat5_tex[] = {
              &bitset___cat5_tex_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat5_tex_s2en_bindless[] = {
+static const struct isa_bitset *__cat5_tex_s2en_bindless[] = {
              &bitset___cat5_tex_s2en_bindless_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat5_type[] = {
+static const struct isa_bitset *__cat5_type[] = {
              &bitset___cat5_type_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat5_src3[] = {
+static const struct isa_bitset *__cat5_src3[] = {
              &bitset___cat5_src3_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__const_dst[] = {
+static const struct isa_bitset *__const_dst[] = {
              &bitset___const_dst_imm_gen_0,
              &bitset___const_dst_a1_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat6_typed[] = {
+static const struct isa_bitset *__cat6_typed[] = {
              &bitset___cat6_typed_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat6_base[] = {
+static const struct isa_bitset *__cat6_base[] = {
              &bitset___cat6_base_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat6_src[] = {
+static const struct isa_bitset *__cat6_src[] = {
              &bitset___cat6_src_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__cat6_src_const_or_gpr[] = {
+static const struct isa_bitset *__cat6_src_const_or_gpr[] = {
              &bitset___cat6_src_const_or_gpr_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__alias_immed_src[] = {
+static const struct isa_bitset *__alias_immed_src[] = {
              &bitset___alias_immed_src_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__alias_const_src[] = {
+static const struct isa_bitset *__alias_const_src[] = {
              &bitset___alias_const_src_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__alias_gpr_src[] = {
+static const struct isa_bitset *__alias_gpr_src[] = {
              &bitset___alias_gpr_src_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__dst_rt[] = {
+static const struct isa_bitset *__dst_rt[] = {
              &bitset___dst_rt_gen_0,
-    nullptr
+    (void *)0
 };
-const struct isa_bitset *__instruction[] = {
+static const struct isa_bitset *__instruction[] = {
              &bitset_nop_gen_0,
              &bitset_end_gen_0,
              &bitset_ret_gen_0,
@@ -14854,7 +14854,7 @@ const struct isa_bitset *__instruction[] = {
              &bitset_lock_gen_700,
              &bitset_unlock_gen_700,
              &bitset_alias_gen_700,
-    nullptr
+    (void *)0
 };
 
 #include "isaspec_decode_impl.c"

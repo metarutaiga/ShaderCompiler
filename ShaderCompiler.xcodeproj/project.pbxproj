@@ -13,6 +13,8 @@
 		D61CAAA12E915BE90031B205 /* x86_ia32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAA9D2E915BE90031B205 /* x86_ia32.cpp */; };
 		D61CAAA62E9184270031B205 /* ssse3_instruction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAAA52E9184260031B205 /* ssse3_instruction.cpp */; };
 		D61CAAA82E921B590031B205 /* mmx_ssse3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D61CAAA72E921B520031B205 /* mmx_ssse3.cpp */; };
+		F525CF6C2EA205CE00EF9D63 /* disasm-a3xx.c in Sources */ = {isa = PBXBuildFile; fileRef = F52869362EA10373003CC84C /* disasm-a3xx.c */; };
+		F525CF6D2EA205D300EF9D63 /* ir3-isa.c in Sources */ = {isa = PBXBuildFile; fileRef = F5286A922EA1331A003CC84C /* ir3-isa.c */; };
 		F528691F2E9A7DB4003CC84C /* VirtualMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F528691D2E9A7DB4003CC84C /* VirtualMachine.cpp */; };
 		F52869202E9A7DB4003CC84C /* AMDCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F52869152E9A7DB4003CC84C /* AMDCompiler.cpp */; };
 		F52869212E9A7DB4003CC84C /* D3DCompiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F52869172E9A7DB4003CC84C /* D3DCompiler.cpp */; };
@@ -86,7 +88,14 @@
 		F582D6A02E8272D000D70BDC /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6942E8272D000D70BDC /* imgui.cpp */; };
 		F582D6A12E8272D000D70BDC /* imgui_tables.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F582D6982E8272D000D70BDC /* imgui_tables.cpp */; };
 		F595FFE72E97D4A70096661A /* mmx_sse2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F595FFE62E97D4A70096661A /* mmx_sse2.cpp */; };
+		F59AF88F2EA207C500FECE31 /* macros.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F59AF88E2EA207A200FECE31 /* macros.cpp */; };
+		F59AF8902EA213BE00FECE31 /* isaspec.c in Sources */ = {isa = PBXBuildFile; fileRef = F525CF682EA1F2A800EF9D63 /* isaspec.c */; };
+		F59AF8912EA2160100FECE31 /* disasm.c in Sources */ = {isa = PBXBuildFile; fileRef = F52869452EA10373003CC84C /* disasm.c */; };
+		F59AF8922EA2160600FECE31 /* disasm.c in Sources */ = {isa = PBXBuildFile; fileRef = F52869422EA10373003CC84C /* disasm.c */; };
 		F5A7A0742E8E588800C7E565 /* shlwapi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5A7A0732E8E588100C7E565 /* shlwapi.cpp */; };
+		F5C33FF12EA2173C005E2063 /* disassemble.c in Sources */ = {isa = PBXBuildFile; fileRef = F52869392EA10373003CC84C /* disassemble.c */; };
+		F5C33FF22EA21741005E2063 /* midgard_print_constant.c in Sources */ = {isa = PBXBuildFile; fileRef = F528693E2EA10373003CC84C /* midgard_print_constant.c */; };
+		F5C33FF32EA21745005E2063 /* midgard_ops.c in Sources */ = {isa = PBXBuildFile; fileRef = F528693D2EA10373003CC84C /* midgard_ops.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +112,10 @@
 		D61CAAA42E9184110031B205 /* ssse3_instruction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ssse3_instruction.h; sourceTree = "<group>"; };
 		D61CAAA52E9184260031B205 /* ssse3_instruction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ssse3_instruction.cpp; sourceTree = "<group>"; };
 		D61CAAA72E921B520031B205 /* mmx_ssse3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mmx_ssse3.cpp; sourceTree = "<group>"; };
+		F525CF672EA1F2A800EF9D63 /* ir3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ir3.h; sourceTree = "<group>"; };
+		F525CF682EA1F2A800EF9D63 /* isaspec.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = isaspec.c; sourceTree = "<group>"; };
+		F525CF692EA204D200EF9D63 /* bitset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bitset.h; sourceTree = "<group>"; };
+		F525CF6A2EA204D200EF9D63 /* macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
 		F52869142E9A7DB4003CC84C /* AMDCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMDCompiler.h; sourceTree = "<group>"; };
 		F52869152E9A7DB4003CC84C /* AMDCompiler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AMDCompiler.cpp; sourceTree = "<group>"; };
 		F52869162E9A7DB4003CC84C /* D3DCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = D3DCompiler.h; sourceTree = "<group>"; };
@@ -138,7 +151,6 @@
 		F5286A232EA103D3003CC84C /* NVKelvinR7.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NVKelvinR7.cpp; sourceTree = "<group>"; };
 		F5286A272EA103D3003CC84C /* r2um.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = r2um.cpp; sourceTree = "<group>"; };
 		F5286A8D2EA11149003CC84C /* disasm.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disasm.h; sourceTree = "<group>"; };
-		F5286A902EA1331A003CC84C /* bitset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bitset.h; sourceTree = "<group>"; };
 		F5286A912EA1331A003CC84C /* ir3-isa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ir3-isa.h"; sourceTree = "<group>"; };
 		F5286A922EA1331A003CC84C /* ir3-isa.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "ir3-isa.c"; sourceTree = "<group>"; };
 		F5286A932EA1331A003CC84C /* isaspec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = isaspec.h; sourceTree = "<group>"; };
@@ -261,7 +273,9 @@
 		F582D69C2E8272D000D70BDC /* imstb_truetype.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imstb_truetype.h; sourceTree = "<group>"; };
 		F582D6A72E82754900D70BDC /* Info-macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-macOS.plist"; sourceTree = "<group>"; };
 		F595FFE62E97D4A70096661A /* mmx_sse2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mmx_sse2.cpp; sourceTree = "<group>"; };
+		F59AF88E2EA207A200FECE31 /* macros.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = macros.cpp; sourceTree = "<group>"; };
 		F5A7A0732E8E588100C7E565 /* shlwapi.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = shlwapi.cpp; sourceTree = "<group>"; };
+		F5C33FF02EA21729005E2063 /* disassemble.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disassemble.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,6 +355,16 @@
 			path = imgui;
 			sourceTree = "<group>";
 		};
+		F525CF6B2EA204D200EF9D63 /* mesa */ = {
+			isa = PBXGroup;
+			children = (
+				F525CF692EA204D200EF9D63 /* bitset.h */,
+				F525CF6A2EA204D200EF9D63 /* macros.h */,
+				F59AF88E2EA207A200FECE31 /* macros.cpp */,
+			);
+			path = mesa;
+			sourceTree = "<group>";
+		};
 		F528691E2E9A7DB4003CC84C /* src */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,13 +391,14 @@
 		F52869382EA10373003CC84C /* adreno */ = {
 			isa = PBXGroup;
 			children = (
-				F5286A902EA1331A003CC84C /* bitset.h */,
 				F5286A8D2EA11149003CC84C /* disasm.h */,
 				F52869362EA10373003CC84C /* disasm-a3xx.c */,
 				F52869372EA10373003CC84C /* instr-a3xx.h */,
+				F525CF672EA1F2A800EF9D63 /* ir3.h */,
 				F5286A912EA1331A003CC84C /* ir3-isa.h */,
 				F5286A922EA1331A003CC84C /* ir3-isa.c */,
 				F5286A932EA1331A003CC84C /* isaspec.h */,
+				F525CF682EA1F2A800EF9D63 /* isaspec.c */,
 				F5286A942EA1331A003CC84C /* isaspec_decode_decl.h */,
 				F5286A952EA1331A003CC84C /* isaspec_decode_impl.c */,
 			);
@@ -383,6 +408,7 @@
 		F52869402EA10373003CC84C /* midgard */ = {
 			isa = PBXGroup;
 			children = (
+				F5C33FF02EA21729005E2063 /* disassemble.h */,
 				F52869392EA10373003CC84C /* disassemble.c */,
 				F528693A2EA10373003CC84C /* helpers.h */,
 				F528693B2EA10373003CC84C /* midgard.h */,
@@ -425,6 +451,7 @@
 			isa = PBXGroup;
 			children = (
 				F52869382EA10373003CC84C /* adreno */,
+				F525CF6B2EA204D200EF9D63 /* mesa */,
 				F52869402EA10373003CC84C /* midgard */,
 				F52869472EA10373003CC84C /* utgard */,
 			);
@@ -688,6 +715,15 @@
 				F52869302E9D22DE003CC84C /* QCOMCompiler.cpp in Sources */,
 				F52869232E9A7DB4003CC84C /* UnifiedExecution.cpp in Sources */,
 				F528691F2E9A7DB4003CC84C /* VirtualMachine.cpp in Sources */,
+				F525CF6C2EA205CE00EF9D63 /* disasm-a3xx.c in Sources */,
+				F525CF6D2EA205D300EF9D63 /* ir3-isa.c in Sources */,
+				F59AF8902EA213BE00FECE31 /* isaspec.c in Sources */,
+				F59AF88F2EA207C500FECE31 /* macros.cpp in Sources */,
+				F5C33FF12EA2173C005E2063 /* disassemble.c in Sources */,
+				F5C33FF32EA21745005E2063 /* midgard_ops.c in Sources */,
+				F5C33FF22EA21741005E2063 /* midgard_print_constant.c in Sources */,
+				F59AF8922EA2160600FECE31 /* disasm.c in Sources */,
+				F59AF8912EA2160100FECE31 /* disasm.c in Sources */,
 				F558E8052E84262C0060F473 /* coff.cpp in Sources */,
 				F558E8062E84262C0060F473 /* ecoff.cpp in Sources */,
 				F558E8072E84262C0060F473 /* ecoff64.cpp in Sources */,
