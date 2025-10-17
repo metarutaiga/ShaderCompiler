@@ -11,6 +11,7 @@
 #include <map>
 #include <vector>
 #include "mine/mine.h"
+#include "mine/syscall/allocator.h"
 #include "src/AMDCompiler.h"
 #include "src/ATICompiler.h"
 #include "src/D3DCompiler.h"
@@ -262,6 +263,10 @@ static void Option()
         // Debug
         ImGui::NewLine();
         ImGui::Checkbox("Debug Virtual Machine", &debug_vm);
+        if (cpu) {
+            auto allocator = cpu->Allocator;
+            ImGui::Text("%08zX : %.2fMB", cpu->Program(), allocator->used_size() / 1048576.0f);
+        }
     }
     ImGui::End();
 }

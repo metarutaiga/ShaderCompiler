@@ -46,6 +46,9 @@ mine* NextProcess(mine* cpu)
     auto& x86 = i386->x86;
     auto* memory = (uint8_t*)allocator->address();
     auto* stack = (uint32_t*)(memory + cpu->Stack());
+    if ((ESP + sizeof(uint32_t) * 7) >= x86.memory_size)
+        return nullptr;
+
     switch (stack[4 + 0]) {
     case 'AMDH':
     case 'AMDI': {

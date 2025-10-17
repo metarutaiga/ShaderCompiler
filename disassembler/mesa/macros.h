@@ -1,5 +1,9 @@
 #pragma once
 
+#pragma clang diagnostic ignored "-Winitializer-overrides"
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
+#pragma clang diagnostic ignored "-Wunused-function"
+
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 #define BITFIELD_BIT(b) (1u << (b))
 #define BITFIELD_MASK(b) ((b) == 32 ? (~0u) : BITFIELD_BIT((b) & 31) - 1)
@@ -21,7 +25,6 @@
 #define util_bitcount __builtin_popcount
 #define util_logbase2(n) ((sizeof(unsigned) * 8 - 1) - __builtin_clz(n | 1))
 #define util_sign_extend(v, w) (((int)(v) << (32 - w)) >> w)
-#define _mesa_half_to_float(v) (float)(*(__fp16*)&v)
 #define _util_printf_format(...)
 
 #undef unreachable
@@ -29,6 +32,7 @@
 
 #include <assert.h>
 #include <stdarg.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -49,6 +53,8 @@ struct hash_entry { void* data; };
 struct hash_table *_mesa_pointer_hash_table_create(void*);
 struct hash_entry *_mesa_hash_table_search(void* table, void* key);
 void _mesa_hash_table_insert(void* table, void* key, void* value);
+
+float _mesa_half_to_float(uint16_t val);
 
 void mesa_cleanup();
 

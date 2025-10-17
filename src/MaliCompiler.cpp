@@ -23,6 +23,9 @@ mine* NextProcess(mine* cpu)
     auto& x86 = i386->x86;
     auto* memory = (uint8_t*)allocator->address();
     auto* stack = (uint32_t*)(memory + cpu->Stack());
+    if ((ESP + sizeof(uint32_t) * 10) >= x86.memory_size)
+        return nullptr;
+
     switch (stack[2]) {
     case 'MALI': {
         auto binary_data_size = stack[5];

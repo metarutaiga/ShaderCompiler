@@ -276,6 +276,7 @@
 		F59AF88E2EA207A200FECE31 /* macros.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = macros.cpp; sourceTree = "<group>"; };
 		F5A7A0732E8E588100C7E565 /* shlwapi.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = shlwapi.cpp; sourceTree = "<group>"; };
 		F5C33FF02EA21729005E2063 /* disassemble.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disassemble.h; sourceTree = "<group>"; };
+		F5C33FF42EA2A878005E2063 /* extend_allocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = extend_allocator.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -540,6 +541,7 @@
 				F558E6A12E827B290060F473 /* assert.cpp */,
 				F558E6A22E827B290060F473 /* convert_format.h */,
 				F558E6A32E827B290060F473 /* ctype.cpp */,
+				F5C33FF42EA2A878005E2063 /* extend_allocator.h */,
 				F558E6A42E827B290060F473 /* locale.cpp */,
 				F558E6A52E827B290060F473 /* math.cpp */,
 				F558E6A62E827B290060F473 /* setjmp.cpp */,

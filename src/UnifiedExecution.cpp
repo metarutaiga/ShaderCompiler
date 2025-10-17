@@ -9,7 +9,7 @@
 
 namespace UnifiedExecution {
 
-size_t RunDriver(mine* cpu, size_t(*symbol)(mine*, void*, const char*)) __attribute__((optnone))
+size_t RunDriver(mine* cpu, size_t(*symbol)(mine*, void*, const char*))
 {
     auto* allocator = cpu->Allocator;
     auto* i386 = (x86_i386*)cpu;
@@ -117,7 +117,7 @@ size_t RunDriver(mine* cpu, size_t(*symbol)(mine*, void*, const char*)) __attrib
                     }
                     else if (machine[i] == "pOutput" || machine[i] == "OutputSize") {
                         if (pOutput == 0 && OutputSize == 0) {
-                            pOutput = VirtualMachine::DataToMemory("", 1048576, allocator);
+                            pOutput = VirtualMachine::DataToMemory(nullptr, 1048576, allocator);
                             OutputSize = 1048576;
                         }
                         if (machine[i] == "pOutput")

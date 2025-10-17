@@ -2,7 +2,7 @@
 #include "VirtualMachine.h"
 #include "../mine/format/coff/pe.h"
 #include "../mine/syscall/allocator.h"
-#include "../mine/syscall/simple_allocator.h"
+#include "../mine/syscall/extend_allocator.h"
 #include "../mine/syscall/syscall.h"
 #include "../mine/syscall/windows/syscall_windows.h"
 #include "../mine/x86/x86_i386.h"
@@ -29,11 +29,11 @@ void Close(mine* cpu)
 
 mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, void*, const char*)), bool debug)
 {
-    static const size_t allocator_size = 256 * 1024 * 1024;
+    static const size_t allocator_size = 2 * 1024 * 1024;
     static const size_t stack_size = 1 * 1024 * 1024;
 
     mine* cpu = new x86_ia32;
-    cpu->Initialize(simple_allocator<16>::construct(allocator_size), stack_size);
+    cpu->Initialize(extend_allocator<16>::construct(allocator_size), stack_size);
     cpu->Exception = RunException;
 
     void* image = PE::Load(dll.c_str(), [](size_t base, size_t size, void* userdata) {
@@ -56,11 +56,11 @@ mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, 
         SyscallWindows syscall_windows = {
             .stack_base = allocator_size,
             .stack_limit = allocator_size - stack_size,
-            .image = image,
+            .image = (size_t)((uint8_t*)image - cpu->Memory()),
             .symbol = GetSymbol,
         };
         syscall_windows_new(cpu, &syscall_windows);
-        syscall_windows_import(cpu, file.c_str(), image, true);
+        syscall_windows_import(cpu, file.c_str(), syscall_windows.image, true);
 
         size_t address = parameter(cpu, GetProcAddress);
         if (address) {
@@ -108,9 +108,9 @@ size_t GetSymbol(const char* file, const char* name, void* symbol_data)
 
 uint32_t DataToMemory(const void* data, size_t size, struct allocator_t* allocator)
 {
-    auto* memory = (char*)allocator->address();
     auto* pointer = (char*)allocator->allocate(size);
     if (pointer) {
+        auto* memory = (char*)allocator->address();
         if (data) {
             memcpy(pointer, data, size);
         }

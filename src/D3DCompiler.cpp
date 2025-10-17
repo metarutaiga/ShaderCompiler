@@ -223,6 +223,9 @@ mine* NextProcess(mine* cpu)
     auto& x86 = i386->x86;
     auto* memory = (uint8_t*)allocator->address();
     auto* stack = (uint32_t*)(memory + cpu->Stack());
+    if ((ESP + sizeof(uint32_t) * 2) >= x86.memory_size)
+        return nullptr;
+
     switch (stack[0]) {
     case 'D3DA':
     case 'D3DC': {
