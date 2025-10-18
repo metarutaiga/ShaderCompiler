@@ -251,6 +251,8 @@ static void Option()
         // Machine
         static std::vector<std::vector<std::string>> empty_machines;
         auto& machines = (drivers.size() > driver_index) ? drivers[driver_index].machines : empty_machines;
+        if (machine_index >= (int)machines.size())
+            machine_index = (int)machines.size() - 1;
         ImGui::TextUnformatted("Machine");
         ImGui::SetNextItemWidth(region.x);
         if (ImGui::Combo("##206", &machine_index, [](void* user_data, int index) {
