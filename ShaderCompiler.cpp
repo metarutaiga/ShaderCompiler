@@ -670,12 +670,15 @@ static void Init()
 
 bool ShaderCompilerGUI(ImVec2 screen)
 {
+    static int resize = 1;
+    static ImVec2 window_size = ImVec2(1536.0f, 864.0f);
+
     bool show = true;
     const char* title = "Shader Compiler";
-    ImVec2 window_size = ImVec2(1536.0f, 864.0f);
+    ImGui::SetNextWindowSize(window_size, resize > 0 ? ImGuiCond_Always : ImGuiCond_Once);
+    ImGui::SetNextWindowPos(ImVec2((screen.x - window_size.x) / 2.0f, (screen.y - window_size.y) / 2.0f), resize > 0 ? ImGuiCond_Always : ImGuiCond_Once);
+    resize = -abs(resize);
 
-    ImGui::SetNextWindowPos(ImVec2((screen.x - window_size.x) / 2.0f, (screen.y - window_size.y) / 2.0f), ImGuiCond_Once);
-    ImGui::SetNextWindowSize(window_size, ImGuiCond_Once);
     if (ImGui::Begin(title, &show, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse)) {
         ImGui::PushStyleColor(ImGuiCol_ChildBg, ImGui::GetStyleColorVec4(ImGuiCol_TitleBgActive));
         ImGui::BeginChild(title, ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetFrameHeight()));
@@ -687,6 +690,20 @@ bool ShaderCompilerGUI(ImVec2 screen)
         float offset = (region.x - ImGui::CalcTextSize(title).x) / 2.0f;
         ImGui::SetCursorPosX(ImGui::GetCursorPosX() + offset);
         ImGui::TextUnformatted(title);
+        if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+            switch (abs(resize)) {
+            case 1:
+                resize = 2;
+                window_size.x = screen.x;
+                window_size.y = screen.y - 128.0f;
+                break;
+            case 2:
+                resize = 1;
+                window_size.x = 1536.0f;
+                window_size.y = 864.0f;
+                break;
+            }
+        }
         ImGui::EndChild();
         ImGui::PopStyleColor();
 

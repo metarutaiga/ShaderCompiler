@@ -18,10 +18,6 @@ void Close(mine* cpu)
     if (cpu == nullptr)
         return;
 
-    auto allocator = cpu->Allocator;
-    if (allocator) {
-        Logger<SYSTEM>("Peek allocated size : %zd", allocator->peek_size());
-    }
     syscall_windows_delete(cpu);
     syscall_i386_delete(cpu);
     delete cpu;
@@ -60,7 +56,7 @@ mine* RunDLL(const std::string& dll, size_t(*parameter)(mine*, size_t(*)(mine*, 
             .symbol = GetSymbol,
         };
         syscall_windows_new(cpu, &syscall_windows);
-        syscall_windows_import(cpu, file.c_str(), syscall_windows.image, true);
+        syscall_windows_import(cpu, file.c_str(), image, true);
 
         size_t address = parameter(cpu, GetProcAddress);
         if (address) {
