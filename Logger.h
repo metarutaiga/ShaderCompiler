@@ -9,6 +9,7 @@
 extern std::vector<std::string> logs[2];
 extern int logs_index[2];
 extern int logs_focus[2];
+extern const char* eascii[0x80];
 
 template<int INDEX>
 static int LoggerV(const char* format, va_list va)

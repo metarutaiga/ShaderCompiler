@@ -297,13 +297,27 @@ static void Binary()
                 memset(line + offset, ' ', width - offset);
             }
 
+            char* ascii = line + width;
             for (int j = 0; j < 16; ++j) {
                 if ((i + j) >= size)
                     break;
-                char c = binary[i + j];
-                line[width + j] = (c >= 0x20 && c <= 0x7E) ? c : ' ';
+                uint8_t c = binary[i + j];
+                if (c == 0x00 || c == '\n') {
+                    (*ascii++) = ' ';
+                }
+                else if (c >= 0x01 && c <= 0x7F) {
+                    (*ascii++) = c;
+                }
+                else {
+                    for (int i = 0; i < 4; ++i) {
+                        char u = eascii[c - 0x80][i];
+                        if (u == 0)
+                            break;
+                        (*ascii++) = u;
+                    }
+                }
             }
-            line[width + 16] = 0;
+            (*ascii++) = 0;
 
             return line;
         }, &data, (int)(data.size() + 15) / 16);
